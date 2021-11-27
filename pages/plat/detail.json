@@ -12,10 +12,22 @@
                 "type": "container",
                 "body": [
                     {
-                        "type":"container",
-                        "body":"${profile.服役时间}"
+                        "type": "container",
+                        "body": "${profile.服役时间}"
                     }
                 ]
+            },
+            {
+                "type": "service",
+                "schemaApi": "/schema/time1"
+            },
+            {
+                "type": "service",
+                "dataProvider": "setData({ now: new Date().toString() })",
+                "body": {
+                    "type": "tpl",
+                    "tpl": "现在是：${now}"
+                }
             }
         ]
     }

@@ -11,6 +11,8 @@ const {
 
 const app = express();
 
+const routes=require('./routes')
+
 app.set('port', process.env.PORT || 3100);
 app.use(logger('dev'));
 app.use(bodyParser.json()); // Parses json, multi-part (file), url-encoded
@@ -27,6 +29,8 @@ app.use('/api', createProxyMiddleware({
   changeOrigin: true
 }));
 
+
+app.use('/', routes);
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
