@@ -2,6 +2,7 @@ const time1 = (req, res, next) => {
     var json = {
         "type": "service",
         "func": async (data, setData) => {
+            console.log("🚀 ~ : ~ data", data)
             const timer = setInterval(() => {
                 setData({ now: new Date().toString() })
             }, 1000);
