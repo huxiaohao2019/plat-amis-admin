@@ -5,6 +5,10 @@
         "type": "panel",
         "body": [
             {
+                "type":"page",
+                "data":"${profile}"
+            },
+            {
                 "type": "container",
                 "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
             },

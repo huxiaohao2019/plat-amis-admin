@@ -1,0 +1,33 @@
+{
+    "type": "page",
+    "data": {
+        "arr": [
+            "A",
+            "B",
+            "C"
+        ],
+        "subdata": {
+            "name1": "sub1",
+            "arr2": [
+                "A",
+                "B",
+                "C"
+            ]
+        }
+    },
+    "body": [
+        {
+            "type": "each",
+            "name": "arr",
+            "items": {
+                "type": "tpl",
+                "tpl": "<span class='label label-default m-l-sm'><%= data.item %></span> "
+            }
+        },
+        {
+            "type": "page",
+            "data": "${subdata}",
+            "body": "${name1}"
+        }
+    ]
+}
