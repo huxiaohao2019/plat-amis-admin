@@ -1,6 +1,12 @@
 const time1 = (req, res, next) => {
     var json = {
         "type": "service",
+        "data":{
+            "舷号": "SSBN730～743",
+            "服役时间": "1984～1997年",
+            "生产厂商": "美国通用动力公司电船分公司",
+            "装备数量": "14艘"
+        },
         "func": async (data, setData) => {
             console.log("🚀 ~ : ~ data", data)
             const timer = setInterval(() => {
@@ -10,7 +16,7 @@ const time1 = (req, res, next) => {
         },
         "body": {
             "type": "tpl",
-            "tpl": "现在是：${date}"
+            "tpl": "现在是2：${date}"
         }
     }
 

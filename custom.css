@@ -1,0 +1,11 @@
+.test1 {
+    display: block;
+    text-align: justify;
+    width: 42px;
+}
+
+.test1::after {
+    width: 100%;
+    display: inline-block;
+    content: '';
+}

@@ -29,6 +29,10 @@ app.use('/api', createProxyMiddleware({
   changeOrigin: true
 }));
 
+app.get('/ss',function(req,res,next){
+  
+})
+
 
 app.use('/', routes);
 app.get('/*', function (req, res) {
