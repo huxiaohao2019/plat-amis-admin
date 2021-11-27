@@ -1,0 +1,22 @@
+{
+    "type": "page",
+    "initApi": "http://192.168.3.129:17980/plat/0.1/${params.id}",
+    "body": {
+        "type": "panel",
+        "body": [
+            {
+                "type": "container",
+                "body": "<div style='font-size: 18px;background-color: #E4D9CA;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
+            },
+            {
+                "type": "container",
+                "body": [
+                    {
+                        "type":"container",
+                        "body":"${profile.服役时间}"
+                    }
+                ]
+            }
+        ]
+    }
+}

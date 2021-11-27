@@ -5,18 +5,33 @@ const reload = require('reload');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 
+const {
+  createProxyMiddleware
+} = require('http-proxy-middleware')
+
 const app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3100);
 app.use(logger('dev'));
 app.use(bodyParser.json()); // Parses json, multi-part (file), url-encoded
 
 app.use('/public', express.static('public'));
 app.use('/pages', express.static('pages'));
+app.use('/api', createProxyMiddleware({
+  // 转发到5000端口
+  target: 'http://192.168.3.129:17980',
+  // 转发时重写路径
+  pathRewrite: {
+    '^/api': ''
+  },
+  changeOrigin: true
+}));
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+
 
 const server = http.createServer(app);
 

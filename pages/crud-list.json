@@ -16,7 +16,7 @@
     {
       "type": "crud",
       "name": "sample",
-      "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample",
+      "api": "/api/plat/0.1?limit=3",
       "filter": {
         "title": "",
         "mode": "inline",
@@ -70,33 +70,21 @@
       ],
       "columns": [
         {
-          "name": "engine",
-          "label": "Rendering engine",
-          "sortable": true
-        },
-        {
           "name": "id",
           "label": "ID",
           "width": 20,
           "sortable": true
         },
         {
-          "name": "browser",
-          "label": "Browser",
+          "name": "name",
+          "label": "名称",
           "sortable": true
         },
+        
         {
-          "name": "platform",
-          "label": "Platform(s)",
+          "name": "country",
+          "label": "国家(地区)",
           "sortable": true
-        },
-        {
-          "name": "version",
-          "label": "Engine version"
-        },
-        {
-          "name": "grade",
-          "label": "CSS grade"
         },
         {
           "type": "operation",
@@ -111,7 +99,7 @@
                   "label": "查看",
                   "level": "primary",
                   "actionType": "link",
-                  "link": "/crud/${id}"
+                  "link": "/plat-detail/${id}"
                 },
                 {
                   "type": "button",

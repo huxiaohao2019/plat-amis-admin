@@ -66,6 +66,16 @@
             }
           },
           {
+            "label": "平台列表",
+            "url": "/plat",
+            "schemaApi": "get:/pages/crud-list.json"
+          },
+          {
+            "label": "平台详情",
+            "url": "plat-detail/:id",
+            "schemaApi": "get:/pages/plat/detail.json"
+          },
+          {
             "label": "列表示例",
             "url": "/crud",
             "rewrite": "/crud/list",
