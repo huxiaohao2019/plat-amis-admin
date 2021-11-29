@@ -5,17 +5,10 @@
   <meta charset="UTF-8" />
   <title>amis admin</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <link
-        rel="stylesheet"
-        title="default"
-        href="https://cdn.jsdelivr.net/npm/amis@beta/sdk/sdk.css" />
-  <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/amis@beta/sdk/helper.css" />
+  <link rel="stylesheet" title="default" href="https://cdn.jsdelivr.net/npm/amis@beta/sdk/sdk.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/amis@beta/sdk/helper.css" />
   <script src="https://cdn.jsdelivr.net/npm/amis@beta/sdk/sdk.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/history/umd/history.js"></script>
@@ -37,38 +30,28 @@
       min-width: 42px;
       text-align-last: justify;
     }
-
-  
   </style>
 </head>
 
 <body>
   <div id="root" class="app-wrapper"></div>
+  <!-- <script src="./script.js"></script> -->
+  <!-- <script>
+    
+  </script> -->
+  <script src="./public/script.js"></script>
   <script>
     (function () {
       let amis = amisRequire('amis/embed');
       const match = amisRequire('path-to-regexp').match;
 
+      console.log("🚀 ~ file: index.html ~ line 49 ~ app1", app1)
+
       // 如果想用 browserHistory 请切换下这处代码, 其他不用变
       // const history = History.createBrowserHistory();
       const history = History.createHashHistory();
 
-      const app = {
-        type: 'app',
-        brandName: '武器平台',
-        logo: '/public/logo.png',
-        header: {
-          type: 'tpl',
-          inline: false,
-          className: 'w-full',
-          tpl: '<div class="flex justify-between"><div>顶部区域左侧</div><div>顶部区域右侧</div></div>'
-        },
-        // footer: '<div class="p-2 text-center bg-light">底部区域</div>',
-        // asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',
-        // asideAfter: '<div class="p-2 text-center">菜单后面区域</div>',
-        api: '/scheme/site/list'
-        // api: '/pages/site.json'
-      };
+      
 
       function normalizeLink(to, location = history.location) {
         to = to || '';
@@ -81,11 +64,11 @@
 
         const idx = to.indexOf('?');
         const idx2 = to.indexOf('#');
-        let pathname = ~idx
-          ? to.substring(0, idx)
-          : ~idx2
-            ? to.substring(0, idx2)
-            : to;
+        let pathname = ~idx ?
+          to.substring(0, idx) :
+          ~idx2 ?
+          to.substring(0, idx2) :
+          to;
         let search = ~idx ? to.substring(idx, ~idx2 ? idx2 : undefined) : '';
         let hash = ~idx2 ? to.substring(idx2) : location.hash;
 
@@ -132,11 +115,9 @@
 
       let amisInstance = amis.embed(
         '#root',
-        app,
-        {
+        app, {
           location: history.location
-        },
-        {
+        }, {
           // watchRouteChange: fn => {
           //   return history.listen(fn);
           // },
@@ -170,9 +151,9 @@
             }
 
             if (action && action.actionType === 'url') {
-              action.blank === false
-                ? (window.location.href = to)
-                : window.open(to, '_blank');
+              action.blank === false ?
+                (window.location.href = to) :
+                window.open(to, '_blank');
               return;
             } else if (action && action.blank) {
               window.open(to, '_blank');
@@ -204,5 +185,6 @@
     })();
   </script>
 </body>
+
 
 </html>
