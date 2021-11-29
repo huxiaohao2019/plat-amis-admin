@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  plat-amis-admin:
+    image: node:lts-alpine
+    container_name: plat-amis-admin
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 3100:3100
+    restart: always
+    working_dir: /usr/src/app
+    command: ["npm", "start"]

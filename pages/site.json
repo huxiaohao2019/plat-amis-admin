@@ -66,8 +66,13 @@
             }
           },
           {
-            "label": "平台列表",
+            "label": "平台列表1",
             "url": "/plat",
+            "schemaApi": "post:/scheme/plat/list"
+          },
+          {
+            "label": "平台列表",
+            "url": "/plat2",
             "schemaApi": "get:/pages/crud-list.json"
           },
           {
