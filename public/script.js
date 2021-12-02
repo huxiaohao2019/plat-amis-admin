@@ -4,7 +4,7 @@ let app1={
 
 const app = {
     "type": "app",
-    "brandName": "应用名称",
+    "brandName": "应用名称1",
     "pages": [{
       "label": "分组1",
 
