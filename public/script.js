@@ -2,10 +2,20 @@ let app1={
     name:1121
 }
 
-const app = {
+const app2 = {
     "type": "app",
-    "brandName": "应用名称1",
-    "pages": [{
+    "brandName": "武器平台",
+    "pages": [
+      {
+        "label": "子页面1",
+        "url": "pageA1",
+        // "schemaApi": "/scheme/plat/list"
+        "schema": {
+          "type": "service",
+          "schemaApi": "get:/scheme/plat/list"
+        }
+      },
+      {
       "label": "分组1",
 
       "children": [{
@@ -22,7 +32,7 @@ const app = {
           },
 
           {
-            "label": "子页面",
+            "label": "平台列表",
             "url": "pageA",
             "schema": {
               "type": "page",
