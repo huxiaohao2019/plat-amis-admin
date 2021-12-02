@@ -1,8 +1,8 @@
 export default {
     input: 'main.js',
     output: {
-        file: 'bundle.js',
+        file: 'public/bundle.js',
         format: 'umd',
-        name:'MyBundle'
+        name:'platApp'
     }
 };

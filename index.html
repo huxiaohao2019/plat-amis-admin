@@ -39,33 +39,20 @@
   <!-- <script>
     
   </script> -->
-  <script src="./public/script.js"></script>
+  <!-- <script src="./public/script.js"></script> -->
+  <script src="./public/bundle.js"></script>
   <script>
     (function () {
+      console.log(window);
       let amis = amisRequire('amis/embed');
       const match = amisRequire('path-to-regexp').match;
 
-      console.log("🚀 ~ file: index.html ~ line 49 ~ app1", app1)
 
       // 如果想用 browserHistory 请切换下这处代码, 其他不用变
       // const history = History.createBrowserHistory();
       const history = History.createHashHistory();
 
-      const app = {
-        type: 'app',
-        brandName: '武器平台',
-        logo: '/public/logo.png',
-        header: {
-          type: 'tpl',
-          inline: false,
-          className: 'w-full',
-          tpl: '<div class="flex justify-between"><div>顶部区域左侧</div><div>顶部区域右侧</div></div>'
-        },
-        // footer: '<div class="p-2 text-center bg-light">底部区域</div>',
-        // asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',
-        // asideAfter: '<div class="p-2 text-center">菜单后面区域</div>',
-        api: '/pages/site.json'
-      };
+      const app =platApp.amisApp;
 
       function normalizeLink(to, location = history.location) {
         to = to || '';
