@@ -36,6 +36,10 @@ const listResponseAdapter = function (payload, response) {
     return amisList;
 }
 
+function objToKvList(obj){
+    
+}
+
 const platItemResponseAdapter = function (payload, response, api) {
     console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api)
     console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response)
