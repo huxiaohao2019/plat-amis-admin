@@ -1,64 +1,105 @@
+import myutils from '../../tools/myutils'
+
 const platList = {
     "type": "page",
+    "remark": null,
+                  "name": "page-demo",
     "body": {
         "type": "crud",
+        "perPage": 10,
         api: {
             method: 'get',
             url: '/api/plat/0.1',
-            requestAdaptor: function (api) {
-                console.log("🚀 ~ file: index.html ~ line 48 ~ api", api)
-                var query = api.query;
-                var page = query.page;
-                var perPage = query.perPage;
-
-                var limit = perPage;
-                var offset = (page - 1) * perPage;
-                api.url = '/api/plat/0.1' + '?limit=' + limit + '&skip=' + offset;
-
-                var obj1 = {
-                    ...api
-
-                };
-                console.log("🚀 ~ file: index.html ~ line 50 ~ obj1", obj1)
-
-                return obj1;
-            },
-            adaptor: function (payload, response) {
-                console.log("🚀 ~ file: index.html ~ line 104 ~ payload", payload)
-                console.log("🚀 ~ file: index.html ~ line 104 ~ response", response)
-                // return {
-                //     ...payload,
-                //     status: payload.code === 200 ? 0 : payload.code
-                // };
-                return payload;
-            }
+            requestAdaptor: myutils.requestAdaptor,
+            adaptor: myutils.listResponseAdapter
+        },
+        "data": {
+            "page": 1
+          },
+        "filter": {
+            "title": "",
+            "mode": "inline",
+            "wrapWithPanel": false,
+            "submitText": "",
+            "controls": [{
+                "type": "text",
+                "name": "keywords",
+                "placeholder": "通过关键字搜索",
+                "addOn": {
+                    "label": "搜索",
+                    "type": "submit",
+                    "className": "btn-success"
+                },
+                "clearable": true
+            }],
+            "className": "m-b-sm"
         },
         "syncLocation": false,
         "columns": [{
                 "name": "id",
-                "label": "ID"
+                "label": "ID",
+                "width": 20,
+                "sortable": true
             },
             {
                 "name": "name",
-                "label": "Engine"
+                "label": "名称",
+                "sortable": true
             },
             {
-                "name": "package_name",
-                "label": "Version"
+                "name": "time",
+                "label": "time"
             },
             {
-                "name": "platform",
-                "label": "Platform(s)"
+                name:'type',
+                label:'type'
             },
             {
-                "name": "version",
-                "label": "Engine version"
+                "name": "country",
+                "label": "国家(地区)",
+                "sortable": true
             },
             {
-                "name": "grade",
-                "label": "CSS grade"
+                "type": "operation",
+                "label": "操作",
+                "width": "",
+                "buttons": [{
+                    "type": "button-group",
+                    "buttons": [{
+                            "type": "button",
+                            "label": "查看",
+                            "level": "primary",
+                            "actionType": "link",
+                            "link": "/plat/${id}?page=$page"
+                        },
+                        {
+                            "type": "button",
+                            "label": "修改",
+                            "level": "info",
+                            "actionType": "link",
+                            "link": "/crud/${id}/edit"
+                        },
+                        {
+                            "type": "button",
+                            "label": "删除",
+                            "level": "danger",
+                            "actionType": "ajax",
+                            "confirmText": "您确认要删除?",
+                            "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id"
+                        }
+                    ]
+                }],
+                "affixHeader": true,
+                    "columnsTogglable": "auto",
+                    "placeholder": "暂无数据",
+                    "tableClassName": "table-db table-striped",
+                    "headerClassName": "crud-table-header",
+                    "footerClassName": "crud-table-footer",
+                    "toolbarClassName": "crud-table-toolbar",
+                    "combineNum": 0,
+                    "bodyClassName": "panel-default"
             }
-        ]
+        ],
     }
 }
 

@@ -4,65 +4,288 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.platApp = factory());
 })(this, (function () { 'use strict';
 
+    const requestAdaptor = function (api) {
+        console.log("🚀 ~ file: index.html ~ line 48 ~ api", api);
+        var query = api.query;
+        var page = query.page;
+        var perPage = query.perPage;
+
+        var limit = perPage;
+        var offset = (page - 1) * perPage;
+        api.url = '/api/plat/0.1' + '?limit=' + limit + '&offset=' + offset;
+
+        var obj1 = {
+            ...api
+        };
+        console.log("🚀 ~ file: index.html ~ line 50 ~ obj1", obj1);
+
+        return obj1;
+    };
+
+    const listResponseAdapter = function (payload, response) {
+        console.log("🚀 ~ file: index.html ~ line 104 ~ payload", payload);
+        console.log("🚀 ~ file: index.html ~ line 104 ~ response", response);
+        // return {
+        //     ...payload,
+        //     status: payload.code === 200 ? 0 : payload.code
+        // };
+        console.log("🚀 ~ file: myutils.js ~ line 32 ~ listResponseAdapter ~ response.headers['sum']", response.headers['sum']);
+        var amisList = {
+            msg: '',
+            status: '0',
+            data: {
+                "rows": payload,
+                "count": response.headers['sum']
+            }
+        };
+
+        return amisList;
+    };
+
+    const platItemResponseAdapter = function (payload, response) {
+        return payload;
+    };
+
+
+
+    var myutils = {
+        requestAdaptor,
+        listResponseAdapter,
+        platItemResponseAdapter
+    };
+
     const platList = {
         "type": "page",
+        "remark": null,
+                      "name": "page-demo",
         "body": {
             "type": "crud",
+            "perPage": 10,
             api: {
                 method: 'get',
                 url: '/api/plat/0.1',
-                requestAdaptor: function (api) {
-                    console.log("🚀 ~ file: index.html ~ line 48 ~ api", api);
-                    var query = api.query;
-                    var page = query.page;
-                    var perPage = query.perPage;
-
-                    var limit = perPage;
-                    var offset = (page - 1) * perPage;
-                    api.url = '/api/plat/0.1' + '?limit=' + limit + '&skip=' + offset;
-
-                    var obj1 = {
-                        ...api
-
-                    };
-                    console.log("🚀 ~ file: index.html ~ line 50 ~ obj1", obj1);
-
-                    return obj1;
-                },
-                adaptor: function (payload, response) {
-                    console.log("🚀 ~ file: index.html ~ line 104 ~ payload", payload);
-                    console.log("🚀 ~ file: index.html ~ line 104 ~ response", response);
-                    // return {
-                    //     ...payload,
-                    //     status: payload.code === 200 ? 0 : payload.code
-                    // };
-                    return payload;
-                }
+                requestAdaptor: myutils.requestAdaptor,
+                adaptor: myutils.listResponseAdapter
+            },
+            "data": {
+                "page": 1
+              },
+            "filter": {
+                "title": "",
+                "mode": "inline",
+                "wrapWithPanel": false,
+                "submitText": "",
+                "controls": [{
+                    "type": "text",
+                    "name": "keywords",
+                    "placeholder": "通过关键字搜索",
+                    "addOn": {
+                        "label": "搜索",
+                        "type": "submit",
+                        "className": "btn-success"
+                    },
+                    "clearable": true
+                }],
+                "className": "m-b-sm"
             },
             "syncLocation": false,
             "columns": [{
                     "name": "id",
-                    "label": "ID"
+                    "label": "ID",
+                    "width": 20,
+                    "sortable": true
                 },
                 {
                     "name": "name",
-                    "label": "Engine"
+                    "label": "名称",
+                    "sortable": true
                 },
                 {
-                    "name": "package_name",
-                    "label": "Version"
+                    "name": "time",
+                    "label": "time"
                 },
                 {
-                    "name": "platform",
-                    "label": "Platform(s)"
+                    name:'type',
+                    label:'type'
                 },
                 {
-                    "name": "version",
-                    "label": "Engine version"
+                    "name": "country",
+                    "label": "国家(地区)",
+                    "sortable": true
                 },
                 {
-                    "name": "grade",
-                    "label": "CSS grade"
+                    "type": "operation",
+                    "label": "操作",
+                    "width": "",
+                    "buttons": [{
+                        "type": "button-group",
+                        "buttons": [{
+                                "type": "button",
+                                "label": "查看",
+                                "level": "primary",
+                                "actionType": "link",
+                                "link": "/plat/${id}?page=$page"
+                            },
+                            {
+                                "type": "button",
+                                "label": "修改",
+                                "level": "info",
+                                "actionType": "link",
+                                "link": "/crud/${id}/edit"
+                            },
+                            {
+                                "type": "button",
+                                "label": "删除",
+                                "level": "danger",
+                                "actionType": "ajax",
+                                "confirmText": "您确认要删除?",
+                                "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id"
+                            }
+                        ]
+                    }],
+                    "affixHeader": true,
+                        "columnsTogglable": "auto",
+                        "placeholder": "暂无数据",
+                        "tableClassName": "table-db table-striped",
+                        "headerClassName": "crud-table-header",
+                        "footerClassName": "crud-table-footer",
+                        "toolbarClassName": "crud-table-toolbar",
+                        "combineNum": 0,
+                        "bodyClassName": "panel-default"
+                }
+            ],
+        }
+    };
+
+    const platView= {
+        "type": "page",
+        "initApi": "/api/plat/0.1/${params.id}",
+        "adapter":myutils.platItemResponseAdapter,
+        "toolbar": [{
+            "type": "button",
+            "actionType": "link",
+            "link": "/plat/list?page=$page",
+            "label": "返回列表"
+        }],
+        "body": {
+            "type": "panel",
+            "body": [{
+                    "type": "page",
+                    "data": "${profile}"
+                },
+                {
+                    "type": "container",
+                    "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
+                },
+                {
+                    "type": "page",
+                    "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>简况</span></div>"
+                },
+                {
+                    "type": "page",
+                    "data": {
+                        "arr": [{
+                                "key": "舷号",
+                                "value": "SSBN730～743"
+                            },
+                            {
+                                "key": "服役时间",
+                                "value": "1984～1997年"
+                            },
+                            {
+                                "key": "生产厂商",
+                                "value": "美国通用动力公司电船分公司"
+                            },
+                            {
+                                "key": "装备数量",
+                                "value": "14艘"
+                            }
+                        ]
+                    },
+                    "body": {
+                        "type": "each",
+                        "name": "arr",
+                        "items": {
+                            "type": "tpl",
+                            "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
+                        }
+                    }
+                },
+                {
+                    "type": "page",
+                    "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>2.<span class='test1'>基本性能参数</span></div>"
+                },
+                {
+                    "type": "page",
+                    "data": {
+                        "arr": [{
+                                "key": "吃水",
+                                "value": "11.1米"
+                            },
+                            {
+                                "key": "舰宽",
+                                "value": "12.8米"
+                            },
+                            {
+                                "key": "舰长",
+                                "value": "170.7米"
+                            },
+                            {
+                                "key": "排水量",
+                                "value": "19000吨（水下）"
+                            },
+                            {
+                                "key": "下潜深度",
+                                "value": "244米"
+                            },
+                            {
+                                "key": "人员编制",
+                                "value": "155名（军官15名）"
+                            },
+                            {
+                                "key": "水下航速",
+                                "value": "24节"
+                            }
+                        ]
+                    },
+                    "body": {
+                        "type": "each",
+                        "name": "arr",
+                        "items": {
+                            "type": "tpl",
+                            "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
+                        }
+                    }
+                },
+                {
+                    "type": "page",
+                    "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>3.<span class='test1'>主要武器</span></div>"
+                },
+                {
+                    "type": "page",
+                    "data": {
+                        "arr": [{
+                                "key": "导弹",
+                                "value": "“战斧”BlockⅣ巡航导弹"
+                            },
+                            {
+                                "key": "鱼雷",
+                                "value": "MK48ADCAPMod5/6/7重型鱼雷"
+                            },
+                            {
+                                "key": "火控系统",
+                                "value": "AN/BYG-1战斗控制系统"
+                            }
+                        ]
+                    },
+                    "body": {
+                        "type": "each",
+                        "name": "arr",
+                        "items": {
+                            "type": "tpl",
+                            "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
+                        }
+                    }
                 }
             ]
         }
@@ -75,135 +298,53 @@
         },
         {
             "label": "业务数据",
-            "children": [{
-                    "label": "页面A",
-                    "url": "index",
-                    "schema": {
-                        "type": "page",
-                        "title": "页面A",
-                        "body": "页面A"
-                    },
-                    "children": [{
-                            "label": "页面A-1",
-                            "url": "1",
-                            "schema": {
-                                "type": "page",
-                                "title": "页面A-1",
-                                "body": "页面A-1"
-                            }
-                        },
-                        {
-                            "label": "页面A-2",
-                            "url": "2",
-                            "schema": {
-                                "type": "page",
-                                "title": "页面A-2",
-                                "body": "页面A-2"
-                            }
-                        },
-                        {
-                            "label": "页面A-3",
-                            "url": "3",
-                            "schema": {
-                                "type": "page",
-                                "title": "页面A-3",
-                                "body": "页面A-3"
-                            }
-                        }
-                    ]
-                },
+            "children": [
 
-                {
-                    "label": "页面C",
-                    "schema": {
-                        "type": "page",
-                        "title": "页面C",
-                        "body": "页面C"
-                    }
-                },
+                // {
+                //     "label": "页面C",
+                //     "schema": {
+                //         "type": "page",
+                //         "title": "页面C",
+                //         "body": "页面C"
+                //     }
+                // },
                 // {
                 //     "label": "平台列表1",
                 //     "url": "/plat",
                 //     "schemaApi": "post:/scheme/plat/list"
                 // },
+                // {
+                //     "label": "平台列表",
+                //     "url": "/plat2",
+                //     "schemaApi": "get:/pages/crud-list.json"
+                // },
+                // {
+                //     "label": "测试页",
+                //     "url": "/testpage",
+                //     "schemaApi": "get:/pages/testpage.json"
+                // },
+                // {
+                //     "label": "平台详情",
+                //     "url": "plat-detail/:id",
+                //     "schemaApi": "get:/pages/plat/detail.json"
+                // },
                 {
                     "label": "平台列表",
-                    "url": "/plat2",
-                    "schemaApi": "get:/pages/crud-list.json"
-                },
-                {
-                    "label": "测试页",
-                    "url": "/testpage",
-                    "schemaApi": "get:/pages/testpage.json"
-                },
-                {
-                    "label": "平台详情",
-                    "url": "plat-detail/:id",
-                    "schemaApi": "get:/pages/plat/detail.json"
-                },
-                {
-                    "label": "平台列表",
-                    // "schema": {
-                    //     "type": "page",
-                    //     "title": "页面B",
-                    //     "body": "页面B"
-                    // }
-                    "url": "plat",
-                    "rewrite": "/plat/list",
-                    // "icon": "fa fa-cube",
-                    // "schema": platList,
-                    "children": [
-                        {
-                            "label": "列表",
-                            "url": "/plat/list",
-                            "icon": "fa fa-list",
-                            "schema": platList
-                        },
-                        {
-                          "label": "添加APP",
-                          "url": "/crud/app/app-add",
-                          "icon": "fa fa-plus",
-                          "schemaApi": "get:/pages/app/app-add.json"
-                        },
-                        // {
-                        //   "label": "新增",
-                        //   "url": "/crud/url/url-add",
-                        //   "icon": "fa fa-plus",
-                        //   "schemaApi": "get:/pages/url/url-add.json"
-                        // },
-                        {
-                            "label": "查看",
-                            "url": "/crud/:id",
-                            "schemaApi": "get:/pages/crud-view.json"
-                        },
-                        {
-                            "label": "修改",
-                            "url": "/crud/:id/edit",
-                            "schemaApi": "get:/pages/crud-edit.json"
-                        }
-                    ]
-                },
-                {
-                    "label": "列表示例",
-                    "url": "/crud",
-                    "rewrite": "/crud/list",
-                    "icon": "fa fa-cube",
-                    "children": [{
-                            "label": "列表",
-                            "url": "/crud/list",
-                            "icon": "fa fa-list",
-                            "schemaApi": "get:/pages/crud-list.json"
-                        },
-                        {
-                            "label": "新增",
-                            "url": "/crud/new",
+                    "url": "/plat/list",
+                    "icon": "fa fa-list",
+                    "schema": platList,
+                    children: [{
+                            "label": "添加平台",
+                            "url": "/plat/add",
                             "icon": "fa fa-plus",
-                            "schemaApi": "get:/pages/crud-new.json"
+                            "schemaApi": "get:/pages/plat/plat-add.json"
                         },
+
                         {
                             "label": "查看",
-                            "url": "/crud/:id",
-                            "schemaApi": "get:/pages/crud-view.json"
+                            "url": "/plat/:id",
+                            // "schemaApi": "get:/pages/plat/plat-view.json"
+                            "schema": platView
                         },
                         {
                             "label": "修改",
@@ -212,6 +353,7 @@
                         }
                     ]
                 }
+                // ,exam
             ]
         },
         {
