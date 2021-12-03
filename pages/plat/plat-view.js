@@ -1,13 +1,23 @@
 import myutils from "../../tools/myutils";
-const platView= {
+const platView = {
     "type": "page",
-    "initApi": "/api/plat/0.1/${params.id}",
-    "adapter":myutils.platItemResponseAdapter,
+
+    "initApi": {
+        method: 'get',
+        url: "/api/plat/0.1/${params.id}",
+        adaptor:myutils.platItemResponseAdapter
+        // adaptor: function (payload, response,api) {
+        //     console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api)
+        //         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response)
+        //         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload)
+        //         return payload;
+        //     }
+    },
     "toolbar": [{
         "type": "button",
         "actionType": "link",
         "link": "/plat/list?page=$page",
-        "label": "返回列表"
+        "label": "返回列表2"
     }],
     "body": {
         "type": "panel",

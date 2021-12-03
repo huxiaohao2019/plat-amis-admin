@@ -36,7 +36,17 @@ const listResponseAdapter = function (payload, response) {
     return amisList;
 }
 
-const platItemResponseAdapter = function (payload, response) {
+const platItemResponseAdapter = function (payload, response, api) {
+    console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api)
+    console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response)
+    console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload)
+
+    var newItem = {
+        ...payload
+    }
+    
+
+
     return payload;
 }
 
