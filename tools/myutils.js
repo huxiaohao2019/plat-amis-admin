@@ -128,7 +128,7 @@ const platItemResponseAdapter = function (payload, response, api) {
     var techKvList = objToKvList(payload['tech']);
     newItem.techKvList = techKvList;
     newItem.profileKvList = objToKvList(payload['profile']);
-    newItem.tacticsKvList = objToKvList(payload['tactics'])
+    newItem.weaponsKvList = objToKvList(payload['weapons'])
 
 
     return newItem;

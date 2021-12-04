@@ -140,7 +140,7 @@
             flagKey: 'tech',
             flagLabel: '技术参数'
         }, {
-            flagKey: 'tactics',
+            flagKey: 'weapons',
             flagLabel: '主要武器'
         }, {
             flagKey: 'profile',
@@ -275,7 +275,7 @@
         var techKvList = objToKvList(payload['tech']);
         newItem.techKvList = techKvList;
         newItem.profileKvList = objToKvList(payload['profile']);
-        newItem.tacticsKvList = objToKvList(payload['tactics']);
+        newItem.weaponsKvList = objToKvList(payload['weapons']);
 
 
         return newItem;
@@ -495,7 +495,7 @@
                 //     "type": "page",
                 //     "body": {
                 //         "type": "each",
-                //         "name": "tacticsKvList",
+                //         "name": "weaponsKvList",
                 //         "items": {
                 //             "type": "tpl",
                 //             "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
@@ -546,7 +546,7 @@
 
         {
             "type": "input-kv",
-            "name": "tactics",
+            "name": "weapons",
             "label": "武器装备"
 
         },
@@ -879,7 +879,7 @@
                     "type": "page",
                     "body": {
                         "type": "each",
-                        "name": "tacticsKvList",
+                        "name": "weaponsKvList",
                         "items": {
                             "type": "tpl",
                             "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "

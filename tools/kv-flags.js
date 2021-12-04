@@ -3,7 +3,7 @@ const platKvFlags = [
         flagKey: 'tech',
         flagLabel: '技术参数'
     }, {
-        flagKey: 'tactics',
+        flagKey: 'weapons',
         flagLabel: '主要武器'
     }, {
         flagKey: 'profile',

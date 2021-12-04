@@ -37,7 +37,7 @@ const platFormItems = [
 
     {
         "type": "input-kv",
-        "name": "tactics",
+        "name": "weapons",
         "label": "武器装备"
 
     },

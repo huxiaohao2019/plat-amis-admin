@@ -71,7 +71,7 @@ let platView = {
                 "type": "page",
                 "body": {
                     "type": "each",
-                    "name": "tacticsKvList",
+                    "name": "weaponsKvList",
                     "items": {
                         "type": "tpl",
                         "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
