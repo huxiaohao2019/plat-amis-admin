@@ -24,14 +24,19 @@
     };
 
     const requestAdaptor = function (api) {
-        console.log("🚀 ~ file: index.html ~ line 48 ~ api", api);
+        console.log("🚀 ~ requestAdaptor ~ api", api);
+        console.log("🚀 ~ requestAdaptor ~ api.url", api.url);
+
+        var urlHost=api.url.split('?')[0];
+
         var query = api.query;
         var page = query.page;
         var perPage = query.perPage;
 
+
         var limit = perPage;
         var offset = (page - 1) * perPage;
-        api.url = '/api/plat/0.1' + '?limit=' + limit + '&offset=' + offset;
+        api.url = urlHost + '?limit=' + limit + '&offset=' + offset;
 
         var obj1 = {
             ...api
@@ -335,95 +340,261 @@
         }
     };
 
+    const vendorList={
+        "type": "page",
+        "title": "厂商列表",
+        "remark": null,
+        "name": "page-demo",
+        // "toolbar": [{
+        //   "type": "button",
+        //   "actionType": "link",
+        //   "link": "/crud/url/url-add",
+        //   "label": "新增",
+        //   "primary": true
+        // }],
+        "body": [{
+          "type": "crud",
+          "name": "sample",
+          "perPage": 10,
+          "data": {
+            "page": 1
+          },
+          // "api": {
+          //   "method": "get",
+          //   "url": "/api/app?limit=${page}"
+          // },
+          api: {
+            method: 'get',
+            url: '/api/vendor/0.1',
+            requestAdaptor: myutils.requestAdaptor,
+            adaptor: myutils.listResponseAdapter
+        },
+
+          "filter": {
+            "title": "",
+            "mode": "inline",
+            "wrapWithPanel": false,
+            "submitText": "",
+            "controls": [{
+              "type": "text",
+              "name": "keywords",
+              "placeholder": "通过关键字搜索2",
+              "addOn": {
+                "label": "搜索",
+                "type": "submit",
+                "className": "btn-success"
+              },
+              "clearable": true
+            }],
+            "className": "m-b-sm"
+          },
+          "bulkActions": [{
+              "label": "批量修改",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "primary",
+              "dialog": {
+                "title": "批量编辑",
+                "name": "sample-bulk-edit",
+                "body": {
+                  "type": "form",
+                  "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/bulkUpdate2",
+                  "controls": [{
+                    "type": "text",
+                    "name": "engine",
+                    "label": "Engine"
+                  }]
+                }
+              }
+            },
+            {
+              "label": "批量删除",
+              "type": "button",
+              "level": "danger",
+              "actionType": "ajax",
+              "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$ids",
+              "confirmText": "确定要批量删除?"
+            }
+          ],
+          "columns": [{
+            "name": "id",
+            "label": "ID",
+            "width": 20,
+            "sortable": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "sortable": true
+        },
+        
+        {
+            "name": "country",
+            "label": "国家(地区)",
+            "sortable": true
+        },
+
+            {
+              "type": "operation",
+              "label": "操作",
+              "width": "",
+              "buttons": [{
+                "type": "button-group",
+                "buttons": [{
+                    "type": "button",
+                    "label": "查看",
+                    "level": "primary",
+                    "actionType": "link",
+                    "link": "/plat/${id}"
+                  },
+                  {
+                    "type": "button",
+                    "label": "修改",
+                    "level": "info",
+                    "actionType": "link",
+                    "link": "/crud/url/${id}/edit"
+                  },
+                  {
+                    "type": "button",
+                    "label": "删除",
+                    "level": "danger",
+                    "actionType": "ajax",
+                    "confirmText": "您确认要删除?",
+                    "api": "get:/api/url/destroy/${id}"
+                  }
+                ]
+              }],
+              "placeholder": "-",
+              "fixed": "right"
+            }
+          ],
+          "affixHeader": true,
+          "columnsTogglable": "auto",
+          "placeholder": "暂无数据",
+          "tableClassName": "table-db table-striped",
+          "headerClassName": "crud-table-header",
+          "footerClassName": "crud-table-footer",
+          "toolbarClassName": "crud-table-toolbar",
+          "combineNum": 0,
+          "bodyClassName": "panel-default"
+        }]
+      };
+
     const pages = [{
-            "label": "Home",
-            "url": "/",
-            "redirect": "/index/1"
+        "label": "Home",
+        "url": "/",
+        "redirect": "/index/1"
+    },
+    {
+        "label": "业务数据",
+        "children": [
+
+            // {
+            //     "label": "页面C",
+            //     "schema": {
+            //         "type": "page",
+            //         "title": "页面C",
+            //         "body": "页面C"
+            //     }
+            // },
+            // {
+            //     "label": "平台列表1",
+            //     "url": "/plat",
+            //     "schemaApi": "post:/scheme/plat/list"
+            // },
+            // {
+            //     "label": "平台列表",
+            //     "url": "/plat2",
+            //     "schemaApi": "get:/pages/crud-list.json"
+            // },
+            // {
+            //     "label": "测试页",
+            //     "url": "/testpage",
+            //     "schemaApi": "get:/pages/testpage.json"
+            // },
+            // {
+            //     "label": "平台详情",
+            //     "url": "plat-detail/:id",
+            //     "schemaApi": "get:/pages/plat/detail.json"
+            // },
+            {
+                "label": "平台列表",
+                "url": "/plat/list",
+                "icon": "fa fa-list",
+                "schema": platList2,
+                children: [{
+                    "label": "添加平台",
+                    "url": "/plat/add",
+                    "icon": "fa fa-plus",
+                    "schemaApi": "get:/pages/plat/plat-add.json"
+                },
+
+                {
+                    "label": "查看",
+                    "url": "/plat/:id",
+                    // "schemaApi": "get:/pages/plat/plat-view.json"
+                    "schema": platView
+                },
+                {
+                    "label": "修改",
+                    "url": "/crud/:id/edit",
+                    "schemaApi": "get:/pages/crud-edit.json"
+                }
+                ]
+            },
+
+            {
+                "label": "厂商列表",
+                "url": "/vendor/list",
+                "icon": "fa fa-list",
+                "schema": vendorList,
+                children: [{
+                    "label": "添加厂商",
+                    "url": "/vender/add",
+                    "icon": "fa fa-plus",
+                    "schemaApi": "get:/pages/vendor/vendor-add.json"
+                },
+
+                {
+                    "label": "查看",
+                    "url": "/plat/:id",
+                    // "schemaApi": "get:/pages/plat/plat-view.json"
+                    "schema": platView
+                },
+                {
+                    "label": "修改",
+                    "url": "/crud/:id/edit",
+                    "schemaApi": "get:/pages/crud-edit.json"
+                }
+                ]
+            }
+            // ,exam
+        ]
+    },
+    {
+        "label": "分组2",
+        "children": [{
+            "label": "用户管理",
+            "schema": {
+                "type": "page",
+                "title": "用户管理",
+                "body": "页面C"
+            }
         },
         {
-            "label": "业务数据",
-            "children": [
-
-                // {
-                //     "label": "页面C",
-                //     "schema": {
-                //         "type": "page",
-                //         "title": "页面C",
-                //         "body": "页面C"
-                //     }
-                // },
-                // {
-                //     "label": "平台列表1",
-                //     "url": "/plat",
-                //     "schemaApi": "post:/scheme/plat/list"
-                // },
-                // {
-                //     "label": "平台列表",
-                //     "url": "/plat2",
-                //     "schemaApi": "get:/pages/crud-list.json"
-                // },
-                // {
-                //     "label": "测试页",
-                //     "url": "/testpage",
-                //     "schemaApi": "get:/pages/testpage.json"
-                // },
-                // {
-                //     "label": "平台详情",
-                //     "url": "plat-detail/:id",
-                //     "schemaApi": "get:/pages/plat/detail.json"
-                // },
-                {
-                    "label": "平台列表",
-                    "url": "/plat/list",
-                    "icon": "fa fa-list",
-                    "schema": platList2,
-                    children: [{
-                            "label": "添加平台",
-                            "url": "/plat/add",
-                            "icon": "fa fa-plus",
-                            "schemaApi": "get:/pages/plat/plat-add.json"
-                        },
-
-                        {
-                            "label": "查看",
-                            "url": "/plat/:id",
-                            // "schemaApi": "get:/pages/plat/plat-view.json"
-                            "schema": platView
-                        },
-                        {
-                            "label": "修改",
-                            "url": "/crud/:id/edit",
-                            "schemaApi": "get:/pages/crud-edit.json"
-                        }
-                    ]
-                }
-                // ,exam
-            ]
+            "label": "外部链接",
+            "link": "http://baidu.gitee.io/amis"
         },
         {
-            "label": "分组2",
-            "children": [{
-                    "label": "用户管理",
-                    "schema": {
-                        "type": "page",
-                        "title": "用户管理",
-                        "body": "页面C"
-                    }
-                },
-                {
-                    "label": "外部链接",
-                    "link": "http://baidu.gitee.io/amis"
-                },
-                {
-                    "label": "部门管理",
-                    "schemaApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/service/form?tpl=tpl3"
-                },
-                {
-                    "label": "jsonp 返回示例",
-                    "schemaApi": "jsonp:/pages/jsonp.js?callback=jsonpCallback"
-                }
-            ]
+            "label": "部门管理",
+            "schemaApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/service/form?tpl=tpl3"
+        },
+        {
+            "label": "jsonp 返回示例",
+            "schemaApi": "jsonp:/pages/jsonp.js?callback=jsonpCallback"
         }
+        ]
+    }
     ];
 
     const app = {

@@ -1,13 +1,18 @@
 import kvFlags from '../tools/kv-flags'
 const requestAdaptor = function (api) {
-    console.log("🚀 ~ file: index.html ~ line 48 ~ api", api)
+    console.log("🚀 ~ requestAdaptor ~ api", api)
+    console.log("🚀 ~ requestAdaptor ~ api.url", api.url)
+
+    var urlHost=api.url.split('?')[0]
+
     var query = api.query;
     var page = query.page;
     var perPage = query.perPage;
 
+
     var limit = perPage;
     var offset = (page - 1) * perPage;
-    api.url = '/api/plat/0.1' + '?limit=' + limit + '&offset=' + offset;
+    api.url = urlHost + '?limit=' + limit + '&offset=' + offset;
 
     var obj1 = {
         ...api
