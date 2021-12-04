@@ -37,8 +37,8 @@ const platList2={
         "submitText": "",
         "controls": [{
           "type": "text",
-          "name": "keywords",
-          "placeholder": "通过关键字搜索2",
+          "name": "country,name",
+          "placeholder": "通过关键字搜索",
           "addOn": {
             "label": "搜索",
             "type": "submit",

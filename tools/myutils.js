@@ -3,7 +3,7 @@ const requestAdaptor = function (api) {
     console.log("🚀 ~ requestAdaptor ~ api", api)
     console.log("🚀 ~ requestAdaptor ~ api.url", api.url)
 
-    var urlHost=api.url.split('?')[0]
+    var urlHost = api.url.split('?')[0]
 
     var query = api.query;
     var page = query.page;
@@ -12,7 +12,53 @@ const requestAdaptor = function (api) {
 
     var limit = perPage;
     var offset = (page - 1) * perPage;
-    api.url = urlHost + '?limit=' + limit + '&offset=' + offset;
+
+    var newQuery = {
+        ...query,
+    }
+    delete newQuery['page']
+    delete newQuery['perPage']
+
+    let subQueryList = [];
+
+    for (let key in newQuery) {
+        if (/.*,.*/.test(key)) {
+            let value = newQuery[key];
+            let subKeys = key.split(',');
+            subKeys.forEach(subKey => {
+                let subQueryStr = subKey + ':like:\'%25' + String(value) + '\%25\''
+                subQueryList.push(subQueryStr);
+            })
+        }
+    }
+
+    console.log("🚀 ~ requestAdaptor ~ subQueryList", subQueryList)
+    let subQueryListStr = '[' + subQueryList.join('|') + ']'
+    console.log("🚀 ~ requestAdaptor ~ subQueryListStr", subQueryListStr)
+
+    let newQuery2 = {
+        limit,
+        offset
+    }
+    if (subQueryList.length) {
+        newQuery2.query = subQueryListStr
+    }
+
+    let newQuery2List=[
+        "limit="+limit,
+        "offet="+offset
+    ]
+    if(subQueryList.length){
+        newQuery2List.push("query="+subQueryListStr)
+    }
+
+    let newQuery2ListStr=newQuery2List.join('&');
+
+
+
+
+    api.url = urlHost + '?'+newQuery2ListStr
+    console.log("🚀 ~ requestAdaptor ~ api.url ", api.url )
 
     var obj1 = {
         ...api

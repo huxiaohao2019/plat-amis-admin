@@ -1,7 +1,10 @@
+import deviceAddPage from "./device/device-add";
 import deviceList from "./device/device-list";
+import deviceView from "./device/device-view";
 import platList from "./plat/plat-list";
 import platView from "./plat/plat-view";
 import vendorList from "./vendor/vendor-list";
+import vendorView from "./vendor/vendor-view";
 
 const exam = {
     "label": "列表示例",
@@ -193,9 +196,9 @@ const pages = [{
 
             {
                 "label": "查看",
-                "url": "/plat/:id",
+                "url": "/vendor/:id",
                 // "schemaApi": "get:/pages/plat/plat-view.json"
-                "schema": platView
+                "schema": vendorView
             },
             {
                 "label": "修改",
@@ -212,17 +215,17 @@ const pages = [{
             "icon": "fa fa-list",
             "schema": deviceList,
             children: [{
-                "label": "添加厂商",
-                "url": "/vender/add",
+                "label": "添加设备",
+                "url": "/device/add",
                 "icon": "fa fa-plus",
-                "schemaApi": "get:/pages/device/device-add.json"
+                "schema":deviceAddPage
             },
 
             {
                 "label": "查看",
-                "url": "/plat/:id",
+                "url": "/device/:id",
                 // "schemaApi": "get:/pages/plat/plat-view.json"
-                "schema": platView
+                "schema": deviceView
             },
             {
                 "label": "修改",

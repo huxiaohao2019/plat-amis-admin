@@ -33,7 +33,7 @@ const deviceList = {
       "submitText": "",
       "controls": [{
         "type": "text",
-        "name": "keywords",
+        "name": "name,info,id",
         "placeholder": "通过关键字搜索2",
         "addOn": {
           "label": "搜索",
@@ -110,7 +110,7 @@ const deviceList = {
           "label": "查看",
           "level": "primary",
           "actionType": "link",
-          "link": "/plat/${id}"
+          "link": "/device/${id}"
         },
         {
           "type": "button",
