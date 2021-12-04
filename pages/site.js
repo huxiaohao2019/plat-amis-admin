@@ -1,3 +1,4 @@
+import deviceList from "./device/device-list";
 import platList from "./plat/plat-list";
 import platView from "./plat/plat-view";
 import vendorList from "./vendor/vendor-list";
@@ -188,6 +189,33 @@ const pages = [{
                 "url": "/vender/add",
                 "icon": "fa fa-plus",
                 "schemaApi": "get:/pages/vendor/vendor-add.json"
+            },
+
+            {
+                "label": "查看",
+                "url": "/plat/:id",
+                // "schemaApi": "get:/pages/plat/plat-view.json"
+                "schema": platView
+            },
+            {
+                "label": "修改",
+                "url": "/crud/:id/edit",
+                "schemaApi": "get:/pages/crud-edit.json"
+            }
+            ]
+        },
+
+
+        {
+            "label": "设备列表",
+            "url": "/device/list",
+            "icon": "fa fa-list",
+            "schema": deviceList,
+            children: [{
+                "label": "添加厂商",
+                "url": "/vender/add",
+                "icon": "fa fa-plus",
+                "schemaApi": "get:/pages/device/device-add.json"
             },
 
             {
