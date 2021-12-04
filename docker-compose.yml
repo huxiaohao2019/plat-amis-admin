@@ -1,11 +1,17 @@
 version: '3.7'
 
+networks:
+  hci-default-net:
+    external: true
+
 services:
   plat-amis-admin:
     image: node:lts-alpine
     container_name: plat-amis-admin
     volumes:
       - ./:/usr/src/app
+    networks:
+     - hci-default-net
     ports:
       - 3100:3100
     restart: always
