@@ -507,6 +507,170 @@
         }
     };
 
+    const platFormItems = [
+        {
+            "type": "text",
+            "name": "name",
+            "label": "名称",
+            "required": true
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "text",
+            "name": "category",
+            "label": "category",
+            "required": true
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "text",
+            "name": "type",
+            "label": "type"
+        },
+        {
+            "type": "input-kv",
+            "name": "tech",
+            "label": "技术参数"
+
+        },
+        {
+            "type": "divider"
+        },
+
+        {
+            "type": "input-kv",
+            "name": "tactics",
+            "label": "武器装备"
+
+        },
+        {
+            "type": "divider"
+        },
+        
+        {
+            "type": "input-kv",
+            "name": "profile",
+            "label": "简介"
+
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "text",
+            "name": "time",
+            "label": "生产日期1",
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "type": "text",
+            "name": "info",
+            "label": "备注",
+        }
+
+    ];
+
+    const platAddPage =
+    {
+      "type": "page",
+      "title": "新增平台",
+      "remark": null,
+      "toolbar": [
+        {
+          "type": "button",
+          "actionType": "link",
+          "link": "/deivce/list",
+          "label": "返回列表"
+        }
+      ],
+      "body": [
+        {
+          "title": "新增平台1",
+          "type": "form",
+          "redirect": "/plat/list",
+          "name": "sample-edit-form",
+          // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample",
+          "api": {
+            "method": "post",
+            "url": "/api/plat/0.1",
+            requestAdaptor: function (api) {
+              console.log("🚀 ~ api", api);
+              var newData = {
+                ...api.data
+              };
+              newData.time = Number(newData.time);
+              newData.category = Number(newData.category);
+              newData.type=Number(newData.type);
+              const payload= {
+                ...api,
+                data: {
+                  ...newData, // 获取暴露的 api 中的 data 变量
+                  
+                }
+              };
+              console.log("🚀 ~ payload", payload);
+              return payload;
+            }
+          },
+          "controls": platFormItems
+        }
+      ]
+    };
+
+    const platEdit =
+    {
+      "type": "page",
+      "title": "修改 ${params.id}",
+      "remark": null,
+      "toolbar": [
+        {
+          "type": "button",
+          "actionType": "link",
+          "link": "/plat/list",
+          "label": "返回列表"
+        }
+      ],
+      "body": [
+        {
+          "type": "form",
+          "initApi": "/api/plat/0.1/${params.id}",
+          // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id",
+          "api": {
+            "method": "PUT",
+            "url":"/api/plat/0.1/${params.id}",
+            requestAdaptor: function (api) {
+              console.log("🚀 ~ api", api);
+              var newData = {
+                ...api.data
+              };
+              newData.produce_time = Number(newData.produce_time);
+              newData.type=Number(newData.type);
+              const payload= {
+                ...api,
+                data: {
+                  ...newData, // 获取暴露的 api 中的 data 变量
+                  
+                }
+              };
+              console.log("🚀 ~ payload", payload);
+              return payload;
+            }
+          },
+          "redirect": "/plat/list",
+          "controls": platFormItems
+        }
+      ]
+    };
+
     const platList2={
         "type": "page",
         "title": "平台列表",
@@ -626,7 +790,7 @@
                     "label": "修改",
                     "level": "info",
                     "actionType": "link",
-                    "link": "/crud/url/${id}/edit"
+                    "link": "/plat/${id}/edit"
                   },
                   {
                     "type": "button",
@@ -1017,7 +1181,8 @@
                     "label": "添加平台",
                     "url": "/plat/add",
                     "icon": "fa fa-plus",
-                    "schemaApi": "get:/pages/plat/plat-add.json"
+                    // "schemaApi": "get:/pages/plat/plat-add.json"
+                    "schema":platAddPage
                 },
 
                 {
@@ -1028,8 +1193,8 @@
                 },
                 {
                     "label": "修改",
-                    "url": "/crud/:id/edit",
-                    "schemaApi": "get:/pages/crud-edit.json"
+                    "url": "/plat/:id/edit",
+                    "schema": platEdit
                 }
                 ]
             },

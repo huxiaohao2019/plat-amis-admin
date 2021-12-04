@@ -2,6 +2,8 @@ import deviceAddPage from "./device/device-add";
 import deviceEdit from "./device/device-edit";
 import deviceList from "./device/device-list";
 import deviceView from "./device/device-view";
+import platAddPage from "./plat/plat-add";
+import platEdit from "./plat/plat-edit";
 import platList from "./plat/plat-list";
 import platView from "./plat/plat-view";
 import vendorAddPage from "./vendor/vendor-add";
@@ -168,7 +170,8 @@ const pages = [{
                 "label": "添加平台",
                 "url": "/plat/add",
                 "icon": "fa fa-plus",
-                "schemaApi": "get:/pages/plat/plat-add.json"
+                // "schemaApi": "get:/pages/plat/plat-add.json"
+                "schema":platAddPage
             },
 
             {
@@ -179,8 +182,8 @@ const pages = [{
             },
             {
                 "label": "修改",
-                "url": "/crud/:id/edit",
-                "schemaApi": "get:/pages/crud-edit.json"
+                "url": "/plat/:id/edit",
+                "schema": platEdit
             }
             ]
         },

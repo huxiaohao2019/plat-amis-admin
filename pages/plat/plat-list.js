@@ -119,7 +119,7 @@ const platList2={
                 "label": "修改",
                 "level": "info",
                 "actionType": "link",
-                "link": "/crud/url/${id}/edit"
+                "link": "/plat/${id}/edit"
               },
               {
                 "type": "button",
