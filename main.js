@@ -1,7 +1,7 @@
 import pages from "./pages/site";
 const app = {
   type: 'app',
-  brandName: '武器平台',
+  brandName: '信息平台',
   logo: '/public/logo.png',
   header: {
     type: 'tpl',

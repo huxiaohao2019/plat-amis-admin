@@ -1,3 +1,4 @@
+import kvFlags from '../tools/kv-flags'
 const requestAdaptor = function (api) {
     console.log("🚀 ~ file: index.html ~ line 48 ~ api", api)
     var query = api.query;
@@ -36,8 +37,16 @@ const listResponseAdapter = function (payload, response) {
     return amisList;
 }
 
-function objToKvList(obj){
-    
+function objToKvList(obj) {
+    let list = []
+    for (let key in obj) {
+        let item = {
+            key,
+            value: obj[key]
+        }
+        list.push(item);
+    }
+    return list;
 }
 
 const platItemResponseAdapter = function (payload, response, api) {
@@ -46,12 +55,32 @@ const platItemResponseAdapter = function (payload, response, api) {
     console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload)
 
     var newItem = {
-        ...payload
+        ...payload,
+        _origin: payload
     }
-    
+
+    var kvContainerList = []
 
 
-    return payload;
+    kvFlags.platKvFlags.forEach(item => {
+        let flagKey = item['flagKey']
+        if (typeof payload[flagKey] == 'object') {
+            delete newItem[flagKey]
+            var kvItems = objToKvList(payload[flagKey]);
+            var kvContainer = { ...item, kvItems: kvItems }
+            kvContainerList.push(kvContainer);
+        }
+    })
+    newItem.kvContainerList = kvContainerList;
+    console.log("🚀 ~ platItemResponseAdapter ~ newItem", newItem)
+
+    var techKvList = objToKvList(payload['tech']);
+    newItem.techKvList = techKvList;
+    newItem.profileKvList = objToKvList(payload['profile']);
+    newItem.tacticsKvList = objToKvList(payload['tactics'])
+
+
+    return newItem;
 }
 
 
