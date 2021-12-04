@@ -15,7 +15,7 @@ const routes=require('./routes')
 
 app.set('port', process.env.PORT || 3100);
 app.use(logger('dev'));
-app.use(bodyParser.json()); // Parses json, multi-part (file), url-encoded
+// app.use(bodyParser.json()); // Parses json, multi-part (file), url-encoded
 
 app.use('/public', express.static('public'));
 app.use('/pages', express.static('pages'));

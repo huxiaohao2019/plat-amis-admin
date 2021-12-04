@@ -1,28 +1,26 @@
 import deviceFormItems from "./device-form-items";
 
-const deviceAddPage =
+const deviceEdit =
 {
   "type": "page",
-  "title": "新增",
+  "title": "修改 ${params.id}",
   "remark": null,
   "toolbar": [
     {
       "type": "button",
       "actionType": "link",
-      "link": "/deivce/list",
+      "link": "/device/list",
       "label": "返回列表"
     }
   ],
   "body": [
     {
-      "title": "新增设备1",
       "type": "form",
-      "redirect": "/device/list",
-      "name": "sample-edit-form",
-      // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample",
+      "initApi": "/api/device/0.1/${params.id}",
+      // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id",
       "api": {
-        "method": "post",
-        "url": "/api/device/0.1",
+        "method": "PUT",
+        "url":"/api/device/0.1/${params.id}",
         requestAdaptor: function (api) {
           console.log("🚀 ~ api", api)
           var newData = {
@@ -41,9 +39,10 @@ const deviceAddPage =
           return payload;
         }
       },
+      "redirect": "/vendor/list",
       "controls": deviceFormItems
     }
   ]
 }
 
-export default deviceAddPage;
+export default deviceEdit;

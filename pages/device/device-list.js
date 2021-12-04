@@ -117,7 +117,7 @@ const deviceList = {
           "label": "修改",
           "level": "info",
           "actionType": "link",
-          "link": "/crud/url/${id}/edit"
+          "link": "/device/${id}/edit"
         },
         {
           "type": "button",

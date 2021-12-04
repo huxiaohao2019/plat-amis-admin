@@ -112,7 +112,7 @@ const vendorList={
                 "label": "修改",
                 "level": "info",
                 "actionType": "link",
-                "link": "/crud/url/${id}/edit"
+                "link": "/vendor/${id}/edit"
               },
               {
                 "type": "button",
@@ -120,7 +120,7 @@ const vendorList={
                 "level": "danger",
                 "actionType": "ajax",
                 "confirmText": "您确认要删除?",
-                "api": "get:/api/url/destroy/${id}"
+                "api": "delete:/api/vendor/0.1/${id}"
               }
             ]
           }],

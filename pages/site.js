@@ -1,8 +1,11 @@
 import deviceAddPage from "./device/device-add";
+import deviceEdit from "./device/device-edit";
 import deviceList from "./device/device-list";
 import deviceView from "./device/device-view";
 import platList from "./plat/plat-list";
 import platView from "./plat/plat-view";
+import vendorAddPage from "./vendor/vendor-add";
+import vendorEdit from "./vendor/vendor-edit";
 import vendorList from "./vendor/vendor-list";
 import vendorView from "./vendor/vendor-view";
 
@@ -191,7 +194,7 @@ const pages = [{
                 "label": "添加厂商",
                 "url": "/vender/add",
                 "icon": "fa fa-plus",
-                "schemaApi": "get:/pages/vendor/vendor-add.json"
+                "schema":vendorAddPage
             },
 
             {
@@ -202,8 +205,8 @@ const pages = [{
             },
             {
                 "label": "修改",
-                "url": "/crud/:id/edit",
-                "schemaApi": "get:/pages/crud-edit.json"
+                "url": "/vendor/:id/edit",
+                "schema":vendorEdit
             }
             ]
         },
@@ -229,8 +232,8 @@ const pages = [{
             },
             {
                 "label": "修改",
-                "url": "/crud/:id/edit",
-                "schemaApi": "get:/pages/crud-edit.json"
+                "url": "/device/:id/edit",
+                "schema":deviceEdit
             }
             ]
         }
