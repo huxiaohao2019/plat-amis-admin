@@ -39,9 +39,9 @@ let operationItem = {
 }
 columns.push(operationItem)
 
-const platDeviceList = {
+const vendorDeviceList = {
     "type": "page",
-    "title": "平台->装备列表",
+    "title": "厂商->装备列表",
     "remark": null,
     "name": "page-demo",
     "body": [{
@@ -55,7 +55,7 @@ const platDeviceList = {
             
             method: 'get',
             // url: '/api/device/0.1',
-            url: '/api/device/0.1/plat-id/${params.id}',
+            url: '/api/device/0.1/vendor-id/${params.id}',
             // url: '/api/device/0.1/plat-id/4',
             // requestAdaptor: myutils.requestAdaptor,
             adaptor: myutils.listResponseAdapter
@@ -75,4 +75,4 @@ const platDeviceList = {
     }]
 }
 
-export default platDeviceList;
+export default vendorDeviceList;

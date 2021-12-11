@@ -331,9 +331,9 @@
         }
     ];
 
-    let columns$1 = deviceListItems.map(v => v);
+    let columns$2 = deviceListItems.map(v => v);
 
-    let operationItem$1= {
+    let operationItem$2= {
       "type": "operation",
       "label": "操作",
       "width": "",
@@ -366,7 +366,7 @@
       "placeholder": "-",
       "fixed": "right"
     };
-    columns$1.push(operationItem$1);
+    columns$2.push(operationItem$2);
 
 
     const deviceList = {
@@ -413,35 +413,9 @@
           }],
           "className": "m-b-sm"
         },
-        "bulkActions": [{
-            "label": "批量修改",
-            "type": "button",
-            "actionType": "dialog",
-            "level": "primary",
-            "dialog": {
-              "title": "批量编辑",
-              "name": "sample-bulk-edit",
-              "body": {
-                "type": "form",
-                "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/bulkUpdate2",
-                "controls": [{
-                  "type": "text",
-                  "name": "engine",
-                  "label": "Engine"
-                }]
-              }
-            }
-          },
-          {
-            "label": "批量删除",
-            "type": "button",
-            "level": "danger",
-            "actionType": "ajax",
-            "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$ids",
-            "confirmText": "确定要批量删除?"
-          }
+        "bulkActions": [
         ],
-        "columns": columns$1,
+        "columns": columns$2,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -771,9 +745,9 @@
       ]
     };
 
-    let columns = deviceListItems.map(v => v);
+    let columns$1 = deviceListItems.map(v => v);
 
-    let operationItem = {
+    let operationItem$1 = {
         "type": "operation",
         "label": "操作",
         "width": "",
@@ -806,7 +780,7 @@
         "placeholder": "-",
         "fixed": "right"
     };
-    columns.push(operationItem);
+    columns$1.push(operationItem$1);
 
     const platDeviceList = {
         "type": "page",
@@ -831,7 +805,7 @@
             },
 
         
-            "columns": columns,
+            "columns": columns$1,
             "affixHeader": true,
             "columnsTogglable": "auto",
             "placeholder": "暂无数据",
@@ -937,33 +911,8 @@
           }],
           "className": "m-b-sm"
         },
-        "bulkActions": [{
-            "label": "批量修改",
-            "type": "button",
-            "actionType": "dialog",
-            "level": "primary",
-            "dialog": {
-              "title": "批量编辑",
-              "name": "sample-bulk-edit",
-              "body": {
-                "type": "form",
-                "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/bulkUpdate2",
-                "controls": [{
-                  "type": "text",
-                  "name": "engine",
-                  "label": "Engine"
-                }]
-              }
-            }
-          },
-          {
-            "label": "批量删除",
-            "type": "button",
-            "level": "danger",
-            "actionType": "ajax",
-            "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$ids",
-            "confirmText": "确定要批量删除?"
-          }
+        "bulkActions": [
+         
         ],
         "columns": [{
             "name": "id",
@@ -1212,6 +1161,79 @@
       ]
     };
 
+    let columns = deviceListItems.map(v => v);
+
+    let operationItem = {
+        "type": "operation",
+        "label": "操作",
+        "width": "",
+        "buttons": [{
+            "type": "button-group",
+            "buttons": [{
+                    "type": "button",
+                    "label": "查看",
+                    "level": "primary",
+                    "actionType": "link",
+                    "link": "/device/${id}"
+                },
+                {
+                    "type": "button",
+                    "label": "修改",
+                    "level": "info",
+                    "actionType": "link",
+                    "link": "/device/${id}/edit"
+                },
+                {
+                    "type": "button",
+                    "label": "删除",
+                    "level": "danger",
+                    "actionType": "ajax",
+                    "confirmText": "您确认要删除?",
+                    "api": "get:/api/url/destroy/${id}"
+                }
+            ]
+        }],
+        "placeholder": "-",
+        "fixed": "right"
+    };
+    columns.push(operationItem);
+
+    const vendorDeviceList = {
+        "type": "page",
+        "title": "厂商->装备列表",
+        "remark": null,
+        "name": "page-demo",
+        "body": [{
+            "type": "crud",
+            "name": "sample",
+            "perPage": 100,
+            // "data": {
+            //   "page": 1
+            // },
+            api: {
+                
+                method: 'get',
+                // url: '/api/device/0.1',
+                url: '/api/device/0.1/vendor-id/${params.id}',
+                // url: '/api/device/0.1/plat-id/4',
+                // requestAdaptor: myutils.requestAdaptor,
+                adaptor: myutils.listResponseAdapter
+            },
+
+        
+            "columns": columns,
+            "affixHeader": true,
+            "columnsTogglable": "auto",
+            "placeholder": "暂无数据",
+            "tableClassName": "table-db table-striped",
+            "headerClassName": "crud-table-header",
+            "footerClassName": "crud-table-footer",
+            "toolbarClassName": "crud-table-toolbar",
+            "combineNum": 0,
+            "bodyClassName": "panel-default"
+        }]
+    };
+
     const vendorEdit =
     {
       "type": "page",
@@ -1288,33 +1310,7 @@
             }],
             "className": "m-b-sm"
           },
-          "bulkActions": [{
-              "label": "批量修改",
-              "type": "button",
-              "actionType": "dialog",
-              "level": "primary",
-              "dialog": {
-                "title": "批量编辑",
-                "name": "sample-bulk-edit",
-                "body": {
-                  "type": "form",
-                  "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/bulkUpdate2",
-                  "controls": [{
-                    "type": "text",
-                    "name": "engine",
-                    "label": "Engine"
-                  }]
-                }
-              }
-            },
-            {
-              "label": "批量删除",
-              "type": "button",
-              "level": "danger",
-              "actionType": "ajax",
-              "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$ids",
-              "confirmText": "确定要批量删除?"
-            }
+          "bulkActions": [
           ],
           "columns": [{
             "name": "id",
@@ -1332,6 +1328,14 @@
             "name": "country",
             "label": "国家(地区)",
             "sortable": true
+        },
+        {
+          "type": "link",
+          "href": "/#/vendor/${id}/device",
+          "label": "装备",
+          "name":"id",
+          "blank":false,
+          "body": "装备列表"
         },
 
             {
@@ -1409,159 +1413,163 @@
     };
 
     const pages = [{
-        "label": "Home",
-        "url": "/",
-        "redirect": "/index/1"
-    },
-    {
-        "label": "业务数据",
-        "children": [
-
-            // {
-            //     "label": "页面C",
-            //     "schema": {
-            //         "type": "page",
-            //         "title": "页面C",
-            //         "body": "页面C"
-            //     }
-            // },
-            // {
-            //     "label": "平台列表1",
-            //     "url": "/plat",
-            //     "schemaApi": "post:/scheme/plat/list"
-            // },
-            // {
-            //     "label": "平台列表",
-            //     "url": "/plat2",
-            //     "schemaApi": "get:/pages/crud-list.json"
-            // },
-            // {
-            //     "label": "测试页",
-            //     "url": "/testpage",
-            //     "schemaApi": "get:/pages/testpage.json"
-            // },
-            // {
-            //     "label": "平台详情",
-            //     "url": "plat-detail/:id",
-            //     "schemaApi": "get:/pages/plat/detail.json"
-            // },
-            {
-                "label": "平台列表",
-                "url": "/plat/list",
-                "icon": "fa fa-list",
-                "schema": platList2,
-                children: [{
-                    "label": "添加平台",
-                    "url": "/plat/add",
-                    "icon": "fa fa-plus",
-                    // "schemaApi": "get:/pages/plat/plat-add.json"
-                    "schema":platAddPage
-                },
-
-                {
-                    "label": "查看",
-                    "url": "/plat/:id",
-                    // "schemaApi": "get:/pages/plat/plat-view.json"
-                    "schema": platView
-                },
-                {
-                    "label": "修改",
-                    "url": "/plat/:id/edit",
-                    "schema": platEdit
-                },
-                {
-                    "label": "平台装备",
-                    "icon": "fa fa-plus",
-                    "url": "/plat/:id/device",
-                    "schema": platDeviceList
-                }
-                ]
-            },
-
-            {
-                "label": "厂商列表",
-                "url": "/vendor/list",
-                "icon": "fa fa-list",
-                "schema": vendorList,
-                children: [{
-                    "label": "添加厂商",
-                    "url": "/vender/add",
-                    "icon": "fa fa-plus",
-                    "schema":vendorAddPage
-                },
-
-                {
-                    "label": "查看",
-                    "url": "/vendor/:id",
-                    // "schemaApi": "get:/pages/plat/plat-view.json"
-                    "schema": vendorView
-                },
-                {
-                    "label": "修改",
-                    "url": "/vendor/:id/edit",
-                    "schema":vendorEdit
-                }
-                ]
-            },
-
-
-            {
-                "label": "设备列表",
-                "url": "/device/list",
-                "icon": "fa fa-list",
-                "schema": deviceList,
-                children: [{
-                    "label": "添加设备",
-                    "url": "/device/add",
-                    "icon": "fa fa-plus",
-                    "schema":deviceAddPage
-                },
-
-                {
-                    "label": "查看",
-                    "url": "/device/:id",
-                    // "schemaApi": "get:/pages/plat/plat-view.json"
-                    "schema": deviceView
-                },
-                {
-                    "label": "修改",
-                    "url": "/device/:id/edit",
-                    "schema":deviceEdit
-                },
-                {
-                    "label": "平台",
-                    "url": "/device/:id/plat",
-                    "schema":devicePlatList
-                }
-                ]
-            }
-            // ,exam
-        ]
-    },
-    {
-        "label": "分组2",
-        "children": [{
-            "label": "用户管理",
-            "schema": {
-                "type": "page",
-                "title": "用户管理",
-                "body": "页面C"
-            }
+            "label": "Home",
+            "url": "/",
+            "redirect": "/index/1"
         },
         {
-            "label": "外部链接",
-            "link": "http://baidu.gitee.io/amis"
+            "label": "业务数据",
+            "children": [
+
+                // {
+                //     "label": "页面C",
+                //     "schema": {
+                //         "type": "page",
+                //         "title": "页面C",
+                //         "body": "页面C"
+                //     }
+                // },
+                // {
+                //     "label": "平台列表1",
+                //     "url": "/plat",
+                //     "schemaApi": "post:/scheme/plat/list"
+                // },
+                // {
+                //     "label": "平台列表",
+                //     "url": "/plat2",
+                //     "schemaApi": "get:/pages/crud-list.json"
+                // },
+                // {
+                //     "label": "测试页",
+                //     "url": "/testpage",
+                //     "schemaApi": "get:/pages/testpage.json"
+                // },
+                // {
+                //     "label": "平台详情",
+                //     "url": "plat-detail/:id",
+                //     "schemaApi": "get:/pages/plat/detail.json"
+                // },
+                {
+                    "label": "平台列表",
+                    "url": "/plat/list",
+                    "icon": "fa fa-list",
+                    "schema": platList2,
+                    children: [{
+                            "label": "添加平台",
+                            "url": "/plat/add",
+                            "icon": "fa fa-plus",
+                            // "schemaApi": "get:/pages/plat/plat-add.json"
+                            "schema": platAddPage
+                        },
+
+                        {
+                            "label": "查看",
+                            "url": "/plat/:id",
+                            // "schemaApi": "get:/pages/plat/plat-view.json"
+                            "schema": platView
+                        },
+                        {
+                            "label": "修改",
+                            "url": "/plat/:id/edit",
+                            "schema": platEdit
+                        },
+                        {
+                            "label": "平台装备",
+                            "icon": "fa fa-plus",
+                            "url": "/plat/:id/device",
+                            "schema": platDeviceList
+                        }
+                    ]
+                },
+
+                {
+                    "label": "厂商列表",
+                    "url": "/vendor/list",
+                    "icon": "fa fa-list",
+                    "schema": vendorList,
+                    children: [{
+                            "label": "添加厂商",
+                            "url": "/vender/add",
+                            "icon": "fa fa-plus",
+                            "schema": vendorAddPage
+                        },
+
+                        {
+                            "label": "查看",
+                            "url": "/vendor/:id",
+                            // "schemaApi": "get:/pages/plat/plat-view.json"
+                            "schema": vendorView
+                        },
+                        {
+                            "label": "修改",
+                            "url": "/vendor/:id/edit",
+                            "schema": vendorEdit
+                        }, {
+                            "label": "设备列表",
+                            "url": "/vendor/:id/device",
+                            "schema": vendorDeviceList
+                        }
+                    ]
+                },
+
+
+                {
+                    "label": "设备列表",
+                    "url": "/device/list",
+                    "icon": "fa fa-list",
+                    "schema": deviceList,
+                    children: [{
+                            "label": "添加设备",
+                            "url": "/device/add",
+                            "icon": "fa fa-plus",
+                            "schema": deviceAddPage
+                        },
+
+                        {
+                            "label": "查看",
+                            "url": "/device/:id",
+                            // "schemaApi": "get:/pages/plat/plat-view.json"
+                            "schema": deviceView
+                        },
+                        {
+                            "label": "修改",
+                            "url": "/device/:id/edit",
+                            "schema": deviceEdit
+                        },
+                        {
+                            "label": "平台",
+                            "url": "/device/:id/plat",
+                            "schema": devicePlatList
+                        }
+                    ]
+                }
+                // ,exam
+            ]
         },
         {
-            "label": "部门管理",
-            "schemaApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/service/form?tpl=tpl3"
-        },
-        {
-            "label": "jsonp 返回示例",
-            "schemaApi": "jsonp:/pages/jsonp.js?callback=jsonpCallback"
+            "label": "分组2",
+            "children": [{
+                    "label": "用户管理",
+                    "schema": {
+                        "type": "page",
+                        "title": "用户管理",
+                        "body": "页面C"
+                    }
+                },
+                {
+                    "label": "外部链接",
+                    "link": "http://baidu.gitee.io/amis"
+                },
+                {
+                    "label": "部门管理",
+                    "schemaApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/service/form?tpl=tpl3"
+                },
+                {
+                    "label": "jsonp 返回示例",
+                    "schemaApi": "jsonp:/pages/jsonp.js?callback=jsonpCallback"
+                }
+            ]
         }
-        ]
-    }
     ];
 
     const app = {

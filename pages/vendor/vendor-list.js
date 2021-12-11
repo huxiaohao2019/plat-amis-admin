@@ -48,33 +48,7 @@ const vendorList={
         }],
         "className": "m-b-sm"
       },
-      "bulkActions": [{
-          "label": "批量修改",
-          "type": "button",
-          "actionType": "dialog",
-          "level": "primary",
-          "dialog": {
-            "title": "批量编辑",
-            "name": "sample-bulk-edit",
-            "body": {
-              "type": "form",
-              "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/bulkUpdate2",
-              "controls": [{
-                "type": "text",
-                "name": "engine",
-                "label": "Engine"
-              }]
-            }
-          }
-        },
-        {
-          "label": "批量删除",
-          "type": "button",
-          "level": "danger",
-          "actionType": "ajax",
-          "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$ids",
-          "confirmText": "确定要批量删除?"
-        }
+      "bulkActions": [
       ],
       "columns": [{
         "name": "id",
@@ -92,6 +66,14 @@ const vendorList={
         "name": "country",
         "label": "国家(地区)",
         "sortable": true
+    },
+    {
+      "type": "link",
+      "href": "/#/vendor/${id}/device",
+      "label": "装备",
+      "name":"id",
+      "blank":false,
+      "body": "装备列表"
     },
 
         {
