@@ -41,7 +41,7 @@ columns.push(operationItem)
 
 const platDeviceList = {
     "type": "page",
-    "title": "平台装备列表",
+    "title": "平台->装备列表",
     "remark": null,
     "name": "page-demo",
     "body": [{

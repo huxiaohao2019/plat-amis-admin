@@ -3,7 +3,7 @@ import platListItems from "../plat/plat-list-item";
 
 const devicePlatList = {
   "type": "page",
-  "title": "设备平台列表",
+  "title": "装备->平台列表",
   "remark": null,
   "name": "page-demo",
   // "toolbar": [{
@@ -15,7 +15,7 @@ const devicePlatList = {
   // }],
   "body": [
       {
-          
+
       },
       {
     "type": "crud",

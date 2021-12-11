@@ -527,7 +527,7 @@
 
     const devicePlatList = {
       "type": "page",
-      "title": "设备平台列表",
+      "title": "装备->平台列表",
       "remark": null,
       "name": "page-demo",
       // "toolbar": [{
@@ -539,7 +539,7 @@
       // }],
       "body": [
           {
-              
+
           },
           {
         "type": "crud",
@@ -810,7 +810,7 @@
 
     const platDeviceList = {
         "type": "page",
-        "title": "平台装备列表",
+        "title": "平台->装备列表",
         "remark": null,
         "name": "page-demo",
         "body": [{
