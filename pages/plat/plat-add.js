@@ -9,13 +9,13 @@ const platAddPage =
     {
       "type": "button",
       "actionType": "link",
-      "link": "/deivce/list",
+      "link": "/plat/list",
       "label": "返回列表"
     }
   ],
   "body": [
     {
-      "title": "新增平台1",
+      "title": "新增平台",
       "type": "form",
       "redirect": "/plat/list",
       "name": "sample-edit-form",

@@ -9,7 +9,7 @@ const vendorAddPage =
     {
       "type": "button",
       "actionType": "link",
-      "link": "/deivce/list",
+      "link": "/vendor/list",
       "label": "返回列表"
     }
   ],

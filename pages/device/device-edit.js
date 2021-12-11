@@ -39,7 +39,7 @@ const deviceEdit =
           return payload;
         }
       },
-      "redirect": "/vendor/list",
+      "redirect": "/device/list",
       "controls": deviceFormItems
     }
   ]

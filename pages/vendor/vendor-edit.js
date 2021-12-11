@@ -9,7 +9,7 @@ const vendorEdit =
     {
       "type": "button",
       "actionType": "link",
-      "link": "/crud/list",
+      "link": "/vendor/list",
       "label": "返回列表"
     }
   ],

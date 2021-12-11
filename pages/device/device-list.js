@@ -2,7 +2,7 @@ import myutils from '../../tools/myutils'
 
 const deviceList = {
   "type": "page",
-  "title": "厂商列表",
+  "title": "装备列表",
   "remark": null,
   "name": "page-demo",
   // "toolbar": [{

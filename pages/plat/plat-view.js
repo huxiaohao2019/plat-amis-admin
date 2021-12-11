@@ -22,7 +22,7 @@ let platView = {
         "type": "button",
         "actionType": "link",
         "link": "/plat/list?page=$page",
-        "label": "返回列表2"
+        "label": "返回列表"
     }],
     "body": {
         "type": "panel",
@@ -31,6 +31,26 @@ let platView = {
                 "type": "container",
                 "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${country}</div>"
             },
+            {
+                "type": "page",
+                "data": {
+                  "html": "<a target='_blank' href='http://www.baidu.com'>baidu</a>"
+                },
+                "body": {
+                  "type": "tpl",
+                  "tpl": "ddd ${html|raw}"
+                }
+              },
+            {
+                "type": "page",
+                "data": {
+                  "html": "<div>这是一段<a href='http://192.168.18.100:3100/#/plat/list?page=1'>html</a></div>"
+                },
+                "body": {
+                  "type": "tpl",
+                  "tpl": "html is: ${html|raw}"
+                }
+              },
             {
                 "type": "page",
                 "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>简况</span></div>"
@@ -48,7 +68,7 @@ let platView = {
             },
             {
                 "type": "page",
-                "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>2.<span class='test1'>基本性能参数</span></div>"
+                "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>2.<span class='test1'>基本性能参数2</span></div>"
             },
             {
                 "type": "page",

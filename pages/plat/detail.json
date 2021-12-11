@@ -9,6 +9,16 @@
                 "data":"${profile}"
             },
             {
+                "type": "page",
+                "data": {
+                  "html": "<div>这是一段<code>html</code></div>"
+                },
+                "body": {
+                  "type": "tpl",
+                  "tpl": "html is: ${html|raw}"
+                }
+              },
+            {
                 "type": "container",
                 "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
             },
