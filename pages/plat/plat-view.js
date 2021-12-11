@@ -20,9 +20,11 @@ let platView = {
     },
     "toolbar": [{
         "type": "button",
-        "actionType": "link",
-        "link": "/plat/list?page=$page",
-        "label": "返回列表"
+        "actionType": "button",
+        "label": "返回列表",
+        onClick: () => {
+            window.history.back();
+        }
     }],
     "body": {
         "type": "panel",
@@ -61,8 +63,8 @@ let platView = {
                     }
                 ]
             },
-            
-           
+
+
             {
                 "type": "page",
                 "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>简况</span></div>"

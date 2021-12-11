@@ -44,95 +44,89 @@
 
     ];
 
-    const deviceAddPage =
-    {
+    const deviceAddPage = {
       "type": "page",
       "title": "新增",
       "remark": null,
-      "toolbar": [
-        {
-          "type": "button",
-          "actionType": "link",
-          "link": "/deivce/list",
-          "label": "返回列表"
+      "toolbar": [{
+        "type": "button",
+        "actionType": "button",
+        "label": "返回列表",
+        onClick: () => {
+          window.history.back();
         }
-      ],
-      "body": [
-        {
-          "title": "新增设备1",
-          "type": "form",
-          "redirect": "/device/list",
-          "name": "sample-edit-form",
-          // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample",
-          "api": {
-            "method": "post",
-            "url": "/api/device/0.1",
-            requestAdaptor: function (api) {
-              console.log("🚀 ~ api", api);
-              var newData = {
-                ...api.data
-              };
-              newData.produce_time = Number(newData.produce_time);
-              newData.type=Number(newData.type);
-              const payload= {
-                ...api,
-                data: {
-                  ...newData, // 获取暴露的 api 中的 data 变量
-                  
-                }
-              };
-              console.log("🚀 ~ payload", payload);
-              return payload;
-            }
-          },
-          "controls": deviceFormItems
-        }
-      ]
+      }],
+      "body": [{
+        "title": "新增设备1",
+        "type": "form",
+        "redirect": "/device/list",
+        "name": "sample-edit-form",
+        // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample",
+        "api": {
+          "method": "post",
+          "url": "/api/device/0.1",
+          requestAdaptor: function (api) {
+            console.log("🚀 ~ api", api);
+            var newData = {
+              ...api.data
+            };
+            newData.produce_time = Number(newData.produce_time);
+            newData.type = Number(newData.type);
+            const payload = {
+              ...api,
+              data: {
+                ...newData, // 获取暴露的 api 中的 data 变量
+
+              }
+            };
+            console.log("🚀 ~ payload", payload);
+            return payload;
+          }
+        },
+        "controls": deviceFormItems
+      }]
     };
 
-    const deviceEdit =
-    {
+    const deviceEdit = {
       "type": "page",
       "title": "修改 ${params.id}",
       "remark": null,
-      "toolbar": [
-        {
-          "type": "button",
-          "actionType": "link",
-          "link": "/device/list",
-          "label": "返回列表"
+      "toolbar": [{
+        "type": "button",
+        "actionType": "button",
+        "label": "返回列表",
+        onClick: () => {
+          window.history.back();
         }
-      ],
-      "body": [
-        {
-          "type": "form",
-          "initApi": "/api/device/0.1/${params.id}",
-          // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id",
-          "api": {
-            "method": "PUT",
-            "url":"/api/device/0.1/${params.id}",
-            requestAdaptor: function (api) {
-              console.log("🚀 ~ api", api);
-              var newData = {
-                ...api.data
-              };
-              newData.produce_time = Number(newData.produce_time);
-              newData.type=Number(newData.type);
-              const payload= {
-                ...api,
-                data: {
-                  ...newData, // 获取暴露的 api 中的 data 变量
-                  
-                }
-              };
-              console.log("🚀 ~ payload", payload);
-              return payload;
-            }
-          },
-          "redirect": "/device/list",
-          "controls": deviceFormItems
-        }
-      ]
+      }],
+      "body": [{
+        "type": "form",
+        "initApi": "/api/device/0.1/${params.id}",
+        // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id",
+        "api": {
+          "method": "PUT",
+          "url": "/api/device/0.1/${params.id}",
+          requestAdaptor: function (api) {
+            console.log("🚀 ~ api", api);
+            var newData = {
+              ...api.data
+            };
+            newData.produce_time = Number(newData.produce_time);
+            newData.type = Number(newData.type);
+            const payload = {
+              ...api,
+              data: {
+                ...newData, // 获取暴露的 api 中的 data 变量
+
+              }
+            };
+            console.log("🚀 ~ payload", payload);
+            return payload;
+          }
+        },
+        "redirect": "/device/list",
+        "controls": deviceFormItems
+      }]
     };
 
     const platKvFlags = [
@@ -559,18 +553,14 @@
         "toolbar": [{
             "type": "button",
             "actionType": "button",
-            // "link": "/device/list",
             "label": "返回列表",
             onClick: () => {
-                // console.log(window.location);
                 window.history.back();
-                // amisLib.toast.info('消息通知');
-              }
+            }
         }],
         "body": {
             "type": "panel",
-            "body": [
-                {
+            "body": [{
                     "type": "container",
                     "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${country}</div>"
                 },
@@ -706,9 +696,11 @@
       "toolbar": [
         {
           "type": "button",
-          "actionType": "link",
-          "link": "/plat/list",
-          "label": "返回列表"
+            "actionType": "button",
+            "label": "返回列表",
+            onClick: () => {
+                window.history.back();
+            }
         }
       ],
       "body": [
@@ -826,9 +818,11 @@
       "toolbar": [
         {
           "type": "button",
-          "actionType": "link",
-          "link": "/plat/list",
-          "label": "返回列表"
+          "actionType": "button",
+          "label": "返回列表",
+          onClick: () => {
+              window.history.back();
+          }
         }
       ],
       "body": [
@@ -1018,9 +1012,11 @@
         },
         "toolbar": [{
             "type": "button",
-            "actionType": "link",
-            "link": "/plat/list?page=$page",
-            "label": "返回列表"
+            "actionType": "button",
+            "label": "返回列表",
+            onClick: () => {
+                window.history.back();
+            }
         }],
         "body": {
             "type": "panel",
@@ -1059,8 +1055,8 @@
                         }
                     ]
                 },
-                
-               
+
+
                 {
                     "type": "page",
                     "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>简况</span></div>"
@@ -1140,9 +1136,11 @@
       "toolbar": [
         {
           "type": "button",
-          "actionType": "link",
-          "link": "/vendor/list",
-          "label": "返回列表"
+          "actionType": "button",
+          "label": "返回列表",
+          onClick: () => {
+              window.history.back();
+          }
         }
       ],
       "body": [
@@ -1242,9 +1240,11 @@
       "toolbar": [
         {
           "type": "button",
-          "actionType": "link",
-          "link": "/vendor/list",
-          "label": "返回列表"
+          "actionType": "button",
+          "label": "返回列表",
+          onClick: () => {
+              window.history.back();
+          }
         }
       ],
       "body": [

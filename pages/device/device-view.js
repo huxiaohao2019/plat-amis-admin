@@ -25,18 +25,14 @@ let deviceView = {
     "toolbar": [{
         "type": "button",
         "actionType": "button",
-        // "link": "/device/list",
         "label": "返回列表",
         onClick: () => {
-            // console.log(window.location);
             window.history.back();
-            // amisLib.toast.info('消息通知');
-          }
+        }
     }],
     "body": {
         "type": "panel",
-        "body": [
-            {
+        "body": [{
                 "type": "container",
                 "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${country}</div>"
             },

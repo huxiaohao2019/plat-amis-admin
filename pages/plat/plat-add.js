@@ -8,9 +8,11 @@ const platAddPage =
   "toolbar": [
     {
       "type": "button",
-      "actionType": "link",
-      "link": "/plat/list",
-      "label": "返回列表"
+        "actionType": "button",
+        "label": "返回列表",
+        onClick: () => {
+            window.history.back();
+        }
     }
   ],
   "body": [

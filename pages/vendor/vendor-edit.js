@@ -8,9 +8,11 @@ const vendorEdit =
   "toolbar": [
     {
       "type": "button",
-      "actionType": "link",
-      "link": "/vendor/list",
-      "label": "返回列表"
+      "actionType": "button",
+      "label": "返回列表",
+      onClick: () => {
+          window.history.back();
+      }
     }
   ],
   "body": [
