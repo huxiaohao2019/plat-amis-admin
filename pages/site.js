@@ -1,6 +1,7 @@
 import deviceAddPage from "./device/device-add";
 import deviceEdit from "./device/device-edit";
 import deviceList from "./device/device-list";
+import devicePlatList from "./device/device-plats";
 import deviceView from "./device/device-view";
 import platAddPage from "./plat/plat-add";
 import platDeviceList from "./plat/plat-devices";
@@ -244,6 +245,11 @@ const pages = [{
                 "label": "修改",
                 "url": "/device/:id/edit",
                 "schema":deviceEdit
+            },
+            {
+                "label": "平台",
+                "url": "/device/:id/plat",
+                "schema":devicePlatList
             }
             ]
         }

@@ -10,6 +10,14 @@ var deviceListItems = [{
         "sortable": true
     },
     {
+        "type": "link",
+        "href": "/#/device/${id}/plat",
+        "label": "平台",
+        "name":"id",
+        "blank":false,
+        "body": "平台列表"
+      },
+    {
         "name": "info",
         "label": "备注",
         "sortable": true

@@ -306,6 +306,14 @@
             "sortable": true
         },
         {
+            "type": "link",
+            "href": "/#/device/${id}/plat",
+            "label": "平台",
+            "name":"id",
+            "blank":false,
+            "body": "平台列表"
+          },
+        {
             "name": "info",
             "label": "备注",
             "sortable": true
@@ -434,6 +442,124 @@
           }
         ],
         "columns": columns$1,
+        "affixHeader": true,
+        "columnsTogglable": "auto",
+        "placeholder": "暂无数据",
+        "tableClassName": "table-db table-striped",
+        "headerClassName": "crud-table-header",
+        "footerClassName": "crud-table-footer",
+        "toolbarClassName": "crud-table-toolbar",
+        "combineNum": 0,
+        "bodyClassName": "panel-default"
+      }]
+    };
+
+    let platListItems=[{
+        "name": "id",
+        "label": "ID",
+        "width": 20,
+        "sortable": true
+      },
+      {
+        "name": "name",
+        "label": "名称",
+        "sortable": true
+      },
+      {
+        "name": "time",
+        "type":"tpl",
+        "label": "time",
+        "tpl": "${time|date:LLL:x}"
+       
+      },
+      {
+        "type": "link",
+        "href": "/#/plat/${id}/device",
+        "label": "装备",
+        "name":"id",
+        "blank":false,
+        "body": "装备列表"
+      },
+      {
+        name: 'type',
+        label: 'type'
+      },
+      {
+        "name": "country",
+        "label": "国家(地区)",
+        "sortable": true
+      },
+
+      {
+        "type": "operation",
+        "label": "操作",
+        "width": "",
+        "buttons": [{
+          "type": "button-group",
+          "buttons": [{
+              "type": "button",
+              "label": "查看",
+              "level": "primary",
+              "actionType": "link",
+              "link": "/plat/${id}"
+            },
+            {
+              "type": "button",
+              "label": "修改",
+              "level": "info",
+              "actionType": "link",
+              "link": "/plat/${id}/edit"
+            },
+            {
+              "type": "button",
+              "label": "删除",
+              "level": "danger",
+              "actionType": "ajax",
+              "confirmText": "您确认要删除?",
+              "api": "get:/api/url/destroy/${id}"
+            }
+          ]
+        }],
+        "placeholder": "-",
+        "fixed": "right"
+      }
+    ];
+
+    const devicePlatList = {
+      "type": "page",
+      "title": "设备平台列表",
+      "remark": null,
+      "name": "page-demo",
+      // "toolbar": [{
+      //   "type": "button",
+      //   "actionType": "link",
+      //   "link": "/crud/url/url-add",
+      //   "label": "新增",
+      //   "primary": true
+      // }],
+      "body": [
+          {
+              
+          },
+          {
+        "type": "crud",
+        "name": "sample",
+        "perPage": 10,
+        "data": {
+          "page": 1
+        },
+        // "api": {
+        //   "method": "get",
+        //   "url": "/api/app?limit=${page}"
+        // },
+        api: {
+          method: 'get',
+          url: '/api/plat/0.1/device-id/${params.id}',
+        //   requestAdaptor: myutils.requestAdaptor,
+          adaptor: myutils.listResponseAdapter
+        },
+
+        "columns":platListItems,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -1401,6 +1527,11 @@
                     "label": "修改",
                     "url": "/device/:id/edit",
                     "schema":deviceEdit
+                },
+                {
+                    "label": "平台",
+                    "url": "/device/:id/plat",
+                    "schema":devicePlatList
                 }
                 ]
             }
