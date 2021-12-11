@@ -26,31 +26,43 @@ let platView = {
     }],
     "body": {
         "type": "panel",
-        "body": [
-            {
+        "body": [{
                 "type": "container",
-                "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${country}</div>"
+                "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
             },
             {
                 "type": "page",
                 "data": {
-                  "html": "<a target='_blank' href='http://www.baidu.com'>baidu</a>"
+                    "html": "<img src=${imgSrc}>"
                 },
                 "body": {
-                  "type": "tpl",
-                  "tpl": "ddd ${html|raw}"
+                    "type": "tpl",
+                    //   "tpl": "${html|raw}"
+                    "tpl": "<div style='text-align:center'><img width='320' src=${imgSrc}></div>"
                 }
-              },
+            },
             {
                 "type": "page",
-                "data": {
-                  "html": "<div>这是一段<a href='http://192.168.18.100:3100/#/plat/list?page=1'>html</a></div>"
-                },
-                "body": {
-                  "type": "tpl",
-                  "tpl": "html is: ${html|raw}"
-                }
-              },
+                "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>通用属性表</span></div>"
+            },
+            {
+                "type": "property",
+                "items": [{
+                        "label": "国家/地区",
+                        "content": "${country}"
+                    },
+                    {
+                        "label": "category",
+                        "content": "${category}"
+                    },
+                    {
+                        "label": "time",
+                        "content": "${time|date:LLL:x}"
+                    }
+                ]
+            },
+            
+           
             {
                 "type": "page",
                 "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>简况</span></div>"

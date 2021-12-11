@@ -258,6 +258,10 @@
             _origin: payload
         };
 
+        if(payload.img && payload.img.file_data){
+            newItem.imgSrc='data:image/jpeg;base64,'+payload.img.file_data;
+        }
+
         var kvContainerList = [];
 
 
@@ -289,6 +293,73 @@
         listResponseAdapter,
         platItemResponseAdapter
     };
+
+    var deviceListItems = [{
+            "name": "id",
+            "label": "ID",
+            "width": 20,
+            "sortable": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "sortable": true
+        },
+        {
+            "name": "info",
+            "label": "备注",
+            "sortable": true
+        },
+        {
+            "name": "type",
+            "label": "类型",
+            "sortable": true
+        },
+        {
+            "name": "produce_time",
+            "label": "生产日期",
+            "type":"tpl",
+            "tpl": "${produce_time|date:LLL:x}"
+        }
+    ];
+
+    let columns$1 = deviceListItems.map(v => v);
+
+    let operationItem$1= {
+      "type": "operation",
+      "label": "操作",
+      "width": "",
+      "buttons": [{
+        "type": "button-group",
+        "buttons": [{
+            "type": "button",
+            "label": "查看",
+            "level": "primary",
+            "actionType": "link",
+            "link": "/device/${id}"
+          },
+          {
+            "type": "button",
+            "label": "修改",
+            "level": "info",
+            "actionType": "link",
+            "link": "/device/${id}/edit"
+          },
+          {
+            "type": "button",
+            "label": "删除",
+            "level": "danger",
+            "actionType": "ajax",
+            "confirmText": "您确认要删除?",
+            "api": "get:/api/url/destroy/${id}"
+          }
+        ]
+      }],
+      "placeholder": "-",
+      "fixed": "right"
+    };
+    columns$1.push(operationItem$1);
+
 
     const deviceList = {
       "type": "page",
@@ -335,94 +406,34 @@
           "className": "m-b-sm"
         },
         "bulkActions": [{
-          "label": "批量修改",
-          "type": "button",
-          "actionType": "dialog",
-          "level": "primary",
-          "dialog": {
-            "title": "批量编辑",
-            "name": "sample-bulk-edit",
-            "body": {
-              "type": "form",
-              "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/bulkUpdate2",
-              "controls": [{
-                "type": "text",
-                "name": "engine",
-                "label": "Engine"
-              }]
+            "label": "批量修改",
+            "type": "button",
+            "actionType": "dialog",
+            "level": "primary",
+            "dialog": {
+              "title": "批量编辑",
+              "name": "sample-bulk-edit",
+              "body": {
+                "type": "form",
+                "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/bulkUpdate2",
+                "controls": [{
+                  "type": "text",
+                  "name": "engine",
+                  "label": "Engine"
+                }]
+              }
             }
+          },
+          {
+            "label": "批量删除",
+            "type": "button",
+            "level": "danger",
+            "actionType": "ajax",
+            "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$ids",
+            "confirmText": "确定要批量删除?"
           }
-        },
-        {
-          "label": "批量删除",
-          "type": "button",
-          "level": "danger",
-          "actionType": "ajax",
-          "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$ids",
-          "confirmText": "确定要批量删除?"
-        }
         ],
-        "columns": [{
-          "name": "id",
-          "label": "ID",
-          "width": 20,
-          "sortable": true
-        },
-        {
-          "name": "name",
-          "label": "名称",
-          "sortable": true
-        },
-        {
-          "name": "info",
-          "label": "备注",
-          "sortable": true
-        },
-        {
-          "name": "type",
-          "label": "类型",
-          "sortable": true
-        },
-        {
-          "name": "produce_time",
-          "label": "生产日期",
-          "sortable": true
-        },
-
-        {
-          "type": "operation",
-          "label": "操作",
-          "width": "",
-          "buttons": [{
-            "type": "button-group",
-            "buttons": [{
-              "type": "button",
-              "label": "查看",
-              "level": "primary",
-              "actionType": "link",
-              "link": "/device/${id}"
-            },
-            {
-              "type": "button",
-              "label": "修改",
-              "level": "info",
-              "actionType": "link",
-              "link": "/device/${id}/edit"
-            },
-            {
-              "type": "button",
-              "label": "删除",
-              "level": "danger",
-              "actionType": "ajax",
-              "confirmText": "您确认要删除?",
-              "api": "get:/api/url/destroy/${id}"
-            }
-            ]
-          }],
-          "placeholder": "-",
-          "fixed": "right"
-        }
-        ],
+        "columns": columns$1,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -435,6 +446,8 @@
       }]
     };
 
+    // let backUrl=
+
     let deviceView = {
         "type": "page",
 
@@ -445,9 +458,14 @@
         },
         "toolbar": [{
             "type": "button",
-            "actionType": "link",
-            "link": "/plat/list?page=$page",
-            "label": "返回列表2"
+            "actionType": "button",
+            // "link": "/device/list",
+            "label": "返回列表",
+            onClick: () => {
+                // console.log(window.location);
+                window.history.back();
+                // amisLib.toast.info('消息通知');
+              }
         }],
         "body": {
             "type": "panel",
@@ -627,6 +645,79 @@
       ]
     };
 
+    let columns = deviceListItems.map(v => v);
+
+    let operationItem = {
+        "type": "operation",
+        "label": "操作",
+        "width": "",
+        "buttons": [{
+            "type": "button-group",
+            "buttons": [{
+                    "type": "button",
+                    "label": "查看",
+                    "level": "primary",
+                    "actionType": "link",
+                    "link": "/device/${id}"
+                },
+                {
+                    "type": "button",
+                    "label": "修改",
+                    "level": "info",
+                    "actionType": "link",
+                    "link": "/device/${id}/edit"
+                },
+                {
+                    "type": "button",
+                    "label": "删除",
+                    "level": "danger",
+                    "actionType": "ajax",
+                    "confirmText": "您确认要删除?",
+                    "api": "get:/api/url/destroy/${id}"
+                }
+            ]
+        }],
+        "placeholder": "-",
+        "fixed": "right"
+    };
+    columns.push(operationItem);
+
+    const platDeviceList = {
+        "type": "page",
+        "title": "平台装备列表",
+        "remark": null,
+        "name": "page-demo",
+        "body": [{
+            "type": "crud",
+            "name": "sample",
+            "perPage": 100,
+            // "data": {
+            //   "page": 1
+            // },
+            api: {
+                
+                method: 'get',
+                // url: '/api/device/0.1',
+                url: '/api/device/0.1/plat-id/${params.id}',
+                // url: '/api/device/0.1/plat-id/4',
+                // requestAdaptor: myutils.requestAdaptor,
+                adaptor: myutils.listResponseAdapter
+            },
+
+        
+            "columns": columns,
+            "affixHeader": true,
+            "columnsTogglable": "auto",
+            "placeholder": "暂无数据",
+            "tableClassName": "table-db table-striped",
+            "headerClassName": "crud-table-header",
+            "footerClassName": "crud-table-footer",
+            "toolbarClassName": "crud-table-toolbar",
+            "combineNum": 0,
+            "bodyClassName": "panel-default"
+        }]
+    };
+
     const platEdit =
     {
       "type": "page",
@@ -761,27 +852,31 @@
           },
           {
             "name": "time",
-            "label": "time"
+            "type":"tpl",
+            "label": "time",
+            "tpl": "${time|date:LLL:x}"
+           
           },
           {
             "type": "link",
             "href": "/#/plat/${id}/device",
             "label": "装备",
             "name":"id",
-            "body": "装备"
+            "blank":false,
+            "body": "装备列表"
           },
-          {
-            "name": "time",
-            "label": "映射",
-            "type": "mapping",
-            "map": {
-              "1": "<span class='label label-info'>漂亮</span>",
-              "2": "<span class='label label-success'>开心</span>",
-              "3": "<span class='label label-danger'>惊吓</span>",
-              "4": "<span class='label label-warning'>紧张</span>",
-              "*": "<span class='label label-warning'>紧张</span>${time}"
-            }
-          },
+          // {
+          //   "name": "time",
+          //   "label": "映射",
+          //   "type": "mapping",
+          //   "map": {
+          //     "1": "<span class='label label-info'>漂亮</span>",
+          //     "2": "<span class='label label-success'>开心</span>",
+          //     "3": "<span class='label label-danger'>惊吓</span>",
+          //     "4": "<span class='label label-warning'>紧张</span>",
+          //     "*": "<span class='label label-warning'>紧张</span>${time}"
+          //   }
+          // },
           {
             name: 'type',
             label: 'type'
@@ -854,31 +949,43 @@
         }],
         "body": {
             "type": "panel",
-            "body": [
-                {
+            "body": [{
                     "type": "container",
-                    "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${country}</div>"
+                    "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
                 },
                 {
                     "type": "page",
                     "data": {
-                      "html": "<a target='_blank' href='http://www.baidu.com'>baidu</a>"
+                        "html": "<img src=${imgSrc}>"
                     },
                     "body": {
-                      "type": "tpl",
-                      "tpl": "ddd ${html|raw}"
+                        "type": "tpl",
+                        //   "tpl": "${html|raw}"
+                        "tpl": "<div style='text-align:center'><img width='320' src=${imgSrc}></div>"
                     }
-                  },
+                },
                 {
                     "type": "page",
-                    "data": {
-                      "html": "<div>这是一段<a href='http://192.168.18.100:3100/#/plat/list?page=1'>html</a></div>"
-                    },
-                    "body": {
-                      "type": "tpl",
-                      "tpl": "html is: ${html|raw}"
-                    }
-                  },
+                    "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>通用属性表</span></div>"
+                },
+                {
+                    "type": "property",
+                    "items": [{
+                            "label": "国家/地区",
+                            "content": "${country}"
+                        },
+                        {
+                            "label": "category",
+                            "content": "${category}"
+                        },
+                        {
+                            "label": "time",
+                            "content": "${time|date:LLL:x}"
+                        }
+                    ]
+                },
+                
+               
                 {
                     "type": "page",
                     "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>简况</span></div>"
@@ -1235,6 +1342,12 @@
                     "label": "修改",
                     "url": "/plat/:id/edit",
                     "schema": platEdit
+                },
+                {
+                    "label": "平台装备",
+                    "icon": "fa fa-plus",
+                    "url": "/plat/:id/device",
+                    "schema": platDeviceList
                 }
                 ]
             },

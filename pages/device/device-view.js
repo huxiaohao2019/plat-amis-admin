@@ -10,6 +10,10 @@ let part1 = {
 
 }
 
+
+
+// let backUrl=
+
 let deviceView = {
     "type": "page",
 
@@ -20,9 +24,14 @@ let deviceView = {
     },
     "toolbar": [{
         "type": "button",
-        "actionType": "link",
-        "link": "/plat/list?page=$page",
-        "label": "返回列表2"
+        "actionType": "button",
+        // "link": "/device/list",
+        "label": "返回列表",
+        onClick: () => {
+            // console.log(window.location);
+            window.history.back();
+            // amisLib.toast.info('消息通知');
+          }
     }],
     "body": {
         "type": "panel",

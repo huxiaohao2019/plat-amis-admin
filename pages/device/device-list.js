@@ -1,5 +1,45 @@
 import myutils from '../../tools/myutils'
 
+import deviceListItems from './device-list-items';
+
+let columns = deviceListItems.map(v => v);
+
+let operationItem= {
+  "type": "operation",
+  "label": "操作",
+  "width": "",
+  "buttons": [{
+    "type": "button-group",
+    "buttons": [{
+        "type": "button",
+        "label": "查看",
+        "level": "primary",
+        "actionType": "link",
+        "link": "/device/${id}"
+      },
+      {
+        "type": "button",
+        "label": "修改",
+        "level": "info",
+        "actionType": "link",
+        "link": "/device/${id}/edit"
+      },
+      {
+        "type": "button",
+        "label": "删除",
+        "level": "danger",
+        "actionType": "ajax",
+        "confirmText": "您确认要删除?",
+        "api": "get:/api/url/destroy/${id}"
+      }
+    ]
+  }],
+  "placeholder": "-",
+  "fixed": "right"
+}
+columns.push(operationItem)
+
+
 const deviceList = {
   "type": "page",
   "title": "装备列表",
@@ -45,94 +85,34 @@ const deviceList = {
       "className": "m-b-sm"
     },
     "bulkActions": [{
-      "label": "批量修改",
-      "type": "button",
-      "actionType": "dialog",
-      "level": "primary",
-      "dialog": {
-        "title": "批量编辑",
-        "name": "sample-bulk-edit",
-        "body": {
-          "type": "form",
-          "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/bulkUpdate2",
-          "controls": [{
-            "type": "text",
-            "name": "engine",
-            "label": "Engine"
-          }]
+        "label": "批量修改",
+        "type": "button",
+        "actionType": "dialog",
+        "level": "primary",
+        "dialog": {
+          "title": "批量编辑",
+          "name": "sample-bulk-edit",
+          "body": {
+            "type": "form",
+            "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/bulkUpdate2",
+            "controls": [{
+              "type": "text",
+              "name": "engine",
+              "label": "Engine"
+            }]
+          }
         }
+      },
+      {
+        "label": "批量删除",
+        "type": "button",
+        "level": "danger",
+        "actionType": "ajax",
+        "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$ids",
+        "confirmText": "确定要批量删除?"
       }
-    },
-    {
-      "label": "批量删除",
-      "type": "button",
-      "level": "danger",
-      "actionType": "ajax",
-      "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$ids",
-      "confirmText": "确定要批量删除?"
-    }
     ],
-    "columns": [{
-      "name": "id",
-      "label": "ID",
-      "width": 20,
-      "sortable": true
-    },
-    {
-      "name": "name",
-      "label": "名称",
-      "sortable": true
-    },
-    {
-      "name": "info",
-      "label": "备注",
-      "sortable": true
-    },
-    {
-      "name": "type",
-      "label": "类型",
-      "sortable": true
-    },
-    {
-      "name": "produce_time",
-      "label": "生产日期",
-      "sortable": true
-    },
-
-    {
-      "type": "operation",
-      "label": "操作",
-      "width": "",
-      "buttons": [{
-        "type": "button-group",
-        "buttons": [{
-          "type": "button",
-          "label": "查看",
-          "level": "primary",
-          "actionType": "link",
-          "link": "/device/${id}"
-        },
-        {
-          "type": "button",
-          "label": "修改",
-          "level": "info",
-          "actionType": "link",
-          "link": "/device/${id}/edit"
-        },
-        {
-          "type": "button",
-          "label": "删除",
-          "level": "danger",
-          "actionType": "ajax",
-          "confirmText": "您确认要删除?",
-          "api": "get:/api/url/destroy/${id}"
-        }
-        ]
-      }],
-      "placeholder": "-",
-      "fixed": "right"
-    }
-    ],
+    "columns": columns,
     "affixHeader": true,
     "columnsTogglable": "auto",
     "placeholder": "暂无数据",

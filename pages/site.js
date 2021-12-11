@@ -3,6 +3,7 @@ import deviceEdit from "./device/device-edit";
 import deviceList from "./device/device-list";
 import deviceView from "./device/device-view";
 import platAddPage from "./plat/plat-add";
+import platDeviceList from "./plat/plat-devices";
 import platEdit from "./plat/plat-edit";
 import platList from "./plat/plat-list";
 import platView from "./plat/plat-view";
@@ -184,6 +185,12 @@ const pages = [{
                 "label": "修改",
                 "url": "/plat/:id/edit",
                 "schema": platEdit
+            },
+            {
+                "label": "平台装备",
+                "icon": "fa fa-plus",
+                "url": "/plat/:id/device",
+                "schema": platDeviceList
             }
             ]
         },

@@ -110,6 +110,10 @@ const platItemResponseAdapter = function (payload, response, api) {
         _origin: payload
     }
 
+    if(payload.img && payload.img.file_data){
+        newItem.imgSrc='data:image/jpeg;base64,'+payload.img.file_data;
+    }
+
     var kvContainerList = []
 
 
