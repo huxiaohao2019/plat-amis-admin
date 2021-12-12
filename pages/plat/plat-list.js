@@ -70,10 +70,10 @@ const platList2 = {
        
       },
       {
-        "type": "link",
-        "href": "/#/plat/${id}/device",
         "label": "装备",
         "name":"id",
+        "type": "link",
+        "href": "/#/plat/${id}/device",
         "blank":false,
         "body": "装备列表"
       },
