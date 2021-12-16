@@ -2,6 +2,7 @@ import deviceListItems from '../device/device-list-items';
 import myutils from '../../tools/myutils';
 
 
+
 let columns = deviceListItems.map(v => v);
 
 let operationItem = {

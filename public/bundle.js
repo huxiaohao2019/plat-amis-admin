@@ -1,6 +1,6 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('express')) :
+    typeof define === 'function' && define.amd ? define(['express'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.platApp = factory());
 })(this, (function () { 'use strict';
 
@@ -1002,14 +1002,55 @@
       }]
     };
 
-    let platView = {
+    // let 
+
+    let devices = {
+        "type": "panel",
+        "title": "装备详情",
+
+        "body": {
+            "type": "service",
+            api: {
+
+                method: 'get',
+                // url: '/api/device/0.1',
+                url: '/api/device/0.1/plat-id/${params.id}',
+                // url: '/api/device/0.1/plat-id/4',
+                // requestAdaptor: myutils.requestAdaptor,
+                // adaptor: myutils.listResponseAdapter
+                adaptor: (payload, response) => {
+
+                }
+            },
+            "body": {
+
+                "type": "tabs",
+                "tabs": [{
+                        "title": "Tab ",
+                        "tab": {
+                            type: 'page',
+                            body: 'dweew'
+                        }
+                    },
+                    {
+                        "title": "Tab 2",
+                        "tab": "Content 2"
+                    }
+                ]
+            }
+        }
+
+    };
+
+
+    let detailView = {
         "type": "page",
 
-        "initApi": {
-            method: 'get',
-            url: "/api/plat/0.1/${params.id}",
-            adaptor: myutils.platItemResponseAdapter
-        },
+        // "initApi": {
+        //     method: 'get',
+        //     url: "/api/plat/0.1/${params.id}",
+        //     adaptor: myutils.platItemResponseAdapter
+        // },
         "toolbar": [{
             "type": "button",
             "actionType": "button",
@@ -1107,6 +1148,32 @@
 
             ]
         }
+    };
+
+    let platView = {
+        "type": "page",
+        "initApi": {
+            method: 'get',
+            url: "/api/plat/0.1/${params.id}",
+            adaptor: myutils.platItemResponseAdapter
+        },
+        "body": [{
+            "type": "grid",
+            // "className": "b-a bg-dark lter",
+            "columns": [{
+                    "md": 6,
+                    "body": {
+                        "type": "panel",
+                        "title": "平台概况",
+                        "body": detailView
+                    }
+                },
+                {
+                    "md": 6,
+                    "body": devices
+                }
+            ]
+        }]
     };
 
     const vendorFormItems = [
