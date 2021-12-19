@@ -318,6 +318,16 @@
             "sortable": true
         },
         {
+    "name":"vendor_id",
+    "label":"生产厂商",
+    // "sortable":true,
+    "type":"link",
+    // "tpl":""
+    "href":"/#/vendor/${vendor_id}",
+    "blank":false,
+            "body": "${vendor_name}"
+        },
+        {
             "name": "produce_time",
             "label": "生产日期",
             "type":"tpl",
@@ -498,13 +508,25 @@
         "title": "装备->平台列表",
         "remark": null,
         "name": "page-demo",
-        // "toolbar": [{
+        "toolbar": [
+        //     {
         //   "type": "button",
         //   "actionType": "link",
         //   "link": "/crud/url/url-add",
-        //   "label": "新增",
+        //   "label": "添加平台绑定",
         //   "primary": true
-        // }],
+        // },
+        {
+            "type": "button",
+            "primary": true,
+            "label": "添加平台绑定",
+            "actionType": "dialog",
+            "dialog": {
+              "title": "添加平台绑定",
+              "body": "Hello World!"
+            }
+        }
+    ],
         "body": [{
 
             },
@@ -1018,9 +1040,9 @@
                 // url: '/api/device/0.1/plat-id/4',
                 // requestAdaptor: myutils.requestAdaptor,
                 // adaptor: myutils.listResponseAdapter
-                adaptor: (payload, response) => {
+                // adaptor: (payload, response) => {
 
-                }
+                // }
             },
             "body": {
 
@@ -1470,11 +1492,19 @@
             url: "/api/vendor/0.1/${params.id}",
             adaptor: myutils.platItemResponseAdapter
         },
+        // "toolbar": [{
+        //     "type": "button",
+        //     "actionType": "link",
+        //     "link": "/vendor/list?page=$page",
+        //     "label": "返回厂商列表"
+        // }],
         "toolbar": [{
             "type": "button",
-            "actionType": "link",
-            "link": "/vendor/list?page=$page",
-            "label": "返回厂商列表"
+            "actionType": "button",
+            "label": "返回列表",
+            onClick: () => {
+                window.history.back();
+            }
         }],
         "body": body2
     };
@@ -1613,30 +1643,30 @@
                 // ,exam
             ]
         },
-        {
-            "label": "分组2",
-            "children": [{
-                    "label": "用户管理",
-                    "schema": {
-                        "type": "page",
-                        "title": "用户管理",
-                        "body": "页面C"
-                    }
-                },
-                {
-                    "label": "外部链接",
-                    "link": "http://baidu.gitee.io/amis"
-                },
-                {
-                    "label": "部门管理",
-                    "schemaApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/service/form?tpl=tpl3"
-                },
-                {
-                    "label": "jsonp 返回示例",
-                    "schemaApi": "jsonp:/pages/jsonp.js?callback=jsonpCallback"
-                }
-            ]
-        }
+        // {
+        //     "label": "分组2",
+        //     "children": [{
+        //             "label": "用户管理",
+        //             "schema": {
+        //                 "type": "page",
+        //                 "title": "用户管理",
+        //                 "body": "页面C"
+        //             }
+        //         },
+        //         {
+        //             "label": "外部链接",
+        //             "link": "http://baidu.gitee.io/amis"
+        //         },
+        //         {
+        //             "label": "部门管理",
+        //             "schemaApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/service/form?tpl=tpl3"
+        //         },
+        //         {
+        //             "label": "jsonp 返回示例",
+        //             "schemaApi": "jsonp:/pages/jsonp.js?callback=jsonpCallback"
+        //         }
+        //     ]
+        // }
     ];
 
     const app = {
@@ -1647,7 +1677,7 @@
         type: 'tpl',
         inline: false,
         className: 'w-full',
-        tpl: '<div class="flex justify-between"><div>顶部区域左侧</div><div>顶部区域右侧</div></div>'
+        tpl: '<div class="flex justify-between"><div></div><div></div></div>'
       },
       // footer: '<div class="p-2 text-center bg-light">底部区域</div>',
       // asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',

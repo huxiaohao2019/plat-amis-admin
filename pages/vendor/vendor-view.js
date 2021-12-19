@@ -93,11 +93,19 @@ let vendorView = {
         url: "/api/vendor/0.1/${params.id}",
         adaptor: myutils.platItemResponseAdapter
     },
+    // "toolbar": [{
+    //     "type": "button",
+    //     "actionType": "link",
+    //     "link": "/vendor/list?page=$page",
+    //     "label": "返回厂商列表"
+    // }],
     "toolbar": [{
         "type": "button",
-        "actionType": "link",
-        "link": "/vendor/list?page=$page",
-        "label": "返回厂商列表"
+        "actionType": "button",
+        "label": "返回列表",
+        onClick: () => {
+            window.history.back();
+        }
     }],
     "body": body2
 }

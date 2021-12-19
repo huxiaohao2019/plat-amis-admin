@@ -20,9 +20,9 @@ let devices = {
             // url: '/api/device/0.1/plat-id/4',
             // requestAdaptor: myutils.requestAdaptor,
             // adaptor: myutils.listResponseAdapter
-            adaptor: (payload, response) => {
+            // adaptor: (payload, response) => {
 
-            }
+            // }
         },
         "body": {
 

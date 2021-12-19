@@ -261,30 +261,30 @@ const pages = [{
             // ,exam
         ]
     },
-    {
-        "label": "分组2",
-        "children": [{
-                "label": "用户管理",
-                "schema": {
-                    "type": "page",
-                    "title": "用户管理",
-                    "body": "页面C"
-                }
-            },
-            {
-                "label": "外部链接",
-                "link": "http://baidu.gitee.io/amis"
-            },
-            {
-                "label": "部门管理",
-                "schemaApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/service/form?tpl=tpl3"
-            },
-            {
-                "label": "jsonp 返回示例",
-                "schemaApi": "jsonp:/pages/jsonp.js?callback=jsonpCallback"
-            }
-        ]
-    }
+    // {
+    //     "label": "分组2",
+    //     "children": [{
+    //             "label": "用户管理",
+    //             "schema": {
+    //                 "type": "page",
+    //                 "title": "用户管理",
+    //                 "body": "页面C"
+    //             }
+    //         },
+    //         {
+    //             "label": "外部链接",
+    //             "link": "http://baidu.gitee.io/amis"
+    //         },
+    //         {
+    //             "label": "部门管理",
+    //             "schemaApi": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/service/form?tpl=tpl3"
+    //         },
+    //         {
+    //             "label": "jsonp 返回示例",
+    //             "schemaApi": "jsonp:/pages/jsonp.js?callback=jsonpCallback"
+    //         }
+    //     ]
+    // }
 ]
 
 export default pages;

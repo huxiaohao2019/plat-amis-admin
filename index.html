@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/amis@beta/sdk/sdk.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/history/umd/history.js"></script>
-  <link rel="stylesheet" href="./style.css">
+  <!-- <link rel="stylesheet" href="./style.css"> -->
   <style>
     html,
     body,
@@ -29,6 +29,15 @@
       text-align: justify;
       min-width: 42px;
       text-align-last: justify;
+    }
+
+    .plat-title {
+      font-size: 18px;
+      background-color: antiquewhite;
+    }
+
+    .sub-label {
+      color: #425EAF;
     }
   </style>
 </head>
@@ -52,7 +61,7 @@
       // const history = History.createBrowserHistory();
       const history = History.createHashHistory();
 
-      const app =platApp.amisApp;
+      const app = platApp.amisApp;
 
       function normalizeLink(to, location = history.location) {
         to = to || '';

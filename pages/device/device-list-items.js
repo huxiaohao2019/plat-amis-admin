@@ -28,6 +28,16 @@ var deviceListItems = [{
         "sortable": true
     },
     {
+"name":"vendor_id",
+"label":"生产厂商",
+// "sortable":true,
+"type":"link",
+// "tpl":""
+"href":"/#/vendor/${vendor_id}",
+"blank":false,
+        "body": "${vendor_name}"
+    },
+    {
         "name": "produce_time",
         "label": "生产日期",
         "type":"tpl",

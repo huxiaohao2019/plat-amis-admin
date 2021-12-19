@@ -6,13 +6,25 @@ const devicePlatList = {
     "title": "装备->平台列表",
     "remark": null,
     "name": "page-demo",
-    // "toolbar": [{
+    "toolbar": [
+    //     {
     //   "type": "button",
     //   "actionType": "link",
     //   "link": "/crud/url/url-add",
-    //   "label": "新增",
+    //   "label": "添加平台绑定",
     //   "primary": true
-    // }],
+    // },
+    {
+        "type": "button",
+        "primary": true,
+        "label": "添加平台绑定",
+        "actionType": "dialog",
+        "dialog": {
+          "title": "添加平台绑定",
+          "body": "Hello World!"
+        }
+    }
+],
     "body": [{
 
         },
