@@ -53,14 +53,7 @@ let detailView = {
     //     url: "/api/plat/0.1/${params.id}",
     //     adaptor: myutils.platItemResponseAdapter
     // },
-    "toolbar": [{
-        "type": "button",
-        "actionType": "button",
-        "label": "返回列表",
-        onClick: () => {
-            window.history.back();
-        }
-    }],
+
     "body": {
         "type": "panel",
         "body": [{
@@ -152,30 +145,107 @@ let detailView = {
     }
 }
 
-let platView = {
+let platView =    {
     "type": "page",
     "initApi": {
         method: 'get',
         url: "/api/plat/0.1/${params.id}",
         adaptor: myutils.platItemResponseAdapter
     },
-    "body": [{
-        "type": "grid",
-        // "className": "b-a bg-dark lter",
-        "columns": [{
-                "md": 6,
-                "body": {
-                    "type": "panel",
-                    "title": "平台概况",
-                    "body": detailView
+    "body": [
+        {
+            "type": "container",
+            "className":"my-2",
+            "body": {
+                "type": "button",
+                "actionType": "button",
+                "label": "返回",
+                
+                onClick: () => {
+                    window.history.back();
                 }
-            },
-            {
-                "md": 6,
-                "body": devices
             }
-        ]
-    }]
+        },
+        {
+            "type": "grid",
+            // "className": "b-a bg-dark lter",
+            "columns": [{
+                    "md": 6,
+                    "body": {
+                        "type": "panel",
+                        "title": "平台概况",
+                        "body": detailView
+                    }
+                },
+                {
+                    "md": 6,
+                    "body": devices
+                }
+            ]
+        }
+    ]
 }
+
+let platView2 = {
+    "type": "page",
+    "body": [{
+            "type": "page",
+            "body": {
+                "type": "button",
+                "actionType": "button",
+                "label": "返回列表",
+                onClick: () => {
+                    window.history.back();
+                }
+            }
+        },
+
+        {
+            "type": "page",
+            "body": {
+                "type": "button",
+                "actionType": "button",
+                "label": "返回列表",
+                onClick: () => {
+                    window.history.back();
+                }
+            }
+        },
+
+        {
+
+            "type": "page",
+
+
+
+            "initApi": {
+                method: 'get',
+                url: "/api/plat/0.1/${params.id}",
+                adaptor: myutils.platItemResponseAdapter
+            },
+            "body": [
+
+                {
+                    "type": "grid",
+                    // "className": "b-a bg-dark lter",
+                    "columns": [{
+                            "md": 6,
+                            "body": {
+                                "type": "panel",
+                                "title": "平台概况",
+                                "body": detailView
+                            }
+                        },
+                        {
+                            "md": 6,
+                            "body": devices
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
 
 export default platView;
