@@ -1123,7 +1123,7 @@
 
 
     let detailView = {
-        "type": "page",
+        "type": "service",
 
         // "initApi": {
         //     method: 'get',
@@ -1132,7 +1132,7 @@
         // },
 
         "body": {
-            "type": "panel",
+            "type": "service",
             "body": [{
                     "type": "container",
                     "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
@@ -1159,11 +1159,11 @@
                             "content": "${country}"
                         },
                         {
-                            "label": "category",
+                            "label": "科目",
                             "content": "${category}"
                         },
                         {
-                            "label": "time",
+                            "label": "时间",
                             "content": "${time|date:LLL:x}"
                         }
                     ]

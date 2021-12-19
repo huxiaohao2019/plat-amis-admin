@@ -46,7 +46,7 @@ let devices = {
 
 
 let detailView = {
-    "type": "page",
+    "type": "service",
 
     // "initApi": {
     //     method: 'get',
@@ -55,7 +55,7 @@ let detailView = {
     // },
 
     "body": {
-        "type": "panel",
+        "type": "service",
         "body": [{
                 "type": "container",
                 "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
@@ -82,11 +82,11 @@ let detailView = {
                         "content": "${country}"
                     },
                     {
-                        "label": "category",
+                        "label": "科目",
                         "content": "${category}"
                     },
                     {
-                        "label": "time",
+                        "label": "时间",
                         "content": "${time|date:LLL:x}"
                     }
                 ]
