@@ -1153,21 +1153,25 @@
                     "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>通用属性表</span></div>"
                 },
                 {
-                    "type": "property",
-                    "items": [{
-                            "label": "国家/地区",
-                            "content": "${country}"
-                        },
-                        {
-                            "label": "科目",
-                            "content": "${category}"
-                        },
-                        {
-                            "label": "时间",
-                            "content": "${time|date:LLL:x}"
-                        }
-                    ]
+                    "type":"page",
+                    "body":{
+                        "type": "property",
+                        "items": [{
+                                "label": "国家/地区",
+                                "content": "${country}"
+                            },
+                            {
+                                "label": "科目",
+                                "content": "${category}"
+                            },
+                            {
+                                "label": "时间",
+                                "content": "${time|date:LLL:x}"
+                            }
+                        ]
+                    }
                 },
+                
 
 
                 {
