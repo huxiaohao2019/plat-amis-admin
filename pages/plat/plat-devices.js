@@ -20,19 +20,29 @@ let operationItem = {
             },
             {
                 "type": "button",
-                "label": "修改",
-                "level": "info",
-                "actionType": "link",
-                "link": "/device/${id}/edit"
-            },
-            {
-                "type": "button",
-                "label": "删除",
+                "label": "移除绑定",
+                // "level": "info",
                 "level": "danger",
                 "actionType": "ajax",
-                "confirmText": "您确认要删除?",
-                "api": "get:/api/url/destroy/${id}"
-            }
+                "confirmText": "确定移除该设备绑定?${name}",
+                // http://127.0.0.1:8089/device/belonging/0.1/dev/4/plat/1
+                "api": "delete:/api/device/belonging/0.1/dev/${id}/plat/${params.id}"
+              }
+            // {
+            //     "type": "button",
+            //     "label": "修改",
+            //     "level": "info",
+            //     "actionType": "link",
+            //     "link": "/device/${id}/edit"
+            // },
+            // {
+            //     "type": "button",
+            //     "label": "删除",
+            //     "level": "danger",
+            //     "actionType": "ajax",
+            //     "confirmText": "您确认要删除?",
+            //     "api": "get:/api/url/destroy/${id}"
+            // }
         ]
     }],
     "placeholder": "-",

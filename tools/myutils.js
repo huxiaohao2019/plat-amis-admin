@@ -46,7 +46,7 @@ const requestAdaptor = function (api) {
 
     let newQuery2List=[
         "limit="+limit,
-        "offet="+offset
+        "offset="+offset
     ]
     if(subQueryList.length){
         newQuery2List.push("query="+subQueryListStr)

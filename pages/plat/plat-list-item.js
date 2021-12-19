@@ -1,39 +1,7 @@
-let platListItems=[{
-    "name": "id",
-    "label": "ID",
-    "width": 20,
-    "sortable": true
-  },
-  {
-    "name": "name",
-    "label": "名称",
-    "sortable": true
-  },
-  {
-    "name": "time",
-    "type":"tpl",
-    "label": "time",
-    "tpl": "${time|date:LLL:x}"
-   
-  },
-  {
-    "type": "link",
-    "href": "/#/plat/${id}/device",
-    "label": "装备",
-    "name":"id",
-    "blank":false,
-    "body": "装备列表"
-  },
-  {
-    name: 'type',
-    label: 'type'
-  },
-  {
-    "name": "country",
-    "label": "国家(地区)",
-    "sortable": true
-  },
+import platDataColumns from "./plat-data-columns";
 
+
+let platListOperationItems=[
   {
     "type": "operation",
     "label": "操作",
@@ -68,5 +36,7 @@ let platListItems=[{
     "fixed": "right"
   }
 ]
+
+let platListItems=platDataColumns .concat(platListOperationItems)
 
 export default platListItems;
