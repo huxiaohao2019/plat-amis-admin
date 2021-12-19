@@ -25,7 +25,9 @@
     "reload": "^3.1.1"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.178",
     "axios": "^0.24.0",
-    "http-proxy-middleware": "^2.0.1"
+    "http-proxy-middleware": "^2.0.1",
+    "lodash": "^4.17.21"
   }
 }

@@ -130,7 +130,11 @@ const pageA = {
 const pages = [{
         "label": "Home",
         "url": "/",
-        "redirect": "/index/1"
+        // "redirect": "/index/1"
+        body:{
+            "type":"page",
+            body:'index'
+        }
     },
     {
         "label": "业务数据",

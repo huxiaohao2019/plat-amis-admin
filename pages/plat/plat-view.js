@@ -3,6 +3,7 @@ import {
 } from "express";
 import deviceTypes from "../../tools/device-types";
 import myutils from "../../tools/myutils";
+import platDevicesTab from "./plat-devices-tab";
 
 // let 
 
@@ -10,40 +11,36 @@ let devices = {
     "type": "panel",
     "title": "装备详情",
 
-    "body": {
-        "type": "service",
-        api: {
-
-            method: 'get',
-            // url: '/api/device/0.1',
-            url: '/api/device/0.1/plat-id/${params.id}',
-            // url: '/api/device/0.1/plat-id/4',
-            // requestAdaptor: myutils.requestAdaptor,
-            // adaptor: myutils.listResponseAdapter
-            // adaptor: (payload, response) => {
-
-            // }
-        },
-        "body": {
-
-            "type": "tabs",
-            "tabs": [{
-                    "title": "Tab ",
-                    "tab": {
-                        type: 'page',
-                        body: 'dweew'
-                    }
-                },
-                {
-                    "title": "Tab 2",
-                    "tab": "Content 2"
-                }
-            ]
-        }
-    }
+    "body": platDevicesTab
 
 }
 
+let detailView1=
+{
+    "type": "page",
+        "data": {
+            "arr": [{
+                    "a": "收入",
+                    "b": 199
+                },
+                {
+                    "a": "支出",
+                    "b": 299
+                }
+            ]
+        },
+        "body": [{
+            "type": "tabs",
+            "source": "${arr}",
+            "tabs": [{
+                "title": "${a}",
+                "body": {
+                    "type": "tpl",
+                    "tpl": "金额：${b|number}元"
+                }
+            }]
+        }]
+}
 
 let detailView = {
     "type": "service",

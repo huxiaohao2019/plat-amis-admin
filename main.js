@@ -2,6 +2,14 @@ import pages from "./pages/site";
 const app = {
   type: 'app',
   brandName: '信息平台',
+  "definitions": {
+    "aa": {
+      "type": "page",
+      // "name": "jack",
+      // "value": "ref value",
+      "labelRemark": "通过<code>\\$ref ${text} </code>引入的组件"
+    }
+  },
   logo: '/public/logo.png',
   header: {
     type: 'tpl',
@@ -13,7 +21,7 @@ const app = {
   // asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',
   // asideAfter: '<div class="p-2 text-center">菜单后面区域</div>',
   // api: '/pages/site.json'
-  pages:pages
+  pages: pages
 };
 export default {
   amisApp: app

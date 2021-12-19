@@ -1081,46 +1081,135 @@
       }]
     };
 
+    // import _ from "lodash";
+
+    let platDevicesTab = {
+        "type": "page",
+
+        initApi: {
+
+            method: 'get',
+            url: '/api/device/0.1/plat-id/${params.id}',
+
+            adaptor: (payload, response) => {
+                // payload.forEach(element => {
+                //     _.uniq()
+                // });
+                let typeIndexList = payload.map(v => v.type);
+                let typeIndexListUniq = _.uniq(typeIndexList);
+                console.log("🚀 ~ file: plat-devices-tab.js ~ line 18 ~ typeIndexListUniq", typeIndexListUniq);
+
+                let list2 = [];
+
+                typeIndexListUniq.forEach(v1 => {
+                    let list2Item = {
+                        name: 'type' + v1,
+                        id: v1,
+                        subItems: []
+                    };
+                    list2Item.subItems = payload.filter(v2 => {
+                        return v2.type == v1;
+                    });
+                    list2.push(list2Item);
+                });
+
+                // tab1 = 
+
+                let newPayload = {
+                    "arr": list2,
+                    tabs1: [{
+                            "title": "Tab ",
+
+                            "tab": {
+                                "type": "each",
+                                "name": "arr",
+                                "items": {
+                                    "type": "container",
+                                    "body": "<span class='label label-default m-l-sm'><%= data.name %></span> "
+                                }
+                            }
+                        },
+                        {
+                            "title": "Tab 2",
+                            "tab": "Content 2"
+                        }
+                    ],
+                    "age11": 123
+                };
+
+                console.log("🚀 ~ file: plat-devices-tab.js ~ line 23 ~ newPayload", newPayload);
+
+                return newPayload
+            }
+        },
+        "body1": {
+            "type": "page",
+            "data": {
+                "arr": [{
+                        "a": "收入",
+                        "b": 199
+                    },
+                    {
+                        "a": "支出",
+                        "b": 299
+                    }
+                ]
+            },
+            "body": [{
+                "type": "tabs",
+                "source": "${arr}",
+                "tabs": [{
+                    "title": "${a}",
+                    "body": {
+                        "type": "tpl",
+                        "tpl": "金额：${b|number}元"
+                    }
+                }]
+            }]
+        },
+        "body": [{
+                type: 'page',
+                // body: '${age11}'
+            },
+
+            // 
+            {
+
+                "type": "tabs",
+                "mode": "card",
+                // "tabs": "${tabs1}"
+
+                // "tabs": [{
+                //         "title": "Tab ",
+
+                //         "tab": {
+                //             "type": "each",
+                //             "name": "arr",
+                //             "items": {
+                //                 "type": "container",
+                //                 "body": "<span class='label label-default m-l-sm'><%= data.name %></span> "
+                //             }
+                //         }
+                //     },
+                //     {
+                //         "title": "Tab 2",
+                //         "tab": "Content 2"
+                //     }
+                // ]
+            }
+
+        ]
+    };
+
     // let 
 
     let devices = {
         "type": "panel",
         "title": "装备详情",
 
-        "body": {
-            "type": "service",
-            api: {
-
-                method: 'get',
-                // url: '/api/device/0.1',
-                url: '/api/device/0.1/plat-id/${params.id}',
-                // url: '/api/device/0.1/plat-id/4',
-                // requestAdaptor: myutils.requestAdaptor,
-                // adaptor: myutils.listResponseAdapter
-                // adaptor: (payload, response) => {
-
-                // }
-            },
-            "body": {
-
-                "type": "tabs",
-                "tabs": [{
-                        "title": "Tab ",
-                        "tab": {
-                            type: 'page',
-                            body: 'dweew'
-                        }
-                    },
-                    {
-                        "title": "Tab 2",
-                        "tab": "Content 2"
-                    }
-                ]
-            }
-        }
+        "body": platDevicesTab
 
     };
-
 
     let detailView = {
         "type": "service",
@@ -1581,7 +1670,11 @@
     const pages = [{
             "label": "Home",
             "url": "/",
-            "redirect": "/index/1"
+            // "redirect": "/index/1"
+            body:{
+                "type":"page",
+                body:'index'
+            }
         },
         {
             "label": "业务数据",
@@ -1741,6 +1834,14 @@
     const app = {
       type: 'app',
       brandName: '信息平台',
+      "definitions": {
+        "aa": {
+          "type": "page",
+          // "name": "jack",
+          // "value": "ref value",
+          "labelRemark": "通过<code>\\$ref ${text} </code>引入的组件"
+        }
+      },
       logo: '/public/logo.png',
       header: {
         type: 'tpl',
@@ -1752,7 +1853,7 @@
       // asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',
       // asideAfter: '<div class="p-2 text-center">菜单后面区域</div>',
       // api: '/pages/site.json'
-      pages:pages
+      pages: pages
     };
     var main = {
       amisApp: app
