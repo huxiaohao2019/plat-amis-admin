@@ -1,5 +1,6 @@
 import deviceListItems from '../device/device-list-items';
 import myutils from '../../tools/myutils';
+import platDeviceBindDiaLog from './plat-device-bind';
 
 
 
@@ -27,7 +28,7 @@ let operationItem = {
                 "confirmText": "确定移除该设备绑定?${name}",
                 // http://127.0.0.1:8089/device/belonging/0.1/dev/4/plat/1
                 "api": "delete:/api/device/belonging/0.1/dev/${id}/plat/${params.id}"
-              }
+            }
             // {
             //     "type": "button",
             //     "label": "修改",
@@ -55,6 +56,16 @@ const platDeviceList = {
     "title": "平台->装备列表",
     "remark": null,
     "name": "page-demo",
+    "toolbar": [
+
+        {
+            "type": "button",
+            "primary": true,
+            "label": "添加设备绑定",
+            "actionType": "dialog",
+            "dialog": platDeviceBindDiaLog
+        }
+    ],
     "body": [{
         "type": "crud",
         "name": "sample",
@@ -63,7 +74,7 @@ const platDeviceList = {
         //   "page": 1
         // },
         api: {
-            
+
             method: 'get',
             // url: '/api/device/0.1',
             url: '/api/device/0.1/plat-id/${params.id}',
@@ -72,7 +83,7 @@ const platDeviceList = {
             adaptor: myutils.listResponseAdapter
         },
 
-    
+
         "columns": columns,
         "affixHeader": true,
         "columnsTogglable": "auto",

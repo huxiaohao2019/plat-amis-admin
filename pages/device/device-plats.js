@@ -23,13 +23,7 @@ const devicePlatList = {
   "remark": null,
   "name": "page-demo",
   "toolbar": [
-    //     {
-    //   "type": "button",
-    //   "actionType": "link",
-    //   "link": "/crud/url/url-add",
-    //   "label": "添加平台绑定",
-    //   "primary": true
-    // },
+    
     {
       "type": "button",
       "primary": true,

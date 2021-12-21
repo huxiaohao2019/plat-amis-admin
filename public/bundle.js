@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('express')) :
     typeof define === 'function' && define.amd ? define(['express'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.platApp = factory());
-}(this, (function () { 'use strict';
+})(this, (function () { 'use strict';
 
     const deviceFormItems = [
         {
@@ -184,6 +184,7 @@
         console.log("🚀 ~ requestAdaptor ~ subQueryList", subQueryList);
         let subQueryListStr = '[' + subQueryList.join('|') + ']';
         console.log("🚀 ~ requestAdaptor ~ subQueryListStr", subQueryListStr);
+        if (subQueryList.length) ;
 
         let newQuery2List=[
             "limit="+limit,
@@ -334,9 +335,9 @@
         }
     ];
 
-    let columns = deviceListItems.map(v => v);
+    let columns$2 = deviceListItems.map(v => v);
 
-    let operationItem= {
+    let operationItem$2= {
       "type": "operation",
       "label": "操作",
       "width": "",
@@ -369,7 +370,7 @@
       "placeholder": "-",
       "fixed": "right"
     };
-    columns.push(operationItem);
+    columns$2.push(operationItem$2);
 
 
     const deviceList = {
@@ -418,7 +419,7 @@
         },
         "bulkActions": [
         ],
-        "columns": columns,
+        "columns": columns$2,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -558,13 +559,7 @@
       "remark": null,
       "name": "page-demo",
       "toolbar": [
-        //     {
-        //   "type": "button",
-        //   "actionType": "link",
-        //   "link": "/crud/url/url-add",
-        //   "label": "添加平台绑定",
-        //   "primary": true
-        // },
+        
         {
           "type": "button",
           "primary": true,
@@ -820,6 +815,73 @@
       ]
     };
 
+    let platDeviceBindDiaLog = {
+        "title": "添加设备绑定",
+        // "body":'12'
+
+        "body": {
+            "initApi": {
+                "method": "get",
+                "url": "/api/device/0.1?limit=3000",
+                "adaptor": function (payload, response, api) {
+                    console.log("🚀 ~ file: device-plats.js ~ line 30 ~ response", response);
+                    console.log("🚀 ~ file: device-plats.js ~ line 30 ~ payload", payload);
+                    let newPayload = {
+                        "status": 0,
+                        "msg": "",
+                        "data": {
+                            "age": 222,
+                            // 必须用 options 作为选项组的 key 值
+                            "options": payload
+                        }
+                    };
+                    console.log("🚀 ~ file: device-plats.js ~ line 35 ~ newPayload", newPayload);
+                    return newPayload;
+                }
+            },
+            "type": "form",
+            "api": {
+                "method": "post",
+                "url": "/api/device/belonging/0.1",
+                requestAdaptor: function (api) {
+                    console.log("🚀 ~ file: device-plat-bind.js ~ line 30 ~ api", api);
+                    let newItem = {
+                        ...api,
+                        data: {
+                            ...api.data, // 获取暴露的 api 中的 data 变量
+                            // foo: 'bar' // 新添加数据
+                        }
+                    };
+
+                    if (api.data.obj_id) {
+                        let obj_id = api.data.obj_id;
+                        newItem.data.obj_id = Number(obj_id);
+                        newItem.body.obj_id = Number(obj_id);
+
+                    }
+
+                    console.log("🚀 ~ file: device-plat-bind.js ~ line 39 ~ newItem", newItem);
+                    return newItem;
+                },
+                "data": {
+                    "device_id": "${device}",
+                    "obj": 1,
+                    "obj_id": "${params.id}"
+                }
+            },
+            "body": [{
+                "label": "设备",
+                "labelField": "name",
+                "valueField": "id",
+                "type": "select",
+                "searchable": true,
+                "name": "device",
+                "source": "${options}"
+                // "source": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/getOptions?waitSeconds=1"
+            }]
+        }
+    };
+
     let columns$1 = deviceListItems.map(v => v);
 
     let operationItem$1 = {
@@ -844,7 +906,7 @@
                     "confirmText": "确定移除该设备绑定?${name}",
                     // http://127.0.0.1:8089/device/belonging/0.1/dev/4/plat/1
                     "api": "delete:/api/device/belonging/0.1/dev/${id}/plat/${params.id}"
-                  }
+                }
                 // {
                 //     "type": "button",
                 //     "label": "修改",
@@ -872,6 +934,16 @@
         "title": "平台->装备列表",
         "remark": null,
         "name": "page-demo",
+        "toolbar": [
+
+            {
+                "type": "button",
+                "primary": true,
+                "label": "添加设备绑定",
+                "actionType": "dialog",
+                "dialog": platDeviceBindDiaLog
+            }
+        ],
         "body": [{
             "type": "crud",
             "name": "sample",
@@ -880,7 +952,7 @@
             //   "page": 1
             // },
             api: {
-                
+
                 method: 'get',
                 // url: '/api/device/0.1',
                 url: '/api/device/0.1/plat-id/${params.id}',
@@ -889,7 +961,7 @@
                 adaptor: myutils.listResponseAdapter
             },
 
-        
+
             "columns": columns$1,
             "affixHeader": true,
             "columnsTogglable": "auto",
@@ -1420,9 +1492,9 @@
       ]
     };
 
-    let columns$2 = deviceListItems.map(v => v);
+    let columns = deviceListItems.map(v => v);
 
-    let operationItem$2 = {
+    let operationItem = {
         "type": "operation",
         "label": "操作",
         "width": "",
@@ -1455,7 +1527,7 @@
         "placeholder": "-",
         "fixed": "right"
     };
-    columns$2.push(operationItem$2);
+    columns.push(operationItem);
 
     const vendorDeviceList = {
         "type": "page",
@@ -1480,7 +1552,7 @@
             },
 
         
-            "columns": columns$2,
+            "columns": columns,
             "affixHeader": true,
             "columnsTogglable": "auto",
             "placeholder": "暂无数据",
@@ -1875,4 +1947,4 @@
 
     return main;
 
-})));
+}));
