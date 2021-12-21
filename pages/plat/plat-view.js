@@ -1,7 +1,6 @@
 import {
     response
 } from "express";
-import deviceTypes from "../../tools/device-types";
 import myutils from "../../tools/myutils";
 import platDevicesTab from "./plat-devices-tab";
 
@@ -11,35 +10,41 @@ let devices = {
     "type": "panel",
     "title": "装备详情",
 
-    "body": platDevicesTab
+    // "body": {platDevicesTab}
+    "body": {
+        "type": "service",
+        "schemaApi": {
+            "method": 'get',
+            'url': '/schema/plat-device-tabs/${params.id}'
+        }
+    }
 
 }
 
-let detailView1=
-{
+let detailView1 = {
     "type": "page",
-        "data": {
-            "arr": [{
-                    "a": "收入",
-                    "b": 199
-                },
-                {
-                    "a": "支出",
-                    "b": 299
-                }
-            ]
-        },
-        "body": [{
-            "type": "tabs",
-            "source": "${arr}",
-            "tabs": [{
-                "title": "${a}",
-                "body": {
-                    "type": "tpl",
-                    "tpl": "金额：${b|number}元"
-                }
-            }]
+    "data": {
+        "arr": [{
+                "a": "收入",
+                "b": 199
+            },
+            {
+                "a": "支出",
+                "b": 299
+            }
+        ]
+    },
+    "body": [{
+        "type": "tabs",
+        "source": "${arr}",
+        "tabs": [{
+            "title": "${a}",
+            "body": {
+                "type": "tpl",
+                "tpl": "金额：${b|number}元"
+            }
         }]
+    }]
 }
 
 let detailView = {
@@ -73,8 +78,8 @@ let detailView = {
                 "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>通用属性表</span></div>"
             },
             {
-                "type":"page",
-                "body":{
+                "type": "page",
+                "body": {
                     "type": "property",
                     "items": [{
                             "label": "国家/地区",
@@ -91,7 +96,7 @@ let detailView = {
                     ]
                 }
             },
-            
+
 
 
             {
@@ -146,22 +151,21 @@ let detailView = {
     }
 }
 
-let platView =    {
+let platView = {
     "type": "page",
     "initApi": {
         method: 'get',
         url: "/api/plat/0.1/${params.id}",
         adaptor: myutils.platItemResponseAdapter
     },
-    "body": [
-        {
+    "body": [{
             "type": "container",
-            "className":"my-2",
+            "className": "my-2",
             "body": {
                 "type": "button",
                 "actionType": "button",
                 "label": "返回",
-                
+
                 onClick: () => {
                     window.history.back();
                 }

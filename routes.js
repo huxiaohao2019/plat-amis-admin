@@ -14,6 +14,6 @@ router.post('/schema/time1',tab2Cont.time1);
 router.get('/scheme/plat/list',platController.platList)
 router.get('/scheme/site/list',siteController.pageList)
 
-
+router.get('/schema/plat-device-tabs/:platId',platController.platDeviceTabs)
 
 module.exports = router;

@@ -34,7 +34,7 @@ app.get('/ss',function(req,res,next){
 })
 
 
-// app.use('/', routes);
+app.use('/', routes);
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });

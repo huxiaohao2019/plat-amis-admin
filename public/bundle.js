@@ -1167,133 +1167,20 @@
       }]
     };
 
-    // import _ from "lodash";
-
-    let platDevicesTab = {
-        "type": "page",
-
-        initApi: {
-
-            method: 'get',
-            url: '/api/device/0.1/plat-id/${params.id}',
-
-            adaptor: (payload, response) => {
-                // payload.forEach(element => {
-                //     _.uniq()
-                // });
-                let typeIndexList = payload.map(v => v.type);
-                let typeIndexListUniq = _.uniq(typeIndexList);
-                console.log("🚀 ~ file: plat-devices-tab.js ~ line 18 ~ typeIndexListUniq", typeIndexListUniq);
-
-                let list2 = [];
-
-                typeIndexListUniq.forEach(v1 => {
-                    let list2Item = {
-                        name: 'type' + v1,
-                        id: v1,
-                        subItems: []
-                    };
-                    list2Item.subItems = payload.filter(v2 => {
-                        return v2.type == v1;
-                    });
-                    list2.push(list2Item);
-                });
-
-                // tab1 = 
-
-                let newPayload = {
-                    "arr": list2,
-                    tabs1: [{
-                            "title": "Tab ",
-
-                            "tab": {
-                                "type": "each",
-                                "name": "arr",
-                                "items": {
-                                    "type": "container",
-                                    "body": "<span class='label label-default m-l-sm'><%= data.name %></span> "
-                                }
-                            }
-                        },
-                        {
-                            "title": "Tab 2",
-                            "tab": "Content 2"
-                        }
-                    ],
-                    "age11": 123
-                };
-
-                console.log("🚀 ~ file: plat-devices-tab.js ~ line 23 ~ newPayload", newPayload);
-
-                return newPayload
-            }
-        },
-        "body1": {
-            "type": "page",
-            "data": {
-                "arr": [{
-                        "a": "收入",
-                        "b": 199
-                    },
-                    {
-                        "a": "支出",
-                        "b": 299
-                    }
-                ]
-            },
-            "body": [{
-                "type": "tabs",
-                "source": "${arr}",
-                "tabs": [{
-                    "title": "${a}",
-                    "body": {
-                        "type": "tpl",
-                        "tpl": "金额：${b|number}元"
-                    }
-                }]
-            }]
-        },
-        "body": [{
-                type: 'page',
-                // body: '${age11}'
-            },
-
-            // 
-            {
-
-                "type": "tabs",
-                "mode": "card",
-                // "tabs": "${tabs1}"
-
-                // "tabs": [{
-                //         "title": "Tab ",
-
-                //         "tab": {
-                //             "type": "each",
-                //             "name": "arr",
-                //             "items": {
-                //                 "type": "container",
-                //                 "body": "<span class='label label-default m-l-sm'><%= data.name %></span> "
-                //             }
-                //         }
-                //     },
-                //     {
-                //         "title": "Tab 2",
-                //         "tab": "Content 2"
-                //     }
-                // ]
-            }
-
-        ]
-    };
-
     // let 
 
     let devices = {
         "type": "panel",
         "title": "装备详情",
 
-        "body": platDevicesTab
+        // "body": {platDevicesTab}
+        "body": {
+            "type": "service",
+            "schemaApi": {
+                "method": 'get',
+                'url': '/schema/plat-device-tabs/${params.id}'
+            }
+        }
 
     };
 
@@ -1328,8 +1215,8 @@
                     "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>通用属性表</span></div>"
                 },
                 {
-                    "type":"page",
-                    "body":{
+                    "type": "page",
+                    "body": {
                         "type": "property",
                         "items": [{
                                 "label": "国家/地区",
@@ -1346,7 +1233,7 @@
                         ]
                     }
                 },
-                
+
 
 
                 {
@@ -1401,22 +1288,21 @@
         }
     };
 
-    let platView =    {
+    let platView = {
         "type": "page",
         "initApi": {
             method: 'get',
             url: "/api/plat/0.1/${params.id}",
             adaptor: myutils.platItemResponseAdapter
         },
-        "body": [
-            {
+        "body": [{
                 "type": "container",
-                "className":"my-2",
+                "className": "my-2",
                 "body": {
                     "type": "button",
                     "actionType": "button",
                     "label": "返回",
-                    
+
                     onClick: () => {
                         window.history.back();
                     }
