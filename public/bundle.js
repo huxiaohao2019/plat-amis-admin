@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('express')) :
     typeof define === 'function' && define.amd ? define(['express'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.platApp = factory());
-})(this, (function () { 'use strict';
+}(this, (function () { 'use strict';
 
     const deviceFormItems = [
         {
@@ -184,7 +184,6 @@
         console.log("🚀 ~ requestAdaptor ~ subQueryList", subQueryList);
         let subQueryListStr = '[' + subQueryList.join('|') + ']';
         console.log("🚀 ~ requestAdaptor ~ subQueryListStr", subQueryListStr);
-        if (subQueryList.length) ;
 
         let newQuery2List=[
             "limit="+limit,
@@ -335,9 +334,9 @@
         }
     ];
 
-    let columns$2 = deviceListItems.map(v => v);
+    let columns = deviceListItems.map(v => v);
 
-    let operationItem$2= {
+    let operationItem= {
       "type": "operation",
       "label": "操作",
       "width": "",
@@ -370,7 +369,7 @@
       "placeholder": "-",
       "fixed": "right"
     };
-    columns$2.push(operationItem$2);
+    columns.push(operationItem);
 
 
     const deviceList = {
@@ -419,7 +418,7 @@
         },
         "bulkActions": [
         ],
-        "columns": columns$2,
+        "columns": columns,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -1378,9 +1377,9 @@
       ]
     };
 
-    let columns = deviceListItems.map(v => v);
+    let columns$2 = deviceListItems.map(v => v);
 
-    let operationItem = {
+    let operationItem$2 = {
         "type": "operation",
         "label": "操作",
         "width": "",
@@ -1413,7 +1412,7 @@
         "placeholder": "-",
         "fixed": "right"
     };
-    columns.push(operationItem);
+    columns$2.push(operationItem$2);
 
     const vendorDeviceList = {
         "type": "page",
@@ -1438,7 +1437,7 @@
             },
 
         
-            "columns": columns,
+            "columns": columns$2,
             "affixHeader": true,
             "columnsTogglable": "auto",
             "placeholder": "暂无数据",
@@ -1833,4 +1832,4 @@
 
     return main;
 
-}));
+})));
