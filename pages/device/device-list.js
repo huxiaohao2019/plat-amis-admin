@@ -26,7 +26,7 @@ let operationItem= {
       },
       {
         "type": "button",
-        "label": "删除1",
+        "label": "删除",
         "level": "danger",
         "actionType": "ajax",
         "confirmText": "您确认要删除?",

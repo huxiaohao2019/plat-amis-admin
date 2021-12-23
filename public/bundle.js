@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('express')) :
     typeof define === 'function' && define.amd ? define(['express'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.platApp = factory());
-}(this, (function () { 'use strict';
+})(this, (function () { 'use strict';
 
     const deviceFormItems = [
         {
@@ -184,6 +184,7 @@
         console.log("🚀 ~ requestAdaptor ~ subQueryList", subQueryList);
         let subQueryListStr = '[' + subQueryList.join('|') + ']';
         console.log("🚀 ~ requestAdaptor ~ subQueryListStr", subQueryListStr);
+        if (subQueryList.length) ;
 
         let newQuery2List=[
             "limit="+limit,
@@ -241,7 +242,7 @@
         return list;
     }
 
-    const platItemResponseAdapter = function (payload, response, api) {
+    const platItemResponseAdapter$1 = function (payload, response, api) {
         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api);
         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response);
         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload);
@@ -284,7 +285,7 @@
     var myutils = {
         requestAdaptor,
         listResponseAdapter,
-        platItemResponseAdapter
+        platItemResponseAdapter: platItemResponseAdapter$1
     };
 
     var deviceListItems = [{
@@ -334,9 +335,9 @@
         }
     ];
 
-    let columns = deviceListItems.map(v => v);
+    let columns$2 = deviceListItems.map(v => v);
 
-    let operationItem= {
+    let operationItem$2= {
       "type": "operation",
       "label": "操作",
       "width": "",
@@ -358,7 +359,7 @@
           },
           {
             "type": "button",
-            "label": "删除1",
+            "label": "删除",
             "level": "danger",
             "actionType": "ajax",
             "confirmText": "您确认要删除?",
@@ -370,7 +371,7 @@
       "placeholder": "-",
       "fixed": "right"
     };
-    columns.push(operationItem);
+    columns$2.push(operationItem$2);
 
 
     const deviceList = {
@@ -419,7 +420,7 @@
         },
         "bulkActions": [
         ],
-        "columns": columns,
+        "columns": columns$2,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -694,13 +695,50 @@
         }]
     };
 
-    const platFormItems = [
-        {
+    const platFormItems = [{
             "type": "text",
             "name": "name",
             "label": "名称",
             "required": true
         },
+        {
+            "type": "divider"
+        },
+      
+        {
+            "type": "input-file",
+            "name": "file",
+            "label": "File",
+            "asBase64": true,
+            "visibleOn": "this.img != undefined"
+
+        },
+        {
+            "type": "tpl",
+            //   "tpl": "${html|raw}"
+            "tpl": "<span style='text-align:center'><img width='240' src=${imgSrc}></span>",
+            "visibleOn": "this.file == undefined"
+
+        },
+
+         {
+            "type": "tpl",
+            //   "tpl": "${html|raw}"
+            "tpl": "<span style='text-align:center'><img width='240' src=${file}></span>",
+            "visibleOn": "this.file != undefined"
+
+        },
+
+        // {
+        //     "type": "service",
+        //     "body": {
+        //       "type": "image",
+        //     //   "src": "https://internal-amis-res.cdn.bcebos.com/images/2020-1/1578395692722/4f3cb4202335.jpeg@s_0,w_216,l_1,f_jpg,q_80"
+        //     "src":"${img.file_data}"
+        //     }
+        //   },
+
+
         {
             "type": "divider"
         },
@@ -713,9 +751,7 @@
         {
             "type": "divider"
         },
-        {
-            "type": "divider"
-        },
+
         {
             "type": "text",
             "name": "type",
@@ -740,7 +776,7 @@
         {
             "type": "divider"
         },
-        
+
         {
             "type": "input-kv",
             "name": "profile",
@@ -975,51 +1011,74 @@
         }]
     };
 
-    const platEdit =
-    {
+    const platItemResponseAdapter = function (payload, response, api) {
+      console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api);
+      console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response);
+      console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload);
+
+      var newItem = {
+        ...payload,
+        _origin: payload
+      };
+
+      if (payload.img && payload.img.file_data) {
+        newItem.imgSrc = 'data:image/jpeg;base64,' + payload.img.file_data;
+      }
+
+      return newItem;
+    };
+
+    const platEdit = {
       "type": "page",
       "title": "修改 ${params.id}",
       "remark": null,
-      "toolbar": [
-        {
-          "type": "button",
-          "actionType": "button",
-          "label": "返回列表",
-          onClick: () => {
-              window.history.back();
-          }
+      "toolbar": [{
+        "type": "button",
+        "actionType": "button",
+        "label": "返回列表",
+        onClick: () => {
+          window.history.back();
         }
-      ],
-      "body": [
-        {
-          "type": "form",
-          "initApi": "/api/plat/0.1/${params.id}",
-          // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id",
-          "api": {
-            "method": "PUT",
-            "url":"/api/plat/0.1/${params.id}",
-            requestAdaptor: function (api) {
-              console.log("🚀 ~ api", api);
-              var newData = {
-                ...api.data
-              };
-              newData.produce_time = Number(newData.produce_time);
-              newData.type=Number(newData.type);
-              const payload= {
-                ...api,
-                data: {
-                  ...newData, // 获取暴露的 api 中的 data 变量
-                  
-                }
-              };
-              console.log("🚀 ~ payload", payload);
-              return payload;
+      }],
+      "body": [{
+        "type": "form",
+        // "initApi": "/api/plat/0.1/${params.id}",
+        "initApi": {
+          method: 'get',
+          url: "/api/plat/0.1/${params.id}",
+          adaptor: platItemResponseAdapter
+        },
+        // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id",
+        "api": {
+          "method": "PUT",
+          "url": "/api/plat/0.1/${params.id}",
+          requestAdaptor: function (api) {
+            console.log("🚀 ~ api", api);
+            var newData = {
+              ...api.data
+            };
+            newData.produce_time = Number(newData.produce_time);
+            newData.type = Number(newData.type);
+            if (/^data:image/g.test(newData.file)) {
+              let base64_1 = newData.file.replace(/data:.+base64,/, '');
+              newData.img.file_data = base64_1;
             }
-          },
-          "redirect": "/plat/list",
-          "controls": platFormItems
-        }
-      ]
+
+            const payload = {
+              ...api,
+              data: {
+                ...newData, // 获取暴露的 api 中的 data 变量
+
+              }
+            };
+            console.log("🚀 ~ payload", payload);
+            return payload;
+          }
+        },
+        "redirect": "/plat/list",
+        "controls": platFormItems
+
+      }]
     };
 
     const platList2 = {
@@ -1379,9 +1438,9 @@
       ]
     };
 
-    let columns$2 = deviceListItems.map(v => v);
+    let columns = deviceListItems.map(v => v);
 
-    let operationItem$2 = {
+    let operationItem = {
         "type": "operation",
         "label": "操作",
         "width": "",
@@ -1414,7 +1473,7 @@
         "placeholder": "-",
         "fixed": "right"
     };
-    columns$2.push(operationItem$2);
+    columns.push(operationItem);
 
     const vendorDeviceList = {
         "type": "page",
@@ -1439,7 +1498,7 @@
             },
 
         
-            "columns": columns$2,
+            "columns": columns,
             "affixHeader": true,
             "columnsTogglable": "auto",
             "placeholder": "暂无数据",
@@ -1834,4 +1893,4 @@
 
     return main;
 
-})));
+}));
