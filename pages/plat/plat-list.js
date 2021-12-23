@@ -125,7 +125,8 @@ const platList2 = {
               "level": "danger",
               "actionType": "ajax",
               "confirmText": "您确认要删除?",
-              "api": "get:/api/url/destroy/${id}"
+              // "api": "get:/api/url/destroy/${id}"
+              "api": "delete:/api/plat/0.1/${id}"
             }
           ]
         }],
