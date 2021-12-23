@@ -26,11 +26,12 @@ let operationItem= {
       },
       {
         "type": "button",
-        "label": "删除",
+        "label": "删除1",
         "level": "danger",
         "actionType": "ajax",
         "confirmText": "您确认要删除?",
-        "api": "get:/api/url/destroy/${id}"
+        // "api": "get:/api/url/destroy/${id}"
+        "api": "delete:/api/device/0.1/${id}"
       }
     ]
   }],
