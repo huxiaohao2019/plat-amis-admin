@@ -625,7 +625,7 @@
             {
                 "type": "container",
                 "className":"my-2",
-                "body": {
+                "body": [{
                     "type": "button",
                     "actionType": "button",
                     "label": "返回",
@@ -633,7 +633,16 @@
                     onClick: () => {
                         window.history.back();
                     }
+                },
+                {
+                    "type": "button",
+                    "actionType": "button",
+                    "label": "编辑",
+                    "actionType": "link",
+                    "link": "/device/${params.id}/edit"
+                
                 }
+            ]
             },
          {
             "type": "panel",
@@ -1371,10 +1380,7 @@
                 "label": "编辑",
                 "actionType": "link",
                 "link": "/plat/${params.id}/edit"
-                // onClick: () => {
-                //     // window.history.back();
-                    
-                // }
+            
             }
         ]
         },
@@ -1706,6 +1712,13 @@
             onClick: () => {
                 window.history.back();
             }
+        },{
+            "type": "button",
+            "actionType": "button",
+            "label": "编辑",
+            "actionType": "link",
+            "link": "/vendor/${params.id}/edit"
+        
         }],
         "body": body2
     };

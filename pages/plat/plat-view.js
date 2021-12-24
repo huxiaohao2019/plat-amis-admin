@@ -175,10 +175,7 @@ let platView = {
             "label": "编辑",
             "actionType": "link",
             "link": "/plat/${params.id}/edit"
-            // onClick: () => {
-            //     // window.history.back();
-                
-            // }
+        
         }
     ]
     },

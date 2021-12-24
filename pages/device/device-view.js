@@ -34,7 +34,7 @@ let deviceView = {
         {
             "type": "container",
             "className":"my-2",
-            "body": {
+            "body": [{
                 "type": "button",
                 "actionType": "button",
                 "label": "返回",
@@ -42,7 +42,16 @@ let deviceView = {
                 onClick: () => {
                     window.history.back();
                 }
+            },
+            {
+                "type": "button",
+                "actionType": "button",
+                "label": "编辑",
+                "actionType": "link",
+                "link": "/device/${params.id}/edit"
+            
             }
+        ]
         },
      {
         "type": "panel",

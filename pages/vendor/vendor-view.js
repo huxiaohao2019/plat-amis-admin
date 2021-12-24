@@ -106,6 +106,13 @@ let vendorView = {
         onClick: () => {
             window.history.back();
         }
+    },{
+        "type": "button",
+        "actionType": "button",
+        "label": "编辑",
+        "actionType": "link",
+        "link": "/vendor/${params.id}/edit"
+    
     }],
     "body": body2
 }
