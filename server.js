@@ -4,6 +4,7 @@ const path = require('path');
 const reload = require('reload');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
+const config=require('./config')
 
 const {
   createProxyMiddleware
@@ -21,7 +22,7 @@ app.use('/public', express.static('public'));
 app.use('/pages', express.static('pages'));
 app.use('/api', createProxyMiddleware({
   // 转发到5000端口
-  target: 'http://114.67.110.181:17980',
+  target: config.serverUrl,
   // 转发时重写路径
   pathRewrite: {
     '^/api': ''

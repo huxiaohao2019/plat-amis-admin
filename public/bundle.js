@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('express')) :
     typeof define === 'function' && define.amd ? define(['express'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.platApp = factory());
-})(this, (function () { 'use strict';
+}(this, (function () { 'use strict';
 
     const deviceFormItems = [
         {
@@ -184,7 +184,6 @@
         console.log("🚀 ~ requestAdaptor ~ subQueryList", subQueryList);
         let subQueryListStr = '[' + subQueryList.join('|') + ']';
         console.log("🚀 ~ requestAdaptor ~ subQueryListStr", subQueryListStr);
-        if (subQueryList.length) ;
 
         let newQuery2List=[
             "limit="+limit,
@@ -242,7 +241,7 @@
         return list;
     }
 
-    const platItemResponseAdapter$1 = function (payload, response, api) {
+    const platItemResponseAdapter = function (payload, response, api) {
         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api);
         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response);
         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload);
@@ -285,7 +284,7 @@
     var myutils = {
         requestAdaptor,
         listResponseAdapter,
-        platItemResponseAdapter: platItemResponseAdapter$1
+        platItemResponseAdapter
     };
 
     var deviceListItems = [{
@@ -335,9 +334,9 @@
         }
     ];
 
-    let columns$2 = deviceListItems.map(v => v);
+    let columns = deviceListItems.map(v => v);
 
-    let operationItem$2= {
+    let operationItem= {
       "type": "operation",
       "label": "操作",
       "width": "",
@@ -371,7 +370,7 @@
       "placeholder": "-",
       "fixed": "right"
     };
-    columns$2.push(operationItem$2);
+    columns.push(operationItem);
 
 
     const deviceList = {
@@ -420,7 +419,7 @@
         },
         "bulkActions": [
         ],
-        "columns": columns$2,
+        "columns": columns,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -1011,7 +1010,7 @@
         }]
     };
 
-    const platItemResponseAdapter = function (payload, response, api) {
+    const platItemResponseAdapter$1 = function (payload, response, api) {
       console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api);
       console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response);
       console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload);
@@ -1046,7 +1045,7 @@
         "initApi": {
           method: 'get',
           url: "/api/plat/0.1/${params.id}",
-          adaptor: platItemResponseAdapter
+          adaptor: platItemResponseAdapter$1
         },
         // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id",
         "api": {
@@ -1438,9 +1437,9 @@
       ]
     };
 
-    let columns = deviceListItems.map(v => v);
+    let columns$2 = deviceListItems.map(v => v);
 
-    let operationItem = {
+    let operationItem$2 = {
         "type": "operation",
         "label": "操作",
         "width": "",
@@ -1473,7 +1472,7 @@
         "placeholder": "-",
         "fixed": "right"
     };
-    columns.push(operationItem);
+    columns$2.push(operationItem$2);
 
     const vendorDeviceList = {
         "type": "page",
@@ -1498,7 +1497,7 @@
             },
 
         
-            "columns": columns,
+            "columns": columns$2,
             "affixHeader": true,
             "columnsTogglable": "auto",
             "placeholder": "暂无数据",
@@ -1893,4 +1892,4 @@
 
     return main;
 
-}));
+})));
