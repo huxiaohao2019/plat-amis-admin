@@ -16,9 +16,9 @@ const vendorList={
       "type": "crud",
       "name": "sample",
       "perPage": 10,
-      "data": {
-        "page": 1
-      },
+      // "data": {
+      //   "page": 1
+      // },
       // "api": {
       //   "method": "get",
       //   "url": "/api/app?limit=${page}"
@@ -94,6 +94,7 @@ const vendorList={
                 "label": "修改",
                 "level": "info",
                 "actionType": "link",
+                // "link": "/vendor/${id}/edit?page=${page}"
                 "link": "/vendor/${id}/edit"
               },
               {

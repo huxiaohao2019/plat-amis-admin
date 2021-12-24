@@ -16,9 +16,9 @@ const platList2 = {
     "type": "crud",
     "name": "sample",
     "perPage": 10,
-    "data": {
-      "page": 1
-    },
+    // "data": {
+    //   "page": 1
+    // },
     // "api": {
     //   "method": "get",
     //   "url": "/api/app?limit=${page}"

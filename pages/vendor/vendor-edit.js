@@ -24,7 +24,7 @@ const vendorEdit =
         "method": "PUT",
         "url":"/api/vendor/0.1/${params.id}"
       },
-      "redirect": "/vendor/list",
+      "redirect": "/vendor/list?page=${page}",
       "controls": vendorFormItems
     }
   ]

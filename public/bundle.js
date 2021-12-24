@@ -124,7 +124,7 @@
             return payload;
           }
         },
-        "redirect": "/device/list",
+        "redirect": "/device/list?page=${page}",
         "controls": deviceFormItems
       }]
     };
@@ -389,9 +389,9 @@
         "type": "crud",
         "name": "sample",
         "perPage": 10,
-        "data": {
-          "page": 1
-        },
+        // "data": {
+        //   "page": 1
+        // },
         api: {
           method: 'get',
           url: '/api/device/0.1',
@@ -1074,7 +1074,7 @@
             return payload;
           }
         },
-        "redirect": "/plat/list",
+        "redirect": "/plat/list?page=${page}",
         "controls": platFormItems
 
       }]
@@ -1096,9 +1096,9 @@
         "type": "crud",
         "name": "sample",
         "perPage": 10,
-        "data": {
-          "page": 1
-        },
+        // "data": {
+        //   "page": 1
+        // },
         // "api": {
         //   "method": "get",
         //   "url": "/api/app?limit=${page}"
@@ -1255,93 +1255,93 @@
         "body": {
             "type": "service",
             "body": [{
-                    "type": "container",
-                    "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
+                "type": "container",
+                "body": "<div style='font-size: 18px;padding: 4px;font-family:Simsun;text-align:center' class='plat-title'>${name}</div>"
+            },
+            {
+                "type": "page",
+                "data": {
+                    "html": "<img src=${imgSrc}>"
                 },
-                {
-                    "type": "page",
-                    "data": {
-                        "html": "<img src=${imgSrc}>"
+                "body": {
+                    "type": "tpl",
+                    //   "tpl": "${html|raw}"
+                    "tpl": "<div style='text-align:center'><img width='320' src=${imgSrc}></div>"
+                }
+            },
+            {
+                "type": "page",
+                "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>通用属性表</span></div>"
+            },
+            {
+                "type": "page",
+                "body": {
+                    "type": "property",
+                    "items": [{
+                        "label": "国家/地区",
+                        "content": "${country}"
                     },
-                    "body": {
+                    {
+                        "label": "科目",
+                        "content": "${category}"
+                    },
+                    {
+                        "label": "时间",
+                        "content": "${time|date:LLL:x}"
+                    }
+                    ]
+                }
+            },
+
+
+
+            {
+                "type": "page",
+                "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>简况</span></div>"
+            },
+            {
+                "type": "page",
+                "body": {
+                    "type": "each",
+                    "name": "profileKvList",
+                    "items": {
                         "type": "tpl",
-                        //   "tpl": "${html|raw}"
-                        "tpl": "<div style='text-align:center'><img width='320' src=${imgSrc}></div>"
-                    }
-                },
-                {
-                    "type": "page",
-                    "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>通用属性表</span></div>"
-                },
-                {
-                    "type": "page",
-                    "body": {
-                        "type": "property",
-                        "items": [{
-                                "label": "国家/地区",
-                                "content": "${country}"
-                            },
-                            {
-                                "label": "科目",
-                                "content": "${category}"
-                            },
-                            {
-                                "label": "时间",
-                                "content": "${time|date:LLL:x}"
-                            }
-                        ]
-                    }
-                },
-
-
-
-                {
-                    "type": "page",
-                    "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>1.<span class='test1'>简况</span></div>"
-                },
-                {
-                    "type": "page",
-                    "body": {
-                        "type": "each",
-                        "name": "profileKvList",
-                        "items": {
-                            "type": "tpl",
-                            "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
-                        }
-                    }
-                },
-                {
-                    "type": "page",
-                    "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>2.<span class='test1'>基本性能参数2</span></div>"
-                },
-                {
-                    "type": "page",
-                    "body": {
-                        "type": "each",
-                        "name": "techKvList",
-                        "items": {
-                            "type": "tpl",
-                            "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
-                        }
-                    }
-                },
-
-                {
-                    "type": "page",
-                    "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>3.<span class='test1'>主要武器</span></div>"
-                },
-
-                {
-                    "type": "page",
-                    "body": {
-                        "type": "each",
-                        "name": "weaponsKvList",
-                        "items": {
-                            "type": "tpl",
-                            "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
-                        }
+                        "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
                     }
                 }
+            },
+            {
+                "type": "page",
+                "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>2.<span class='test1'>基本性能参数2</span></div>"
+            },
+            {
+                "type": "page",
+                "body": {
+                    "type": "each",
+                    "name": "techKvList",
+                    "items": {
+                        "type": "tpl",
+                        "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
+                    }
+                }
+            },
+
+            {
+                "type": "page",
+                "body": "<div style='background-color:#E4D9CA;padding:4px;font-size:16px;color:#425EAF;'>3.<span class='test1'>主要武器</span></div>"
+            },
+
+            {
+                "type": "page",
+                "body": {
+                    "type": "each",
+                    "name": "weaponsKvList",
+                    "items": {
+                        "type": "tpl",
+                        "tpl": "<div style='font-weight: 500' ><span class='sub-label' style=' color:#425EAF;'><span class='label-text' style='display:inline-block;min-width:56px;text-align:justify;'> <%= data.key %></span>: </span><span style='color:#595959;font-family:Simsun'> <%= data.value %></span></div> "
+                    }
+                }
+            }
 
             ]
         }
@@ -1355,35 +1355,46 @@
             adaptor: myutils.platItemResponseAdapter
         },
         "body": [{
-                "type": "container",
-                "className": "my-2",
-                "body": {
-                    "type": "button",
-                    "actionType": "button",
-                    "label": "返回",
+            "type": "container",
+            "className": "my-2",
+            "body": [{
+                "type": "button",
+                "actionType": "button",
+                "label": "返回",
 
-                    onClick: () => {
-                        window.history.back();
-                    }
+                onClick: () => {
+                    window.history.back();
+                }
+            },{
+                "type": "button",
+                "actionType": "button",
+                "label": "编辑",
+                "actionType": "link",
+                "link": "/plat/${params.id}/edit"
+                // onClick: () => {
+                //     // window.history.back();
+                    
+                // }
+            }
+        ]
+        },
+        {
+            "type": "grid",
+            // "className": "b-a bg-dark lter",
+            "columns": [{
+                "md": 6,
+                "body": {
+                    "type": "panel",
+                    "title": "平台概况",
+                    "body": detailView
                 }
             },
             {
-                "type": "grid",
-                // "className": "b-a bg-dark lter",
-                "columns": [{
-                        "md": 6,
-                        "body": {
-                            "type": "panel",
-                            "title": "平台概况",
-                            "body": detailView
-                        }
-                    },
-                    {
-                        "md": 6,
-                        "body": devices
-                    }
-                ]
+                "md": 6,
+                "body": devices
             }
+            ]
+        }
         ]
     };
 
@@ -1534,7 +1545,7 @@
             "method": "PUT",
             "url":"/api/vendor/0.1/${params.id}"
           },
-          "redirect": "/vendor/list",
+          "redirect": "/vendor/list?page=${page}",
           "controls": vendorFormItems
         }
       ]
@@ -1556,9 +1567,9 @@
           "type": "crud",
           "name": "sample",
           "perPage": 10,
-          "data": {
-            "page": 1
-          },
+          // "data": {
+          //   "page": 1
+          // },
           // "api": {
           //   "method": "get",
           //   "url": "/api/app?limit=${page}"
@@ -1634,6 +1645,7 @@
                     "label": "修改",
                     "level": "info",
                     "actionType": "link",
+                    // "link": "/vendor/${id}/edit?page=${page}"
                     "link": "/vendor/${id}/edit"
                   },
                   {

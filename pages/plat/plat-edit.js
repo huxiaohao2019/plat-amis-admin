@@ -64,7 +64,7 @@ const platEdit = {
         return payload;
       }
     },
-    "redirect": "/plat/list",
+    "redirect": "/plat/list?page=${page}",
     "controls": platFormItems
 
   }]
