@@ -11,7 +11,7 @@ const platFormItems = [{
     {
         "type": "input-file",
         "name": "file",
-        "label": "File",
+        "label": "图片",
         "asBase64": true,
         "visibleOn": "this.img != undefined"
 
