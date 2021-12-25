@@ -1,19 +1,51 @@
 import myutils from "../../tools/myutils";
+import platSimpleVendor from "../plat/components/plat-list-item-simple-vendor";
 import platDataColumns from "../plat/plat-data-columns";
 import devicePlatBindDiaLog from "./device-plat-bind";
 
-const devicePlatOpeationItems = [{
-  "type": "button",
-  "label": "移除绑定",
-  // "level": "info",
-  "level": "danger",
-  "actionType": "ajax",
-  "confirmText": "确定移除该平台绑定?${name}",
-  // http://127.0.0.1:8089/device/belonging/0.1/dev/4/plat/1
-  "api": "delete:/api/device/belonging/0.1/dev/${params.id}/plat/${id}"
-}]
+let baseColumns=platDataColumns.map(v=>{
+  // if(v.name=='vendor_id'){
+  //   return platSimpleVendor
+  // }else{
+  //   return v;
+  // }
+  return v;
+}).filter(v=>{
+  return v.name!=='vendor_id'
+})
 
-const devicePlatItems = platDataColumns.concat(devicePlatOpeationItems)
+const devicePlatOpeationItems = [{
+    "type": "operation",
+    "label": "操作",
+    "width": "",
+    "buttons": [{
+      "type": "button-group",
+      "buttons": [{
+          "type": "button",
+          "label": "查看",
+          "level": "primary",
+          "actionType": "link",
+          "link": "/plat/${id}"
+        },
+        {
+          "type": "button",
+          "label": "移除绑定",
+          // "level": "info",
+          "level": "danger",
+          "actionType": "ajax",
+          "confirmText": "确定移除该平台绑定?${name}",
+          // http://127.0.0.1:8089/device/belonging/0.1/dev/4/plat/1
+          "api": "delete:/api/device/belonging/0.1/dev/${params.id}/plat/${id}"
+        }
+      ]
+    }],
+    "placeholder": "-",
+    "fixed": "right"
+  }
+
+]
+
+const devicePlatItems = baseColumns.concat(devicePlatOpeationItems)
 
 
 const devicePlatList = {
@@ -22,7 +54,7 @@ const devicePlatList = {
   "remark": null,
   "name": "page-demo",
   "toolbar": [
-    
+
     {
       "type": "button",
       "primary": true,

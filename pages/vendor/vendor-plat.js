@@ -3,7 +3,9 @@ import platDataColumns from '../plat/plat-data-columns';
 import vendorPlatBindDiaLog from './vendor-plat-bind';
 
 
-let columns = platDataColumns.map(v => v);
+let columns = platDataColumns.map(v => v).filter(v=>{
+    return v.name!=='vendor_id'
+})
 
 let operationItem = {
     "type": "operation",

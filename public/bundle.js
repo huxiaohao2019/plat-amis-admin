@@ -544,7 +544,7 @@
         }
     ];
 
-    let columns$3 = deviceListItems.map(v => v);
+    let columns$4 = deviceListItems.map(v => v);
 
     let operationItem$3= {
       "type": "operation",
@@ -580,7 +580,7 @@
       "placeholder": "-",
       "fixed": "right"
     };
-    columns$3.push(operationItem$3);
+    columns$4.push(operationItem$3);
 
 
     const deviceList = {
@@ -629,7 +629,7 @@
         },
         "bulkActions": [
         ],
-        "columns": columns$3,
+        "columns": columns$4,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -642,57 +642,219 @@
       }]
     };
 
-    let platDataColumns=[
-        {
-          "name": "id",
-          "label": "ID",
-          "width": 20,
-          "sortable": true
-        },
-        {
-          "name": "name",
-          "label": "名称",
-          "sortable": true
-        },
-        {
-          "name": "time",
-          "type":"tpl",
-          "label": "time",
-          "tpl": "${time|date:LLL:x}"
-         
-        },
-        {
-          "type": "link",
-          "href": "/#/plat/${id}/device",
-          "label": "装备111",
-          "name":"id",
-          "blank":false,
-          "body": "装备列表"
-        },
-        {
-          name: 'type',
-          label: '类型',
-          
-        },
-        {
-          "name": "country",
-          "label": "国家(地区)",
-          "sortable": true
+    // {
+    //     int UNDEFINED = 0;
+    //     int WARSHIP = 1;
+    //     int PLANE = 2;
+    //     int ARMOURED_VEHICLE = 3;
+    //     int MIL_SAT = 4;
+    // }
+    let platTypes = {
+        "1": "WARSHIP",
+        "2": "PLANE",
+        "3": "ARMOURED_VEHICLE",
+        "4": "MIL_SAT",
+        "*":"其他"
+    };
+
+    let platVendorBindDiaLog = {
+        "title": "添加厂商绑定",
+        "body": {
+            "initApi": {
+                "method": "get",
+                "url": "/api/vendor/0.1?limit=1000",
+                "adaptor": function (payload, response, api) {
+                    console.log("🚀 ~ file: plat-plats.js ~ line 30 ~ response", response);
+                    console.log("🚀 ~ file: plat-plats.js ~ line 30 ~ payload", payload);
+                    let newPayload = {
+                        "status": 0,
+                        "msg": "",
+                        "data": {
+                            "age": 222,
+                            // 必须用 options 作为选项组的 key 值
+                            "options": payload
+                        }
+                    };
+                    console.log("🚀 ~ file: plat-plats.js ~ line 35 ~ newPayload", newPayload);
+                    return newPayload;
+                }
+            },
+            "type": "form",
+            "api": {
+                "method": "post",
+                "url": "/api/vendor/product/0.1",
+                requestAdaptor: function (api) {
+                    console.log("🚀 ~ file: plat-plat-bind.js ~ line 30 ~ api", api);
+                    let newItem = {
+                        ...api,
+                        data: {
+                            ...api.data, // 获取暴露的 api 中的 data 变量
+                            // foo: 'bar' // 新添加数据
+                        }
+                    };
+
+                    console.log("🚀 ~ file: plat-plat-bind.js ~ line 40 ~ api.data.plat_id", api.data.plat_id);
+                    if (api.data.plat_id) {
+                        console.log("🚀 ~ file: plat-plat-bind.js ~ line 40 ~ api.data.plat_id", api.data.plat_id);
+                        let plat_id = api.data.plat_id;
+                        newItem.data.plat_id = Number(plat_id);
+                        newItem.body.plat_id = Number(plat_id);
+
+                    }
+
+                    console.log("🚀 ~ file: plat-plat-bind.js ~ line 39 ~ newItem", newItem);
+                    return newItem;
+                },
+                "data": {
+                    "vendor_id": "${vendor}",
+                    "obj": 1,
+                    "obj_id": "${id}"
+                }
+            },
+            "body": [
+                // {
+                //     "type": "divider"
+                // },
+                {
+                    "label": "平台",
+                    "labelField": "name",
+                    "valueField": "id",
+                    "type": "select",
+                    "searchable": true,
+                    "name": "vendor",
+                    "source": "${options}"
+                    // "source": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/getOptions?waitSeconds=1"
+                }
+            ]
         }
-      ];
+    };
+
+    let platDataColumns = [{
+        "name": "id",
+        "label": "ID",
+        "width": 20,
+        "sortable": true
+      },
+      {
+        "name": "name",
+        "label": "名称",
+        "sortable": true
+      },
+      {
+        "name": "time",
+        "type": "tpl",
+        "label": "时间",
+        "tpl": "${time|date:LLL:x}"
+
+      },
+      {
+        "label": "装备",
+        "name": "id",
+        "type": "link",
+        "href": "/#/plat/${id}/device",
+        "blank": false,
+        "body": "装备列表"
+      },
+
+      {
+        "name": "vendor_id",
+        "type": "container",
+        "label": "生产厂商",
+
+        "body": [{
+            "type": "link",
+            "href": "/#/vendor/${vendor_id}",
+            "blank": false,
+            "className": "mr-1.5",
+            "visibleOn": "this.vendor_id",
+            "body": "${vendor_name}",
+          },
+          {
+
+            "name": "vendor-bind",
+            "type": "button",
+            "size": "xs",
+            // "primary": true,
+            "label": "添加",
+            "actionType": "dialog",
+            // "dialog": deviceVendorBindDiaLog,
+            "dialog": platVendorBindDiaLog,
+            "visibleOn": "!this.vendor_id"
+          },
+          {
+            "name": "vendor-bind",
+            "type": "button",
+            "size": "xs",
+            "label": "移除",
+
+            "level": "danger",
+            "visibleOn": "this.vendor_id",
+
+            "actionType": "ajax",
+            "confirmText": "确定移除该厂商绑定?${name}",
+            "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/1/obj-id/${id}"
+          },
+        ]
+      },
+
+
+
+      {
+        name: 'type',
+        label: '类型',
+        "type": "mapping",
+        "map": platTypes
+      },
+      {
+        "name": "country",
+        "label": "国家(地区)",
+        "sortable": true
+      }
+    ];
+
+    let baseColumns=platDataColumns.map(v=>{
+      // if(v.name=='vendor_id'){
+      //   return platSimpleVendor
+      // }else{
+      //   return v;
+      // }
+      return v;
+    }).filter(v=>{
+      return v.name!=='vendor_id'
+    });
 
     const devicePlatOpeationItems = [{
-      "type": "button",
-      "label": "移除绑定",
-      // "level": "info",
-      "level": "danger",
-      "actionType": "ajax",
-      "confirmText": "确定移除该平台绑定?${name}",
-      // http://127.0.0.1:8089/device/belonging/0.1/dev/4/plat/1
-      "api": "delete:/api/device/belonging/0.1/dev/${params.id}/plat/${id}"
-    }];
+        "type": "operation",
+        "label": "操作",
+        "width": "",
+        "buttons": [{
+          "type": "button-group",
+          "buttons": [{
+              "type": "button",
+              "label": "查看",
+              "level": "primary",
+              "actionType": "link",
+              "link": "/plat/${id}"
+            },
+            {
+              "type": "button",
+              "label": "移除绑定",
+              // "level": "info",
+              "level": "danger",
+              "actionType": "ajax",
+              "confirmText": "确定移除该平台绑定?${name}",
+              // http://127.0.0.1:8089/device/belonging/0.1/dev/4/plat/1
+              "api": "delete:/api/device/belonging/0.1/dev/${params.id}/plat/${id}"
+            }
+          ]
+        }],
+        "placeholder": "-",
+        "fixed": "right"
+      }
 
-    const devicePlatItems = platDataColumns.concat(devicePlatOpeationItems);
+    ];
+
+    const devicePlatItems = baseColumns.concat(devicePlatOpeationItems);
 
 
     const devicePlatList = {
@@ -701,7 +863,7 @@
       "remark": null,
       "name": "page-demo",
       "toolbar": [
-        
+
         {
           "type": "button",
           "primary": true,
@@ -1068,7 +1230,7 @@
         }
     };
 
-    let columns$2 = deviceListItems.map(v => v).filter(v=>{
+    let columns$3 = deviceListItems.map(v => v).filter(v=>{
         return v.name!='vendor_id'
     });
 
@@ -1115,7 +1277,7 @@
         "placeholder": "-",
         "fixed": "right"
     };
-    columns$2.push(operationItem$2);
+    columns$3.push(operationItem$2);
 
     const platDeviceList = {
         "type": "page",
@@ -1150,7 +1312,7 @@
             },
 
 
-            "columns": columns$2,
+            "columns": columns$3,
             "affixHeader": true,
             "columnsTogglable": "auto",
             "placeholder": "暂无数据",
@@ -1233,92 +1395,42 @@
       }]
     };
 
-    // {
-    //     int UNDEFINED = 0;
-    //     int WARSHIP = 1;
-    //     int PLANE = 2;
-    //     int ARMOURED_VEHICLE = 3;
-    //     int MIL_SAT = 4;
-    // }
-    let platTypes = {
-        "1": "WARSHIP",
-        "2": "PLANE",
-        "3": "ARMOURED_VEHICLE",
-        "4": "MIL_SAT",
-        "*":"其他"
-    };
-
-    let platVendorBindDiaLog = {
-        "title": "添加厂商绑定",
-        "body": {
-            "initApi": {
-                "method": "get",
-                "url": "/api/vendor/0.1?limit=1000",
-                "adaptor": function (payload, response, api) {
-                    console.log("🚀 ~ file: plat-plats.js ~ line 30 ~ response", response);
-                    console.log("🚀 ~ file: plat-plats.js ~ line 30 ~ payload", payload);
-                    let newPayload = {
-                        "status": 0,
-                        "msg": "",
-                        "data": {
-                            "age": 222,
-                            // 必须用 options 作为选项组的 key 值
-                            "options": payload
-                        }
-                    };
-                    console.log("🚀 ~ file: plat-plats.js ~ line 35 ~ newPayload", newPayload);
-                    return newPayload;
-                }
-            },
-            "type": "form",
-            "api": {
-                "method": "post",
-                "url": "/api/vendor/product/0.1",
-                requestAdaptor: function (api) {
-                    console.log("🚀 ~ file: plat-plat-bind.js ~ line 30 ~ api", api);
-                    let newItem = {
-                        ...api,
-                        data: {
-                            ...api.data, // 获取暴露的 api 中的 data 变量
-                            // foo: 'bar' // 新添加数据
-                        }
-                    };
-
-                    console.log("🚀 ~ file: plat-plat-bind.js ~ line 40 ~ api.data.plat_id", api.data.plat_id);
-                    if (api.data.plat_id) {
-                        console.log("🚀 ~ file: plat-plat-bind.js ~ line 40 ~ api.data.plat_id", api.data.plat_id);
-                        let plat_id = api.data.plat_id;
-                        newItem.data.plat_id = Number(plat_id);
-                        newItem.body.plat_id = Number(plat_id);
-
-                    }
-
-                    console.log("🚀 ~ file: plat-plat-bind.js ~ line 39 ~ newItem", newItem);
-                    return newItem;
+    let platListOperationItems = [{
+        "type": "operation",
+        "label": "操作",
+        "width": "",
+        "buttons": [{
+            "type": "button-group",
+            "buttons": [{
+                    "type": "button",
+                    "label": "查看",
+                    "level": "primary",
+                    "actionType": "link",
+                    "link": "/plat/${id}"
                 },
-                "data": {
-                    "vendor_id": "${vendor}",
-                    "obj": 1,
-                    "obj_id": "${id}"
-                }
-            },
-            "body": [
-                // {
-                //     "type": "divider"
-                // },
                 {
-                    "label": "平台",
-                    "labelField": "name",
-                    "valueField": "id",
-                    "type": "select",
-                    "searchable": true,
-                    "name": "vendor",
-                    "source": "${options}"
-                    // "source": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/getOptions?waitSeconds=1"
+                    "type": "button",
+                    "label": "修改",
+                    "level": "info",
+                    "actionType": "link",
+                    "link": "/plat/${id}/edit"
+                },
+                {
+                    "type": "button",
+                    "label": "删除",
+                    "level": "danger",
+                    "actionType": "ajax",
+                    "confirmText": "您确认要删除?",
+                    // "api": "get:/api/url/destroy/${id}"
+                    "api": "delete:/api/plat/0.1/${id}"
                 }
             ]
-        }
-    };
+        }],
+        "placeholder": "-",
+        "fixed": "right"
+    }];
+
+    let columns$2=platDataColumns.concat(platListOperationItems);
 
     const platList2 = {
       "type": "page",
@@ -1365,123 +1477,7 @@
         "bulkActions": [
 
         ],
-        "columns": [{
-            "name": "id",
-            "label": "ID",
-            "width": 20,
-            "sortable": true
-          },
-          {
-            "name": "name",
-            "label": "名称",
-            "sortable": true
-          },
-          {
-            "name": "time",
-            "type": "tpl",
-            "label": "时间",
-            "tpl": "${time|date:LLL:x}"
-
-          },
-          {
-            "label": "装备",
-            "name": "id",
-            "type": "link",
-            "href": "/#/plat/${id}/device",
-            "blank": false,
-            "body": "装备列表"
-          },
-
-          {
-            "name": "vendor_id",
-            "type": "container",
-            "label": "生产厂商",
-
-            "body": [{
-                "type": "link",
-                "href": "/#/vendor/${vendor_id}",
-                "blank": false,
-                "className": "mr-1.5",
-                "visibleOn": "this.vendor_id",
-                "body": "${vendor_name}",
-              },
-              {
-
-                "name": "vendor-bind",
-                "type": "button",
-                "size": "xs",
-                // "primary": true,
-                "label": "添加",
-                "actionType": "dialog",
-                // "dialog": deviceVendorBindDiaLog,
-                "dialog": platVendorBindDiaLog,
-                "visibleOn": "!this.vendor_id"
-              },
-              {
-                "name": "vendor-bind",
-                "type": "button",
-                "size": "xs",
-                "label": "移除",
-
-                "level": "danger",
-                "visibleOn": "this.vendor_id",
-
-                "actionType": "ajax",
-                "confirmText": "确定移除该厂商绑定?${name}",
-                "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/1/obj-id/${id}"
-              },
-            ]
-          },
-
-
-
-          {
-            name: 'type',
-            label: '类型',
-            "type": "mapping",
-            "map": platTypes
-          },
-          {
-            "name": "country",
-            "label": "国家(地区)",
-            "sortable": true
-          },
-
-          {
-            "type": "operation",
-            "label": "操作",
-            "width": "",
-            "buttons": [{
-              "type": "button-group",
-              "buttons": [{
-                  "type": "button",
-                  "label": "查看",
-                  "level": "primary",
-                  "actionType": "link",
-                  "link": "/plat/${id}"
-                },
-                {
-                  "type": "button",
-                  "label": "修改",
-                  "level": "info",
-                  "actionType": "link",
-                  "link": "/plat/${id}/edit"
-                },
-                {
-                  "type": "button",
-                  "label": "删除",
-                  "level": "danger",
-                  "actionType": "ajax",
-                  "confirmText": "您确认要删除?",
-                  // "api": "get:/api/url/destroy/${id}"
-                  "api": "delete:/api/plat/0.1/${id}"
-                }
-              ]
-            }],
-            "placeholder": "-",
-            "fixed": "right"
-          }
-        ],
+        "columns": columns$2,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -2112,7 +2108,9 @@
         }
     };
 
-    let columns = platDataColumns.map(v => v);
+    let columns = platDataColumns.map(v => v).filter(v=>{
+        return v.name!=='vendor_id'
+    });
 
     let operationItem = {
         "type": "operation",
