@@ -1,4 +1,5 @@
 import myutils from '../../tools/myutils'
+import platVendorBindDiaLog from './plat-vendor-bind';
 
 const platList2 = {
   "type": "page",
@@ -100,19 +101,21 @@ const platList2 = {
                 "label": "添加",
                 "actionType": "dialog",
                 // "dialog": deviceVendorBindDiaLog,
+                "dialog": platVendorBindDiaLog,
                 "visibleOn": "!this.vendor_id"
             },
             {
                 "name": "vendor-bind",
                 "type": "button",
                 "size": "xs",
-                // "primary": true,
                 "label": "移除",
 
                 "level": "danger",
-                "actionType": "dialog",
-                // "dialog": deviceVendorBindDiaLog,
-                "visibleOn": "this.vendor_id"
+                "visibleOn": "this.vendor_id",
+
+                "actionType": "ajax",
+                "confirmText": "确定移除该厂商绑定?${name}",
+                "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/1/obj-id/${id}"
             },
         ]
     },
