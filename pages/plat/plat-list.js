@@ -1,4 +1,5 @@
 import myutils from '../../tools/myutils'
+import platTypes from './plat-types';
 import platVendorBindDiaLog from './plat-vendor-bind';
 
 const platList2 = {
@@ -17,13 +18,7 @@ const platList2 = {
     "type": "crud",
     "name": "sample",
     "perPage": 10,
-    // "data": {
-    //   "page": 1
-    // },
-    // "api": {
-    //   "method": "get",
-    //   "url": "/api/app?limit=${page}"
-    // },
+
     api: {
       method: 'get',
       url: '/api/plat/0.1',
@@ -50,7 +45,7 @@ const platList2 = {
       "className": "m-b-sm"
     },
     "bulkActions": [
-     
+
     ],
     "columns": [{
         "name": "id",
@@ -65,17 +60,17 @@ const platList2 = {
       },
       {
         "name": "time",
-        "type":"tpl",
+        "type": "tpl",
         "label": "时间",
         "tpl": "${time|date:LLL:x}"
-       
+
       },
       {
         "label": "装备",
-        "name":"id",
+        "name": "id",
         "type": "link",
         "href": "/#/plat/${id}/device",
-        "blank":false,
+        "blank": false,
         "body": "装备列表"
       },
 
@@ -85,53 +80,48 @@ const platList2 = {
         "label": "生产厂商",
 
         "body": [{
-                "type": "link",
-                "href": "/#/vendor/${vendor_id}",
-                "blank": false,
-                "className": "mr-1.5",
-                "visibleOn": "this.vendor_id",
-                "body": "${vendor_name}",
-            },
-            {
+            "type": "link",
+            "href": "/#/vendor/${vendor_id}",
+            "blank": false,
+            "className": "mr-1.5",
+            "visibleOn": "this.vendor_id",
+            "body": "${vendor_name}",
+          },
+          {
 
-                "name": "vendor-bind",
-                "type": "button",
-                "size": "xs",
-                // "primary": true,
-                "label": "添加",
-                "actionType": "dialog",
-                // "dialog": deviceVendorBindDiaLog,
-                "dialog": platVendorBindDiaLog,
-                "visibleOn": "!this.vendor_id"
-            },
-            {
-                "name": "vendor-bind",
-                "type": "button",
-                "size": "xs",
-                "label": "移除",
+            "name": "vendor-bind",
+            "type": "button",
+            "size": "xs",
+            // "primary": true,
+            "label": "添加",
+            "actionType": "dialog",
+            // "dialog": deviceVendorBindDiaLog,
+            "dialog": platVendorBindDiaLog,
+            "visibleOn": "!this.vendor_id"
+          },
+          {
+            "name": "vendor-bind",
+            "type": "button",
+            "size": "xs",
+            "label": "移除",
 
-                "level": "danger",
-                "visibleOn": "this.vendor_id",
+            "level": "danger",
+            "visibleOn": "this.vendor_id",
 
-                "actionType": "ajax",
-                "confirmText": "确定移除该厂商绑定?${name}",
-                "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/1/obj-id/${id}"
-            },
+            "actionType": "ajax",
+            "confirmText": "确定移除该厂商绑定?${name}",
+            "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/1/obj-id/${id}"
+          },
         ]
-    },
+      },
 
-      // {
-      //   "label": "装备",
-      //   "name":"id",
-      //   "type": "link",
-      //   "href": "/#/plat/${id}/device",
-      //   "blank":false,
-      //   "body": "装备列表"
-      // },
-      
+
+
       {
         name: 'type',
-        label: 'type'
+        label: '类型',
+        "type": "mapping",
+        "map": platTypes
       },
       {
         "name": "country",

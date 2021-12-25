@@ -664,14 +664,15 @@
         {
           "type": "link",
           "href": "/#/plat/${id}/device",
-          "label": "装备",
+          "label": "装备111",
           "name":"id",
           "blank":false,
           "body": "装备列表"
         },
         {
           name: 'type',
-          label: '类型'
+          label: '类型',
+          
         },
         {
           "name": "country",
@@ -1232,6 +1233,21 @@
       }]
     };
 
+    // {
+    //     int UNDEFINED = 0;
+    //     int WARSHIP = 1;
+    //     int PLANE = 2;
+    //     int ARMOURED_VEHICLE = 3;
+    //     int MIL_SAT = 4;
+    // }
+    let platTypes = {
+        "1": "WARSHIP",
+        "2": "PLANE",
+        "3": "ARMOURED_VEHICLE",
+        "4": "MIL_SAT",
+        "*":"其他"
+    };
+
     let platVendorBindDiaLog = {
         "title": "添加厂商绑定",
         "body": {
@@ -1320,13 +1336,7 @@
         "type": "crud",
         "name": "sample",
         "perPage": 10,
-        // "data": {
-        //   "page": 1
-        // },
-        // "api": {
-        //   "method": "get",
-        //   "url": "/api/app?limit=${page}"
-        // },
+
         api: {
           method: 'get',
           url: '/api/plat/0.1',
@@ -1353,7 +1363,7 @@
           "className": "m-b-sm"
         },
         "bulkActions": [
-         
+
         ],
         "columns": [{
             "name": "id",
@@ -1368,17 +1378,17 @@
           },
           {
             "name": "time",
-            "type":"tpl",
+            "type": "tpl",
             "label": "时间",
             "tpl": "${time|date:LLL:x}"
-           
+
           },
           {
             "label": "装备",
-            "name":"id",
+            "name": "id",
             "type": "link",
             "href": "/#/plat/${id}/device",
-            "blank":false,
+            "blank": false,
             "body": "装备列表"
           },
 
@@ -1388,53 +1398,48 @@
             "label": "生产厂商",
 
             "body": [{
-                    "type": "link",
-                    "href": "/#/vendor/${vendor_id}",
-                    "blank": false,
-                    "className": "mr-1.5",
-                    "visibleOn": "this.vendor_id",
-                    "body": "${vendor_name}",
-                },
-                {
+                "type": "link",
+                "href": "/#/vendor/${vendor_id}",
+                "blank": false,
+                "className": "mr-1.5",
+                "visibleOn": "this.vendor_id",
+                "body": "${vendor_name}",
+              },
+              {
 
-                    "name": "vendor-bind",
-                    "type": "button",
-                    "size": "xs",
-                    // "primary": true,
-                    "label": "添加",
-                    "actionType": "dialog",
-                    // "dialog": deviceVendorBindDiaLog,
-                    "dialog": platVendorBindDiaLog,
-                    "visibleOn": "!this.vendor_id"
-                },
-                {
-                    "name": "vendor-bind",
-                    "type": "button",
-                    "size": "xs",
-                    "label": "移除",
+                "name": "vendor-bind",
+                "type": "button",
+                "size": "xs",
+                // "primary": true,
+                "label": "添加",
+                "actionType": "dialog",
+                // "dialog": deviceVendorBindDiaLog,
+                "dialog": platVendorBindDiaLog,
+                "visibleOn": "!this.vendor_id"
+              },
+              {
+                "name": "vendor-bind",
+                "type": "button",
+                "size": "xs",
+                "label": "移除",
 
-                    "level": "danger",
-                    "visibleOn": "this.vendor_id",
+                "level": "danger",
+                "visibleOn": "this.vendor_id",
 
-                    "actionType": "ajax",
-                    "confirmText": "确定移除该厂商绑定?${name}",
-                    "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/1/obj-id/${id}"
-                },
+                "actionType": "ajax",
+                "confirmText": "确定移除该厂商绑定?${name}",
+                "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/1/obj-id/${id}"
+              },
             ]
-        },
+          },
 
-          // {
-          //   "label": "装备",
-          //   "name":"id",
-          //   "type": "link",
-          //   "href": "/#/plat/${id}/device",
-          //   "blank":false,
-          //   "body": "装备列表"
-          // },
-          
+
+
           {
             name: 'type',
-            label: 'type'
+            label: '类型',
+            "type": "mapping",
+            "map": platTypes
           },
           {
             "name": "country",

@@ -1,6 +1,5 @@
 import myutils from "../../tools/myutils";
 import platDataColumns from "../plat/plat-data-columns";
-import platListItems from "../plat/plat-list-item";
 import devicePlatBindDiaLog from "./device-plat-bind";
 
 const devicePlatOpeationItems = [{

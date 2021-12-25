@@ -20,14 +20,15 @@ let platDataColumns=[
     {
       "type": "link",
       "href": "/#/plat/${id}/device",
-      "label": "装备",
+      "label": "装备111",
       "name":"id",
       "blank":false,
       "body": "装备列表"
     },
     {
       name: 'type',
-      label: '类型'
+      label: '类型',
+      
     },
     {
       "name": "country",
