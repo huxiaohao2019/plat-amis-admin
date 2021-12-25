@@ -1,8 +1,9 @@
-import deviceListItems from '../device/device-list-items';
 import myutils from '../../tools/myutils';
+import platDataColumns from '../plat/plat-data-columns';
+import vendorPlatBindDiaLog from './vendor-plat-bind';
 
 
-let columns = deviceListItems.map(v => v);
+let columns = platDataColumns.map(v => v);
 
 let operationItem = {
     "type": "operation",
@@ -15,23 +16,23 @@ let operationItem = {
                 "label": "查看",
                 "level": "primary",
                 "actionType": "link",
-                "link": "/device/${id}"
+                "link": "/plat/${id}"
             },
-            {
-                "type": "button",
-                "label": "修改",
-                "level": "info",
-                "actionType": "link",
-                "link": "/device/${id}/edit"
-            },
-            {
-                "type": "button",
-                "label": "删除",
-                "level": "danger",
-                "actionType": "ajax",
-                "confirmText": "您确认要删除?",
-                "api": "get:/api/url/destroy/${id}"
-            }
+            // {
+            //     "type": "button",
+            //     "label": "修改",
+            //     "level": "info",
+            //     "actionType": "link",
+            //     "link": "/device/${id}/edit"
+            // },
+            // {
+            //     "type": "button",
+            //     "label": "删除",
+            //     "level": "danger",
+            //     "actionType": "ajax",
+            //     "confirmText": "您确认要删除?",
+            //     "api": "get:/api/url/destroy/${id}"
+            // }
         ]
     }],
     "placeholder": "-",
@@ -44,6 +45,16 @@ const vendorPlatList = {
     "title": "厂商->平台列表",
     "remark": null,
     "name": "page-demo",
+    "toolbar": [
+
+        {
+            "type": "button",
+            "primary": true,
+            "label": "添加平台绑定",
+            "actionType": "dialog",
+            "dialog": vendorPlatBindDiaLog
+        }
+    ],
     "body": [{
         "type": "crud",
         "name": "sample",
@@ -52,16 +63,16 @@ const vendorPlatList = {
         //   "page": 1
         // },
         api: {
-            
+
             method: 'get',
             // url: '/api/device/0.1',
-            url: '/api/device/0.1/vendor-id/${params.id}',
+            url: '/api/plat/0.1/vendor-id/${params.id}',
             // url: '/api/device/0.1/plat-id/4',
             // requestAdaptor: myutils.requestAdaptor,
             adaptor: myutils.listResponseAdapter
         },
 
-    
+
         "columns": columns,
         "affixHeader": true,
         "columnsTogglable": "auto",

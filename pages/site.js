@@ -12,6 +12,7 @@ import vendorAddPage from "./vendor/vendor-add";
 import vendorDeviceList from "./vendor/vendor-devices";
 import vendorEdit from "./vendor/vendor-edit";
 import vendorList from "./vendor/vendor-list";
+import vendorPlatList from "./vendor/vendor-plat";
 import vendorView from "./vendor/vendor-view";
 
 const exam = {
@@ -230,9 +231,9 @@ const pages = [{
                         "schema": vendorDeviceList
                     },
                      {
-                        "label": "设备列表",
-                        "url": "/vendor/:id/device",
-                        "schema": vendorDeviceList
+                        "label": "平台列表",
+                        "url": "/vendor/:id/plat",
+                        "schema": vendorPlatList
                     }
                 ]
             },

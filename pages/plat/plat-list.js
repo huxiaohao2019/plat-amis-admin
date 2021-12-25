@@ -78,6 +78,45 @@ const platList2 = {
         "body": "装备列表"
       },
 
+      {
+        "name": "vendor_id",
+        "type": "container",
+        "label": "生产厂商",
+
+        "body": [{
+                "type": "link",
+                "href": "/#/vendor/${vendor_id}",
+                "blank": false,
+                "className": "mr-1.5",
+                "visibleOn": "this.vendor_id",
+                "body": "${vendor_name}",
+            },
+            {
+
+                "name": "vendor-bind",
+                "type": "button",
+                "size": "xs",
+                // "primary": true,
+                "label": "添加",
+                "actionType": "dialog",
+                // "dialog": deviceVendorBindDiaLog,
+                "visibleOn": "!this.vendor_id"
+            },
+            {
+                "name": "vendor-bind",
+                "type": "button",
+                "size": "xs",
+                // "primary": true,
+                "label": "移除",
+
+                "level": "danger",
+                "actionType": "dialog",
+                // "dialog": deviceVendorBindDiaLog,
+                "visibleOn": "this.vendor_id"
+            },
+        ]
+    },
+
       // {
       //   "label": "装备",
       //   "name":"id",

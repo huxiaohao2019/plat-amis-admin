@@ -465,39 +465,39 @@
             "name": "vendor_id",
             "type": "container",
             "label": "生产厂商",
-            
+
             "body": [{
-                "type": "link",
-                "href": "/#/vendor/${vendor_id}",
-                "blank": false,
-                "className":"mr-1.5",
-                "visibleOn":"this.vendor_id",
-                "body": "${vendor_name}",
-            },
-            {
-                
-                "name": "vendor-bind",
-                "type": "button",
-                "size":"xs",
-                // "primary": true,
-                "label": "添加",
-                "actionType": "dialog",
-                "dialog": deviceVendorBindDiaLog,
-                "visibleOn":"!this.vendor_id"
-            },
-            {
-                "name": "vendor-bind",
-                "type": "button",
-                "size":"xs",
-                // "primary": true,
-                "label": "移除",
-                
-                "level":"danger",
-                "actionType": "dialog",
-                "dialog": deviceVendorBindDiaLog,
-                "visibleOn":"this.vendor_id"
-            },
-        ]
+                    "type": "link",
+                    "href": "/#/vendor/${vendor_id}",
+                    "blank": false,
+                    "className": "mr-1.5",
+                    "visibleOn": "this.vendor_id",
+                    "body": "${vendor_name}",
+                },
+                {
+
+                    "name": "vendor-bind",
+                    "type": "button",
+                    "size": "xs",
+                    // "primary": true,
+                    "label": "添加",
+                    "actionType": "dialog",
+                    "dialog": deviceVendorBindDiaLog,
+                    "visibleOn": "!this.vendor_id"
+                },
+                {
+                    "name": "vendor-bind",
+                    "type": "button",
+                    "size": "xs",
+                    // "primary": true,
+                    "label": "移除",
+
+                    "level": "danger",
+                    "actionType": "dialog",
+                    "dialog": deviceVendorBindDiaLog,
+                    "visibleOn": "this.vendor_id"
+                },
+            ]
         },
 
         // {
@@ -528,9 +528,9 @@
         }
     ];
 
-    let columns$2 = deviceListItems.map(v => v);
+    let columns$3 = deviceListItems.map(v => v);
 
-    let operationItem$2= {
+    let operationItem$3= {
       "type": "operation",
       "label": "操作",
       "width": "",
@@ -564,7 +564,7 @@
       "placeholder": "-",
       "fixed": "right"
     };
-    columns$2.push(operationItem$2);
+    columns$3.push(operationItem$3);
 
 
     const deviceList = {
@@ -613,7 +613,7 @@
         },
         "bulkActions": [
         ],
-        "columns": columns$2,
+        "columns": columns$3,
         "affixHeader": true,
         "columnsTogglable": "auto",
         "placeholder": "暂无数据",
@@ -1051,9 +1051,9 @@
         }
     };
 
-    let columns$1 = deviceListItems.map(v => v);
+    let columns$2 = deviceListItems.map(v => v);
 
-    let operationItem$1 = {
+    let operationItem$2 = {
         "type": "operation",
         "label": "操作",
         "width": "",
@@ -1096,7 +1096,7 @@
         "placeholder": "-",
         "fixed": "right"
     };
-    columns$1.push(operationItem$1);
+    columns$2.push(operationItem$2);
 
     const platDeviceList = {
         "type": "page",
@@ -1131,7 +1131,7 @@
             },
 
 
-            "columns": columns$1,
+            "columns": columns$2,
             "affixHeader": true,
             "columnsTogglable": "auto",
             "placeholder": "暂无数据",
@@ -1291,6 +1291,45 @@
             "blank":false,
             "body": "装备列表"
           },
+
+          {
+            "name": "vendor_id",
+            "type": "container",
+            "label": "生产厂商",
+
+            "body": [{
+                    "type": "link",
+                    "href": "/#/vendor/${vendor_id}",
+                    "blank": false,
+                    "className": "mr-1.5",
+                    "visibleOn": "this.vendor_id",
+                    "body": "${vendor_name}",
+                },
+                {
+
+                    "name": "vendor-bind",
+                    "type": "button",
+                    "size": "xs",
+                    // "primary": true,
+                    "label": "添加",
+                    "actionType": "dialog",
+                    // "dialog": deviceVendorBindDiaLog,
+                    "visibleOn": "!this.vendor_id"
+                },
+                {
+                    "name": "vendor-bind",
+                    "type": "button",
+                    "size": "xs",
+                    // "primary": true,
+                    "label": "移除",
+
+                    "level": "danger",
+                    "actionType": "dialog",
+                    // "dialog": deviceVendorBindDiaLog,
+                    "visibleOn": "this.vendor_id"
+                },
+            ]
+        },
 
           // {
           //   "label": "装备",
@@ -1577,9 +1616,9 @@
       ]
     };
 
-    let columns = deviceListItems.map(v => v);
+    let columns$1 = deviceListItems.map(v => v);
 
-    let operationItem = {
+    let operationItem$1 = {
         "type": "operation",
         "label": "操作",
         "width": "",
@@ -1612,7 +1651,7 @@
         "placeholder": "-",
         "fixed": "right"
     };
-    columns.push(operationItem);
+    columns$1.push(operationItem$1);
 
     const vendorDeviceList = {
         "type": "page",
@@ -1637,7 +1676,7 @@
             },
 
         
-            "columns": columns,
+            "columns": columns$1,
             "affixHeader": true,
             "columnsTogglable": "auto",
             "placeholder": "暂无数据",
@@ -1810,6 +1849,161 @@
       }]
     };
 
+    let vendorPlatBindDiaLog = {
+        "title": "添加平台绑定",
+        // "body":'12'
+
+        "body": {
+            "initApi": {
+                "method": "get",
+                "url": "/api/plat/0.1?limit=1000",
+                "adaptor": function (payload, response, api) {
+                    console.log("🚀 ~ file: device-plats.js ~ line 30 ~ response", response);
+                    console.log("🚀 ~ file: device-plats.js ~ line 30 ~ payload", payload);
+                    let newPayload = {
+                        "status": 0,
+                        "msg": "",
+                        "data": {
+                            "age": 222,
+                            // 必须用 options 作为选项组的 key 值
+                            "options": payload
+                        }
+                    };
+                    console.log("🚀 ~ file: device-plats.js ~ line 35 ~ newPayload", newPayload);
+                    return newPayload;
+                }
+            },
+            "type": "form",
+            "api": {
+                "method": "post",
+                "url": "/api/vendor/product/0.1",
+                requestAdaptor: function (api) {
+                    console.log("🚀 ~ file: device-plat-bind.js ~ line 30 ~ api", api);
+                    let newItem = {
+                        ...api,
+                        data: {
+                            ...api.data, // 获取暴露的 api 中的 data 变量
+                            // foo: 'bar' // 新添加数据
+                        }
+                    };
+
+                    if (api.data.vendor_id) {
+                        let vendor_id = api.data.vendor_id;
+                        newItem.data.vendor_id = Number(vendor_id);
+                        newItem.body.vendor_id = Number(vendor_id);
+
+                    }
+
+                    console.log("🚀 ~ file: device-plat-bind.js ~ line 39 ~ newItem", newItem);
+                    return newItem;
+                },
+                "data": {
+                    "vendor_id": "${params.id}",
+                    "obj": 1,
+                    "obj_id": "${plat}"
+                }
+            },
+            "body": [
+                // {
+                //     "type": "divider"
+                // },
+                {
+                    "label": "平台",
+                    "labelField": "name",
+                    "valueField": "id",
+                    "type": "select",
+                    "searchable": true,
+                    "name": "plat",
+                    "source": "${options}"
+                    // "source": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/getOptions?waitSeconds=1"
+                }
+            ]
+        }
+    };
+
+    let columns = platDataColumns.map(v => v);
+
+    let operationItem = {
+        "type": "operation",
+        "label": "操作",
+        "width": "",
+        "buttons": [{
+            "type": "button-group",
+            "buttons": [{
+                    "type": "button",
+                    "label": "查看",
+                    "level": "primary",
+                    "actionType": "link",
+                    "link": "/plat/${id}"
+                },
+                // {
+                //     "type": "button",
+                //     "label": "修改",
+                //     "level": "info",
+                //     "actionType": "link",
+                //     "link": "/device/${id}/edit"
+                // },
+                // {
+                //     "type": "button",
+                //     "label": "删除",
+                //     "level": "danger",
+                //     "actionType": "ajax",
+                //     "confirmText": "您确认要删除?",
+                //     "api": "get:/api/url/destroy/${id}"
+                // }
+            ]
+        }],
+        "placeholder": "-",
+        "fixed": "right"
+    };
+    columns.push(operationItem);
+
+    const vendorPlatList = {
+        "type": "page",
+        "title": "厂商->平台列表",
+        "remark": null,
+        "name": "page-demo",
+        "toolbar": [
+
+            {
+                "type": "button",
+                "primary": true,
+                "label": "添加平台绑定",
+                "actionType": "dialog",
+                "dialog": vendorPlatBindDiaLog
+            }
+        ],
+        "body": [{
+            "type": "crud",
+            "name": "sample",
+            "perPage": 100,
+            // "data": {
+            //   "page": 1
+            // },
+            api: {
+
+                method: 'get',
+                // url: '/api/device/0.1',
+                url: '/api/plat/0.1/vendor-id/${params.id}',
+                // url: '/api/device/0.1/plat-id/4',
+                // requestAdaptor: myutils.requestAdaptor,
+                adaptor: myutils.listResponseAdapter
+            },
+
+
+            "columns": columns,
+            "affixHeader": true,
+            "columnsTogglable": "auto",
+            "placeholder": "暂无数据",
+            "tableClassName": "table-db table-striped",
+            "headerClassName": "crud-table-header",
+            "footerClassName": "crud-table-footer",
+            "toolbarClassName": "crud-table-toolbar",
+            "combineNum": 0,
+            "bodyClassName": "panel-default"
+        }]
+    };
+
     let body2 =
     {
         "type": "panel",
@@ -1956,9 +2150,9 @@
                             "schema": vendorDeviceList
                         },
                          {
-                            "label": "设备列表",
-                            "url": "/vendor/:id/device",
-                            "schema": vendorDeviceList
+                            "label": "平台列表",
+                            "url": "/vendor/:id/plat",
+                            "schema": vendorPlatList
                         }
                     ]
                 },
