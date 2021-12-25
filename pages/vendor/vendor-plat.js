@@ -39,7 +39,7 @@ let operationItem = {
 }
 columns.push(operationItem)
 
-const vendorDeviceList = {
+const vendorPlatList = {
     "type": "page",
     "title": "厂商->平台列表",
     "remark": null,
@@ -75,4 +75,4 @@ const vendorDeviceList = {
     }]
 }
 
-export default vendorDeviceList;
+export default vendorPlatList;
