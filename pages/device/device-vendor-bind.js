@@ -1,11 +1,9 @@
-let devicePlatBindDiaLog = {
-    "title": "添加平台绑定",
-    // "body":'12'
-
+let deviceVendorBindDiaLog = {
+    "title": "添加厂商绑定",
     "body": {
         "initApi": {
             "method": "get",
-            "url": "/api/plat/0.1?limit=1000",
+            "url": "/api/vendor/0.1?limit=1000",
             "adaptor": function (payload, response, api) {
                 console.log("🚀 ~ file: device-plats.js ~ line 30 ~ response", response)
                 console.log("🚀 ~ file: device-plats.js ~ line 30 ~ payload", payload)
@@ -25,7 +23,7 @@ let devicePlatBindDiaLog = {
         "type": "form",
         "api": {
             "method": "post",
-            "url": "/api/device/belonging/0.1",
+            "url": "/api/vendor/product/0.1",
             requestAdaptor: function (api) {
             console.log("🚀 ~ file: device-plat-bind.js ~ line 30 ~ api", api)
                 let newItem = {
@@ -49,9 +47,9 @@ let devicePlatBindDiaLog = {
                 return newItem;
             },
             "data": {
-                "device_id": "${params.id}",
-                "obj": 1,
-                "obj_id": "${plat}"
+                "vendor_id": "${vendor}",
+                "obj": 3,
+                "obj_id": "${id}"
             }
         },
         "body": [
@@ -64,11 +62,11 @@ let devicePlatBindDiaLog = {
             "valueField": "id",
             "type": "select",
             "searchable": true,
-            "name": "plat",
+            "name": "vendor",
             "source": "${options}"
             // "source": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/getOptions?waitSeconds=1"
         }]
     }
 }
 
-export default devicePlatBindDiaLog;
+export default deviceVendorBindDiaLog;

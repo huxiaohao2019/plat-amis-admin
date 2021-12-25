@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('express')) :
     typeof define === 'function' && define.amd ? define(['express'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.platApp = factory());
-}(this, (function () { 'use strict';
+})(this, (function () { 'use strict';
 
     const deviceFormItems = [
         {
@@ -184,6 +184,7 @@
         console.log("🚀 ~ requestAdaptor ~ subQueryList", subQueryList);
         let subQueryListStr = '[' + subQueryList.join('|') + ']';
         console.log("🚀 ~ requestAdaptor ~ subQueryListStr", subQueryListStr);
+        if (subQueryList.length) ;
 
         let newQuery2List=[
             "limit="+limit,
@@ -241,7 +242,7 @@
         return list;
     }
 
-    const platItemResponseAdapter = function (payload, response, api) {
+    const platItemResponseAdapter$1 = function (payload, response, api) {
         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api);
         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response);
         console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload);
@@ -284,191 +285,8 @@
     var myutils = {
         requestAdaptor,
         listResponseAdapter,
-        platItemResponseAdapter
+        platItemResponseAdapter: platItemResponseAdapter$1
     };
-
-    var deviceListItems = [{
-            "name": "id",
-            "label": "ID",
-            "width": 20,
-            "sortable": true
-        },
-        {
-            "name": "name",
-            "label": "名称",
-            "sortable": true
-        },
-        {
-            "type": "link",
-            "href": "/#/device/${id}/plat",
-            "label": "平台",
-            "name":"id",
-            "blank":false,
-            "body": "平台列表"
-          },
-        {
-            "name": "info",
-            "label": "备注",
-            "sortable": true
-        },
-        {
-            "name": "type",
-            "label": "类型",
-            "sortable": true
-        },
-        {
-    "name":"vendor_id",
-    "label":"生产厂商",
-    // "sortable":true,
-    "type":"link",
-    // "tpl":""
-    "href":"/#/vendor/${vendor_id}",
-    "blank":false,
-            "body": "${vendor_name}"
-        },
-        {
-            "name": "produce_time",
-            "label": "生产日期",
-            "type":"tpl",
-            "tpl": "${produce_time|date:LLL:x}"
-        }
-    ];
-
-    let columns = deviceListItems.map(v => v);
-
-    let operationItem= {
-      "type": "operation",
-      "label": "操作",
-      "width": "",
-      "buttons": [{
-        "type": "button-group",
-        "buttons": [{
-            "type": "button",
-            "label": "查看",
-            "level": "primary",
-            "actionType": "link",
-            "link": "/device/${id}"
-          },
-          {
-            "type": "button",
-            "label": "修改",
-            "level": "info",
-            "actionType": "link",
-            "link": "/device/${id}/edit"
-          },
-          {
-            "type": "button",
-            "label": "删除",
-            "level": "danger",
-            "actionType": "ajax",
-            "confirmText": "您确认要删除?",
-            // "api": "get:/api/url/destroy/${id}"
-            "api": "delete:/api/device/0.1/${id}"
-          }
-        ]
-      }],
-      "placeholder": "-",
-      "fixed": "right"
-    };
-    columns.push(operationItem);
-
-
-    const deviceList = {
-      "type": "page",
-      "title": "装备列表",
-      "remark": null,
-      "name": "page-demo",
-      // "toolbar": [{
-      //   "type": "button",
-      //   "actionType": "link",
-      //   "link": "/crud/url/url-add",
-      //   "label": "新增",
-      //   "primary": true
-      // }],
-      "body": [{
-        "type": "crud",
-        "name": "sample",
-        "perPage": 10,
-        // "data": {
-        //   "page": 1
-        // },
-        api: {
-          method: 'get',
-          url: '/api/device/0.1',
-          requestAdaptor: myutils.requestAdaptor,
-          adaptor: myutils.listResponseAdapter
-        },
-
-        "filter": {
-          "title": "",
-          "mode": "inline",
-          "wrapWithPanel": false,
-          "submitText": "",
-          "controls": [{
-            "type": "text",
-            "name": "name,info,id",
-            "placeholder": "通过关键字搜索2",
-            "addOn": {
-              "label": "搜索",
-              "type": "submit",
-              "className": "btn-success"
-            },
-            "clearable": true
-          }],
-          "className": "m-b-sm"
-        },
-        "bulkActions": [
-        ],
-        "columns": columns,
-        "affixHeader": true,
-        "columnsTogglable": "auto",
-        "placeholder": "暂无数据",
-        "tableClassName": "table-db table-striped",
-        "headerClassName": "crud-table-header",
-        "footerClassName": "crud-table-footer",
-        "toolbarClassName": "crud-table-toolbar",
-        "combineNum": 0,
-        "bodyClassName": "panel-default"
-      }]
-    };
-
-    let platDataColumns=[
-        {
-          "name": "id",
-          "label": "ID",
-          "width": 20,
-          "sortable": true
-        },
-        {
-          "name": "name",
-          "label": "名称",
-          "sortable": true
-        },
-        {
-          "name": "time",
-          "type":"tpl",
-          "label": "time",
-          "tpl": "${time|date:LLL:x}"
-         
-        },
-        {
-          "type": "link",
-          "href": "/#/plat/${id}/device",
-          "label": "装备",
-          "name":"id",
-          "blank":false,
-          "body": "装备列表"
-        },
-        {
-          name: 'type',
-          label: 'type'
-        },
-        {
-          "name": "country",
-          "label": "国家(地区)",
-          "sortable": true
-        }
-      ];
 
     let devicePlatBindDiaLog = {
         "title": "添加平台绑定",
@@ -526,7 +344,11 @@
                     "obj_id": "${plat}"
                 }
             },
-            "body": [{
+            "body": [
+                // {
+                //     "type": "divider"
+                // },
+                {
                 "label": "平台",
                 "labelField": "name",
                 "valueField": "id",
@@ -538,6 +360,309 @@
             }]
         }
     };
+
+    let deviceVendorBindDiaLog = {
+        "title": "添加厂商绑定",
+        "body": {
+            "initApi": {
+                "method": "get",
+                "url": "/api/vendor/0.1?limit=1000",
+                "adaptor": function (payload, response, api) {
+                    console.log("🚀 ~ file: device-plats.js ~ line 30 ~ response", response);
+                    console.log("🚀 ~ file: device-plats.js ~ line 30 ~ payload", payload);
+                    let newPayload = {
+                        "status": 0,
+                        "msg": "",
+                        "data": {
+                            "age": 222,
+                            // 必须用 options 作为选项组的 key 值
+                            "options": payload
+                        }
+                    };
+                    console.log("🚀 ~ file: device-plats.js ~ line 35 ~ newPayload", newPayload);
+                    return newPayload;
+                }
+            },
+            "type": "form",
+            "api": {
+                "method": "post",
+                "url": "/api/vendor/product/0.1",
+                requestAdaptor: function (api) {
+                console.log("🚀 ~ file: device-plat-bind.js ~ line 30 ~ api", api);
+                    let newItem = {
+                        ...api,
+                        data: {
+                            ...api.data, // 获取暴露的 api 中的 data 变量
+                            // foo: 'bar' // 新添加数据
+                        }
+                    };
+
+                    console.log("🚀 ~ file: device-plat-bind.js ~ line 40 ~ api.data.device_id", api.data.device_id);
+                    if (api.data.device_id) {
+                    console.log("🚀 ~ file: device-plat-bind.js ~ line 40 ~ api.data.device_id", api.data.device_id);
+                    let device_id=api.data.device_id;
+                        newItem.data.device_id = Number(device_id);
+                        newItem.body.device_id = Number(device_id);
+
+                    }
+                    
+                    console.log("🚀 ~ file: device-plat-bind.js ~ line 39 ~ newItem", newItem);
+                    return newItem;
+                },
+                "data": {
+                    "vendor_id": "${vendor}",
+                    "obj": 3,
+                    "obj_id": "${id}"
+                }
+            },
+            "body": [
+                // {
+                //     "type": "divider"
+                // },
+                {
+                "label": "平台",
+                "labelField": "name",
+                "valueField": "id",
+                "type": "select",
+                "searchable": true,
+                "name": "vendor",
+                "source": "${options}"
+                // "source": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/getOptions?waitSeconds=1"
+            }]
+        }
+    };
+
+    var deviceListItems = [{
+            "name": "id",
+            "label": "ID",
+            "width": 20,
+            "sortable": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "sortable": true
+        },
+        {
+            "type": "link",
+            "href": "/#/device/${id}/plat",
+            "label": "平台",
+            "name": "id",
+            "blank": false,
+            "body": "平台列表"
+        },
+        {
+            "name": "info",
+            "label": "备注",
+            "sortable": true
+        },
+        {
+            "name": "type",
+            "label": "类型",
+            "sortable": true
+        },
+        {
+            "name": "vendor_id",
+            "type": "container",
+            "label": "生产厂商",
+            
+            "body": [{
+                "type": "link",
+                "href": "/#/vendor/${vendor_id}",
+                "blank": false,
+                "className":"mr-1.5",
+                "visibleOn":"this.vendor_id",
+                "body": "${vendor_name}",
+            },
+            {
+                
+                "name": "vendor-bind",
+                "type": "button",
+                "size":"xs",
+                // "primary": true,
+                "label": "添加",
+                "actionType": "dialog",
+                "dialog": deviceVendorBindDiaLog,
+                "visibleOn":"!this.vendor_id"
+            },
+            {
+                "name": "vendor-bind",
+                "type": "button",
+                "size":"xs",
+                // "primary": true,
+                "label": "移除",
+                
+                "level":"danger",
+                "actionType": "dialog",
+                "dialog": deviceVendorBindDiaLog,
+                "visibleOn":"this.vendor_id"
+            },
+        ]
+        },
+
+        // {
+        //     "name": "vendor-bind",
+        //     "type": "button",
+        //     "primary": true,
+        //     "label": "修改",
+        //     "actionType": "dialog",
+        //     "dialog": deviceVendorBindDiaLog
+        //     // "dialog": devicePlatBindDiaLog
+        // },
+        // {
+        //     "name": "vendor_id",
+        //     "label": "生产厂商",
+        //     // "sortable":true,
+        //     "type": "link",
+        //     // "tpl":""
+        //     "href": "/#/vendor/${vendor_id}",
+        //     "blank": false,
+        //     "body": "${vendor_name}",
+
+        // },
+        {
+            "name": "produce_time",
+            "label": "生产日期",
+            "type": "tpl",
+            "tpl": "${produce_time|date:LLL:x}"
+        }
+    ];
+
+    let columns$2 = deviceListItems.map(v => v);
+
+    let operationItem$2= {
+      "type": "operation",
+      "label": "操作",
+      "width": "",
+      "buttons": [{
+        "type": "button-group",
+        "buttons": [{
+            "type": "button",
+            "label": "查看",
+            "level": "primary",
+            "actionType": "link",
+            "link": "/device/${id}"
+          },
+          {
+            "type": "button",
+            "label": "修改",
+            "level": "info",
+            "actionType": "link",
+            "link": "/device/${id}/edit"
+          },
+          {
+            "type": "button",
+            "label": "删除",
+            "level": "danger",
+            "actionType": "ajax",
+            "confirmText": "您确认要删除?",
+            // "api": "get:/api/url/destroy/${id}"
+            "api": "delete:/api/device/0.1/${id}"
+          }
+        ]
+      }],
+      "placeholder": "-",
+      "fixed": "right"
+    };
+    columns$2.push(operationItem$2);
+
+
+    const deviceList = {
+      "type": "page",
+      "title": "装备列表",
+      "remark": null,
+      "name": "page-demo",
+      // "toolbar": [{
+      //   "type": "button",
+      //   "actionType": "link",
+      //   "link": "/crud/url/url-add",
+      //   "label": "新增",
+      //   "primary": true
+      // }],
+      "body": [{
+        "type": "crud",
+        "name": "sample",
+        "perPage": 10,
+        // "data": {
+        //   "page": 1
+        // },
+        api: {
+          method: 'get',
+          url: '/api/device/0.1',
+          requestAdaptor: myutils.requestAdaptor,
+          adaptor: myutils.listResponseAdapter
+        },
+
+        "filter": {
+          "title": "",
+          "mode": "inline",
+          "wrapWithPanel": false,
+          "submitText": "",
+          "controls": [{
+            "type": "text",
+            "name": "name,info,id",
+            "placeholder": "通过关键字搜索2",
+            "addOn": {
+              "label": "搜索",
+              "type": "submit",
+              "className": "btn-success"
+            },
+            "clearable": true
+          }],
+          "className": "m-b-sm"
+        },
+        "bulkActions": [
+        ],
+        "columns": columns$2,
+        "affixHeader": true,
+        "columnsTogglable": "auto",
+        "placeholder": "暂无数据",
+        "tableClassName": "table-db table-striped",
+        "headerClassName": "crud-table-header",
+        "footerClassName": "crud-table-footer",
+        "toolbarClassName": "crud-table-toolbar",
+        "combineNum": 0,
+        "bodyClassName": "panel-default"
+      }]
+    };
+
+    let platDataColumns=[
+        {
+          "name": "id",
+          "label": "ID",
+          "width": 20,
+          "sortable": true
+        },
+        {
+          "name": "name",
+          "label": "名称",
+          "sortable": true
+        },
+        {
+          "name": "time",
+          "type":"tpl",
+          "label": "time",
+          "tpl": "${time|date:LLL:x}"
+         
+        },
+        {
+          "type": "link",
+          "href": "/#/plat/${id}/device",
+          "label": "装备",
+          "name":"id",
+          "blank":false,
+          "body": "装备列表"
+        },
+        {
+          name: 'type',
+          label: 'type'
+        },
+        {
+          "name": "country",
+          "label": "国家(地区)",
+          "sortable": true
+        }
+      ];
 
     const devicePlatOpeationItems = [{
       "type": "button",
@@ -1019,7 +1144,7 @@
         }]
     };
 
-    const platItemResponseAdapter$1 = function (payload, response, api) {
+    const platItemResponseAdapter = function (payload, response, api) {
       console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api);
       console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response);
       console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload);
@@ -1054,7 +1179,7 @@
         "initApi": {
           method: 'get',
           url: "/api/plat/0.1/${params.id}",
-          adaptor: platItemResponseAdapter$1
+          adaptor: platItemResponseAdapter
         },
         // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id",
         "api": {
@@ -1154,7 +1279,7 @@
           {
             "name": "time",
             "type":"tpl",
-            "label": "time",
+            "label": "时间",
             "tpl": "${time|date:LLL:x}"
            
           },
@@ -1166,18 +1291,16 @@
             "blank":false,
             "body": "装备列表"
           },
+
           // {
-          //   "name": "time",
-          //   "label": "映射",
-          //   "type": "mapping",
-          //   "map": {
-          //     "1": "<span class='label label-info'>漂亮</span>",
-          //     "2": "<span class='label label-success'>开心</span>",
-          //     "3": "<span class='label label-danger'>惊吓</span>",
-          //     "4": "<span class='label label-warning'>紧张</span>",
-          //     "*": "<span class='label label-warning'>紧张</span>${time}"
-          //   }
+          //   "label": "装备",
+          //   "name":"id",
+          //   "type": "link",
+          //   "href": "/#/plat/${id}/device",
+          //   "blank":false,
+          //   "body": "装备列表"
           // },
+          
           {
             name: 'type',
             label: 'type'
@@ -1454,9 +1577,9 @@
       ]
     };
 
-    let columns$2 = deviceListItems.map(v => v);
+    let columns = deviceListItems.map(v => v);
 
-    let operationItem$2 = {
+    let operationItem = {
         "type": "operation",
         "label": "操作",
         "width": "",
@@ -1489,7 +1612,7 @@
         "placeholder": "-",
         "fixed": "right"
     };
-    columns$2.push(operationItem$2);
+    columns.push(operationItem);
 
     const vendorDeviceList = {
         "type": "page",
@@ -1514,7 +1637,7 @@
             },
 
         
-            "columns": columns$2,
+            "columns": columns,
             "affixHeader": true,
             "columnsTogglable": "auto",
             "placeholder": "暂无数据",
@@ -1557,128 +1680,135 @@
       ]
     };
 
-    const vendorList={
-        "type": "page",
-        "title": "厂商列表",
-        "remark": null,
-        "name": "page-demo",
-        // "toolbar": [{
-        //   "type": "button",
-        //   "actionType": "link",
-        //   "link": "/crud/url/url-add",
-        //   "label": "新增",
-        //   "primary": true
-        // }],
-        "body": [{
-          "type": "crud",
-          "name": "sample",
-          "perPage": 10,
-          // "data": {
-          //   "page": 1
-          // },
-          // "api": {
-          //   "method": "get",
-          //   "url": "/api/app?limit=${page}"
-          // },
-          api: {
-            method: 'get',
-            url: '/api/vendor/0.1',
-            requestAdaptor: myutils.requestAdaptor,
-            adaptor: myutils.listResponseAdapter
+    const vendorList = {
+      "type": "page",
+      "title": "厂商列表",
+      "remark": null,
+      "name": "page-demo",
+      // "toolbar": [{
+      //   "type": "button",
+      //   "actionType": "link",
+      //   "link": "/crud/url/url-add",
+      //   "label": "新增",
+      //   "primary": true
+      // }],
+      "body": [{
+        "type": "crud",
+        "name": "sample",
+        "perPage": 10,
+        // "data": {
+        //   "page": 1
+        // },
+        // "api": {
+        //   "method": "get",
+        //   "url": "/api/app?limit=${page}"
+        // },
+        api: {
+          method: 'get',
+          url: '/api/vendor/0.1',
+          requestAdaptor: myutils.requestAdaptor,
+          adaptor: myutils.listResponseAdapter
         },
 
-          "filter": {
-            "title": "",
-            "mode": "inline",
-            "wrapWithPanel": false,
-            "submitText": "",
-            "controls": [{
-              "type": "text",
-              "name": "country,name",
-              "placeholder": "通过关键字搜索",
-              "addOn": {
-                "label": "搜索",
-                "type": "submit",
-                "className": "btn-success"
-              },
-              "clearable": true
-            }],
-            "className": "m-b-sm"
-          },
-          "bulkActions": [
-          ],
-          "columns": [{
+        "filter": {
+          "title": "",
+          "mode": "inline",
+          "wrapWithPanel": false,
+          "submitText": "",
+          "controls": [{
+            "type": "text",
+            "name": "country,name",
+            "placeholder": "通过关键字搜索",
+            "addOn": {
+              "label": "搜索",
+              "type": "submit",
+              "className": "btn-success"
+            },
+            "clearable": true
+          }],
+          "className": "m-b-sm"
+        },
+        "bulkActions": [],
+        "columns": [{
             "name": "id",
             "label": "ID",
             "width": 20,
             "sortable": true
-        },
-        {
+          },
+          {
             "name": "name",
             "label": "名称",
             "sortable": true
-        },
-        
-        {
+          },
+
+          {
             "name": "country",
             "label": "国家(地区)",
             "sortable": true
-        },
-        {
-          "type": "link",
-          "href": "/#/vendor/${id}/device",
-          "label": "装备",
-          "name":"id",
-          "blank":false,
-          "body": "装备列表"
-        },
+          },
+          {
+            "type": "link",
+            "href": "/#/vendor/${id}/device",
+            "label": "装备",
+            "name": "id",
+            "blank": false,
+            "body": "装备列表"
+          },
+          {
+            "type": "link",
+            "href": "/#/vendor/${id}/plat",
+            "label": "平台",
+            "name": "id",
+            "blank": false,
+            "body": "平台列表"
+          },
 
-            {
-              "type": "operation",
-              "label": "操作",
-              "width": "",
+          {
+            "type": "operation",
+            "label": "操作",
+            "width": "",
+            "buttons": [{
+              "type": "button-group",
               "buttons": [{
-                "type": "button-group",
-                "buttons": [{
-                    "type": "button",
-                    "label": "查看",
-                    "level": "primary",
-                    "actionType": "link",
-                    "link": "/vendor/${id}"
-                  },
-                  {
-                    "type": "button",
-                    "label": "修改",
-                    "level": "info",
-                    "actionType": "link",
-                    // "link": "/vendor/${id}/edit?page=${page}"
-                    "link": "/vendor/${id}/edit"
-                  },
-                  {
-                    "type": "button",
-                    "label": "删除",
-                    "level": "danger",
-                    "actionType": "ajax",
-                    "confirmText": "您确认要删除?",
-                    "api": "delete:/api/vendor/0.1/${id}"
-                  }
-                ]
-              }],
-              "placeholder": "-",
-              "fixed": "right"
-            }
-          ],
-          "affixHeader": true,
-          "columnsTogglable": "auto",
-          "placeholder": "暂无数据",
-          "tableClassName": "table-db table-striped",
-          "headerClassName": "crud-table-header",
-          "footerClassName": "crud-table-footer",
-          "toolbarClassName": "crud-table-toolbar",
-          "combineNum": 0,
-          "bodyClassName": "panel-default"
-        }]
-      };
+                  "type": "button",
+                  "label": "查看",
+                  "level": "primary",
+                  "actionType": "link",
+                  "link": "/vendor/${id}"
+                },
+                {
+                  "type": "button",
+                  "label": "修改",
+                  "level": "info",
+                  "actionType": "link",
+                  // "link": "/vendor/${id}/edit?page=${page}"
+                  "link": "/vendor/${id}/edit"
+                },
+                {
+                  "type": "button",
+                  "label": "删除",
+                  "level": "danger",
+                  "actionType": "ajax",
+                  "confirmText": "您确认要删除?",
+                  "api": "delete:/api/vendor/0.1/${id}"
+                }
+              ]
+            }],
+            "placeholder": "-",
+            "fixed": "right"
+          }
+        ],
+        "affixHeader": true,
+        "columnsTogglable": "auto",
+        "placeholder": "暂无数据",
+        "tableClassName": "table-db table-striped",
+        "headerClassName": "crud-table-header",
+        "footerClassName": "crud-table-footer",
+        "toolbarClassName": "crud-table-toolbar",
+        "combineNum": 0,
+        "bodyClassName": "panel-default"
+      }]
+    };
 
     let body2 =
     {
@@ -1819,7 +1949,13 @@
                             "label": "修改",
                             "url": "/vendor/:id/edit",
                             "schema": vendorEdit
-                        }, {
+                        },
+                        {
+                            "label": "设备列表",
+                            "url": "/vendor/:id/device",
+                            "schema": vendorDeviceList
+                        },
+                         {
                             "label": "设备列表",
                             "url": "/vendor/:id/device",
                             "schema": vendorDeviceList
@@ -1917,4 +2053,4 @@
 
     return main;
 
-})));
+}));

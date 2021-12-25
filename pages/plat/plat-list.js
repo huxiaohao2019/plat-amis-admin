@@ -65,7 +65,7 @@ const platList2 = {
       {
         "name": "time",
         "type":"tpl",
-        "label": "time",
+        "label": "时间",
         "tpl": "${time|date:LLL:x}"
        
       },
@@ -77,18 +77,16 @@ const platList2 = {
         "blank":false,
         "body": "装备列表"
       },
+
       // {
-      //   "name": "time",
-      //   "label": "映射",
-      //   "type": "mapping",
-      //   "map": {
-      //     "1": "<span class='label label-info'>漂亮</span>",
-      //     "2": "<span class='label label-success'>开心</span>",
-      //     "3": "<span class='label label-danger'>惊吓</span>",
-      //     "4": "<span class='label label-warning'>紧张</span>",
-      //     "*": "<span class='label label-warning'>紧张</span>${time}"
-      //   }
+      //   "label": "装备",
+      //   "name":"id",
+      //   "type": "link",
+      //   "href": "/#/plat/${id}/device",
+      //   "blank":false,
+      //   "body": "装备列表"
       // },
+      
       {
         name: 'type',
         label: 'type'

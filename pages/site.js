@@ -223,7 +223,13 @@ const pages = [{
                         "label": "修改",
                         "url": "/vendor/:id/edit",
                         "schema": vendorEdit
-                    }, {
+                    },
+                    {
+                        "label": "设备列表",
+                        "url": "/vendor/:id/device",
+                        "schema": vendorDeviceList
+                    },
+                     {
                         "label": "设备列表",
                         "url": "/vendor/:id/device",
                         "schema": vendorDeviceList
