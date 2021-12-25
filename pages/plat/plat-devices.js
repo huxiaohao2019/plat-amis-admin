@@ -4,7 +4,9 @@ import platDeviceBindDiaLog from './plat-device-bind';
 
 
 
-let columns = deviceListItems.map(v => v);
+let columns = deviceListItems.map(v => v).filter(v=>{
+    return v.name!='vendor_id'
+})
 
 let operationItem = {
     "type": "operation",

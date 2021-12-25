@@ -459,7 +459,20 @@
         {
             "name": "type",
             "label": "类型",
-            "sortable": true
+            "sortable": true,
+            "type": "mapping",
+            // "value": "1",
+            "map": {
+                "1": "雷达",
+                "2": "通信设备",
+                "3": "电子战",
+                "4":"导航",
+                "5":"敌我识别器",
+                "6":"声呐",
+                "7":"光电探测",
+                "*": "其他"
+            }
+
         },
         {
             "name": "vendor_id",
@@ -494,8 +507,11 @@
 
                     "level": "danger",
                     "actionType": "dialog",
-                    "dialog": deviceVendorBindDiaLog,
-                    "visibleOn": "this.vendor_id"
+                    // "dialog": deviceVendorBindDiaLog,
+                    "visibleOn": "this.vendor_id",
+                    "actionType": "ajax",
+                    "confirmText": "确定移除该厂商绑定?${name}",
+                    "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/3/obj-id/${id}"
                 },
             ]
         },
@@ -655,7 +671,7 @@
         },
         {
           name: 'type',
-          label: 'type'
+          label: '类型'
         },
         {
           "name": "country",
@@ -1051,7 +1067,9 @@
         }
     };
 
-    let columns$2 = deviceListItems.map(v => v);
+    let columns$2 = deviceListItems.map(v => v).filter(v=>{
+        return v.name!='vendor_id'
+    });
 
     let operationItem$2 = {
         "type": "operation",
@@ -1690,7 +1708,81 @@
       ]
     };
 
-    let columns$1 = deviceListItems.map(v => v);
+    let vendorDeviceBindDiaLog = {
+        "title": "添加设备绑定",
+        // "body":'12'
+
+        "body": {
+            "initApi": {
+                "method": "get",
+                "url": "/api/device/0.1?limit=1000",
+                "adaptor": function (payload, response, api) {
+                    console.log("🚀 ~ file: device-devices.js ~ line 30 ~ response", response);
+                    console.log("🚀 ~ file: device-devices.js ~ line 30 ~ payload", payload);
+                    let newPayload = {
+                        "status": 0,
+                        "msg": "",
+                        "data": {
+                            "age": 222,
+                            // 必须用 options 作为选项组的 key 值
+                            "options": payload
+                        }
+                    };
+                    console.log("🚀 ~ file: device-devices.js ~ line 35 ~ newPayload", newPayload);
+                    return newPayload;
+                }
+            },
+            "type": "form",
+            "api": {
+                "method": "post",
+                "url": "/api/vendor/product/0.1",
+                requestAdaptor: function (api) {
+                    console.log("🚀 ~ file: device-device-bind.js ~ line 30 ~ api", api);
+                    let newItem = {
+                        ...api,
+                        data: {
+                            ...api.data, // 获取暴露的 api 中的 data 变量
+                            // foo: 'bar' // 新添加数据
+                        }
+                    };
+
+                    if (api.data.vendor_id) {
+                        let vendor_id = api.data.vendor_id;
+                        newItem.data.vendor_id = Number(vendor_id);
+                        newItem.body.vendor_id = Number(vendor_id);
+
+                    }
+
+                    console.log("🚀 ~ file: device-device-bind.js ~ line 39 ~ newItem", newItem);
+                    return newItem;
+                },
+                "data": {
+                    "vendor_id": "${params.id}",
+                    "obj": 3,
+                    "obj_id": "${device}"
+                }
+            },
+            "body": [
+                // {
+                //     "type": "divider"
+                // },
+                {
+                    "label": "设备",
+                    "labelField": "name",
+                    "valueField": "id",
+                    "type": "select",
+                    "searchable": true,
+                    "name": "device",
+                    "source": "${options}"
+                    // "source": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/getOptions?waitSeconds=1"
+                }
+            ]
+        }
+    };
+
+    let columns$1 = deviceListItems.map(v => v).filter(v=>{
+        return v.name!=='vendor_id';
+    });
 
     let operationItem$1 = {
         "type": "operation",
@@ -1707,19 +1799,28 @@
                 },
                 {
                     "type": "button",
-                    "label": "修改",
-                    "level": "info",
-                    "actionType": "link",
-                    "link": "/device/${id}/edit"
-                },
-                {
-                    "type": "button",
-                    "label": "删除",
+                    "label": "移除绑定",
+                    // "level": "info",
                     "level": "danger",
                     "actionType": "ajax",
-                    "confirmText": "您确认要删除?",
-                    "api": "get:/api/url/destroy/${id}"
+                    "confirmText": "确定移除该设备绑定?${name}",
+                    "api": "delete:/api/vendor/product/0.1/vendor/${params.id}/obj/3/obj-id/${id}"
                 }
+                // {
+                //     "type": "button",
+                //     "label": "修改",
+                //     "level": "info",
+                //     "actionType": "link",
+                //     "link": "/device/${id}/edit"
+                // },
+                // {
+                //     "type": "button",
+                //     "label": "删除",
+                //     "level": "danger",
+                //     "actionType": "ajax",
+                //     "confirmText": "您确认要删除?",
+                //     "api": "get:/api/url/destroy/${id}"
+                // }
             ]
         }],
         "placeholder": "-",
@@ -1732,6 +1833,17 @@
         "title": "厂商->装备列表",
         "remark": null,
         "name": "page-demo",
+
+        "toolbar": [
+
+            {
+                "type": "button",
+                "primary": true,
+                "label": "添加设备绑定",
+                "actionType": "dialog",
+                "dialog": vendorDeviceBindDiaLog
+            }
+        ],
         "body": [{
             "type": "crud",
             "name": "sample",

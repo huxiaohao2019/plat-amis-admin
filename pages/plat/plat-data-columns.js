@@ -27,7 +27,7 @@ let platDataColumns=[
     },
     {
       name: 'type',
-      label: 'type'
+      label: '类型'
     },
     {
       "name": "country",

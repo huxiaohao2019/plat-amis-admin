@@ -1,8 +1,11 @@
 import deviceListItems from '../device/device-list-items';
 import myutils from '../../tools/myutils';
+import vendorDeviceBindDiaLog from './vendor-device-bind';
 
 
-let columns = deviceListItems.map(v => v);
+let columns = deviceListItems.map(v => v).filter(v=>{
+    return v.name!=='vendor_id';
+})
 
 let operationItem = {
     "type": "operation",
@@ -19,19 +22,28 @@ let operationItem = {
             },
             {
                 "type": "button",
-                "label": "修改",
-                "level": "info",
-                "actionType": "link",
-                "link": "/device/${id}/edit"
-            },
-            {
-                "type": "button",
-                "label": "删除",
+                "label": "移除绑定",
+                // "level": "info",
                 "level": "danger",
                 "actionType": "ajax",
-                "confirmText": "您确认要删除?",
-                "api": "get:/api/url/destroy/${id}"
+                "confirmText": "确定移除该设备绑定?${name}",
+                "api": "delete:/api/vendor/product/0.1/vendor/${params.id}/obj/3/obj-id/${id}"
             }
+            // {
+            //     "type": "button",
+            //     "label": "修改",
+            //     "level": "info",
+            //     "actionType": "link",
+            //     "link": "/device/${id}/edit"
+            // },
+            // {
+            //     "type": "button",
+            //     "label": "删除",
+            //     "level": "danger",
+            //     "actionType": "ajax",
+            //     "confirmText": "您确认要删除?",
+            //     "api": "get:/api/url/destroy/${id}"
+            // }
         ]
     }],
     "placeholder": "-",
@@ -44,6 +56,17 @@ const vendorDeviceList = {
     "title": "厂商->装备列表",
     "remark": null,
     "name": "page-demo",
+
+    "toolbar": [
+
+        {
+            "type": "button",
+            "primary": true,
+            "label": "添加设备绑定",
+            "actionType": "dialog",
+            "dialog": vendorDeviceBindDiaLog
+        }
+    ],
     "body": [{
         "type": "crud",
         "name": "sample",
