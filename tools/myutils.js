@@ -1,6 +1,5 @@
 import kvFlags from '../tools/kv-flags'
 const requestAdaptor = function (api) {
-    console.log("🚀 ~ requestAdaptor ~ api", api)
     console.log("🚀 ~ requestAdaptor ~ api.url", api.url)
 
     var urlHost = api.url.split('?')[0]
@@ -8,6 +7,8 @@ const requestAdaptor = function (api) {
     var query = api.query;
     var page = query.page;
     var perPage = query.perPage;
+
+
 
 
     var limit = perPage;
@@ -32,9 +33,7 @@ const requestAdaptor = function (api) {
         }
     }
 
-    console.log("🚀 ~ requestAdaptor ~ subQueryList", subQueryList)
     let subQueryListStr = '[' + subQueryList.join('|') + ']'
-    console.log("🚀 ~ requestAdaptor ~ subQueryListStr", subQueryListStr)
 
     let newQuery2 = {
         limit,
@@ -44,33 +43,44 @@ const requestAdaptor = function (api) {
         newQuery2.query = subQueryListStr
     }
 
-    let newQuery2List=[
-        "limit="+limit,
-        "offset="+offset
+    let newQuery2List = [
+        "limit=" + limit,
+        "offset=" + offset
     ]
-    if(subQueryList.length){
-        newQuery2List.push("query="+subQueryListStr)
+
+    let {
+        orderBy,
+        orderDir
+    } = query;
+
+    if (orderBy && orderDir) {
+        let orderStr = 'sort=[' + orderBy + ':' + orderDir + ']'
+        console.log("🚀 ~ file: myutils.js ~ line 58 ~ requestAdaptor ~ orderStr", orderStr)
+
+        newQuery2List.push(orderStr)
     }
 
-    let newQuery2ListStr=newQuery2List.join('&');
+
+    if (subQueryList.length) {
+        newQuery2List.push("query=" + subQueryListStr)
+    }
+
+    let newQuery2ListStr = newQuery2List.join('&');
 
 
 
 
-    api.url = urlHost + '?'+newQuery2ListStr
-    console.log("🚀 ~ requestAdaptor ~ api.url ", api.url )
+    api.url = urlHost + '?' + newQuery2ListStr
+    console.log("🚀 ~ requestAdaptor ~ api.url ", api.url)
 
     var obj1 = {
         ...api
     };
-    console.log("🚀 ~ file: index.html ~ line 50 ~ obj1", obj1)
 
     return obj1;
 }
 
 const listResponseAdapter = function (payload, response) {
-    console.log("🚀 ~ file: index.html ~ line 104 ~ payload", payload)
-    console.log("🚀 ~ file: index.html ~ line 104 ~ response", response)
     // return {
     //     ...payload,
     //     status: payload.code === 200 ? 0 : payload.code
@@ -101,17 +111,14 @@ function objToKvList(obj) {
 }
 
 const platItemResponseAdapter = function (payload, response, api) {
-    console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ api", api)
-    console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ response", response)
-    console.log("🚀 ~ file: myutils.js ~ line 40 ~ platItemResponseAdapter ~ payload", payload)
 
     var newItem = {
         ...payload,
         _origin: payload
     }
 
-    if(payload.img && payload.img.file_data){
-        newItem.imgSrc='data:image/jpeg;base64,'+payload.img.file_data;
+    if (payload.img && payload.img.file_data) {
+        newItem.imgSrc = 'data:image/jpeg;base64,' + payload.img.file_data;
     }
 
     var kvContainerList = []
@@ -122,12 +129,14 @@ const platItemResponseAdapter = function (payload, response, api) {
         if (typeof payload[flagKey] == 'object') {
             delete newItem[flagKey]
             var kvItems = objToKvList(payload[flagKey]);
-            var kvContainer = { ...item, kvItems: kvItems }
+            var kvContainer = {
+                ...item,
+                kvItems: kvItems
+            }
             kvContainerList.push(kvContainer);
         }
     })
     newItem.kvContainerList = kvContainerList;
-    console.log("🚀 ~ platItemResponseAdapter ~ newItem", newItem)
 
     var techKvList = objToKvList(payload['tech']);
     newItem.techKvList = techKvList;
