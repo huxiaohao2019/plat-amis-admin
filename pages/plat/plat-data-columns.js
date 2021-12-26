@@ -96,6 +96,7 @@ let platDataColumns = [{
     "name": "time",
     "type": "tpl",
     "label": "时间",
+    "sortable": true,
     "tpl": "${time|date:LLL:x}"
 
   },

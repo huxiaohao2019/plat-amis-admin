@@ -41,6 +41,9 @@ let platVendorBindDiaLog = {
                     newItem.data.vendor_id = Number(vendor_id);
                     newItem.body.vendor_id = Number(vendor_id);
 
+                    let obj_id = api.data.obj_id;
+                    newItem.data.obj_id = Number(obj_id);
+                    newItem.body.obj_id = Number(obj_id);
                 }
 
                 console.log("🚀 ~ file: plat-plat-bind.js ~ line 39 ~ newItem", newItem)
