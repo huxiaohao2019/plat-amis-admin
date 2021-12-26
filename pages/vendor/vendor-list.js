@@ -1,4 +1,40 @@
 import myutils from '../../tools/myutils'
+import vendorDataColumns from './components/vendor-data-columns';
+
+let operateItem = {
+  "type": "operation",
+  "label": "操作",
+  "width": "",
+  "buttons": [{
+    "type": "button-group",
+    "buttons": [{
+        "type": "button",
+        "label": "查看",
+        "level": "primary",
+        "actionType": "link",
+        "link": "/vendor/${id}"
+      },
+      {
+        "type": "button",
+        "label": "修改",
+        "level": "info",
+        "actionType": "link",
+        // "link": "/vendor/${id}/edit?page=${page}"
+        "link": "/vendor/${id}/edit"
+      },
+      {
+        "type": "button",
+        "label": "删除",
+        "level": "danger",
+        "actionType": "ajax",
+        "confirmText": "您确认要删除?",
+        "api": "delete:/api/vendor/0.1/${id}"
+      }
+    ]
+  }],
+  "placeholder": "-",
+  "fixed": "right"
+}
 
 const vendorList = {
   "type": "page",
@@ -49,75 +85,8 @@ const vendorList = {
       "className": "m-b-sm"
     },
     "bulkActions": [],
-    "columns": [{
-        "name": "id",
-        "label": "ID",
-        "width": 20,
-        "sortable": true
-      },
-      {
-        "name": "name",
-        "label": "名称",
-        "sortable": true
-      },
+    "columns": vendorDataColumns.concat([operateItem]),
 
-      {
-        "name": "country",
-        "label": "国家(地区)",
-        "sortable": true
-      },
-      {
-        "type": "link",
-        "href": "/#/vendor/${id}/device",
-        "label": "装备",
-        "name": "id",
-        "blank": false,
-        "body": "装备列表"
-      },
-      {
-        "type": "link",
-        "href": "/#/vendor/${id}/plat",
-        "label": "平台",
-        "name": "id",
-        "blank": false,
-        "body": "平台列表"
-      },
-
-      {
-        "type": "operation",
-        "label": "操作",
-        "width": "",
-        "buttons": [{
-          "type": "button-group",
-          "buttons": [{
-              "type": "button",
-              "label": "查看",
-              "level": "primary",
-              "actionType": "link",
-              "link": "/vendor/${id}"
-            },
-            {
-              "type": "button",
-              "label": "修改",
-              "level": "info",
-              "actionType": "link",
-              // "link": "/vendor/${id}/edit?page=${page}"
-              "link": "/vendor/${id}/edit"
-            },
-            {
-              "type": "button",
-              "label": "删除",
-              "level": "danger",
-              "actionType": "ajax",
-              "confirmText": "您确认要删除?",
-              "api": "delete:/api/vendor/0.1/${id}"
-            }
-          ]
-        }],
-        "placeholder": "-",
-        "fixed": "right"
-      }
-    ],
     "affixHeader": true,
     "columnsTogglable": "auto",
     "placeholder": "暂无数据",

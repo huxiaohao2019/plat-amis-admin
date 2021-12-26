@@ -39,6 +39,47 @@ let platDataColumns1 = [{
   }
 ]
 
+let vendor_item={
+  "name": "vendor_id",
+  "type": "container",
+  "label": "生产厂商",
+
+  "body": [{
+      "type": "link",
+      "href": "/#/vendor/${vendor_id}",
+      "blank": false,
+      "className": "mr-1.5",
+      "visibleOn": "this.vendor_id",
+      "body": "${vendor_name}",
+    },
+    {
+
+      "name": "vendor-bind",
+      "type": "button",
+      "size": "xs",
+      // "primary": true,
+      "label": "添加",
+      "actionType": "dialog",
+      // "dialog": deviceVendorBindDiaLog,
+      "dialog": platVendorBindDiaLog,
+      "visibleOn": "!this.vendor_id"
+    },
+    {
+      "name": "vendor-bind",
+      "type": "button",
+      "size": "xs",
+      "label": "移除",
+
+      "level": "danger",
+      "visibleOn": "this.vendor_id",
+
+      "actionType": "ajax",
+      "confirmText": "确定移除该厂商绑定?${name}",
+      "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/1/obj-id/${id}"
+    },
+  ]
+}
+
 
 let platDataColumns = [{
     "name": "id",
@@ -67,47 +108,15 @@ let platDataColumns = [{
     "body": "装备列表"
   },
 
+  
   {
-    "name": "vendor_id",
-    "type": "container",
-    "label": "生产厂商",
-
-    "body": [{
-        "type": "link",
-        "href": "/#/vendor/${vendor_id}",
-        "blank": false,
-        "className": "mr-1.5",
-        "visibleOn": "this.vendor_id",
-        "body": "${vendor_name}",
-      },
-      {
-
-        "name": "vendor-bind",
-        "type": "button",
-        "size": "xs",
-        // "primary": true,
-        "label": "添加",
-        "actionType": "dialog",
-        // "dialog": deviceVendorBindDiaLog,
-        "dialog": platVendorBindDiaLog,
-        "visibleOn": "!this.vendor_id"
-      },
-      {
-        "name": "vendor-bind",
-        "type": "button",
-        "size": "xs",
-        "label": "移除",
-
-        "level": "danger",
-        "visibleOn": "this.vendor_id",
-
-        "actionType": "ajax",
-        "confirmText": "确定移除该厂商绑定?${name}",
-        "api": "delete:/api/vendor/product/0.1/vendor/${vendor_id}/obj/1/obj-id/${id}"
-      },
-    ]
+    "label": "厂商",
+    "name": "vendor",
+    "type": "link",
+    "href": "/#/plat/${id}/vendor",
+    "blank": false,
+    "body": "厂商列表"
   },
-
 
 
   {

@@ -7,6 +7,7 @@ import platAddPage from "./plat/plat-add";
 import platDeviceList from "./plat/plat-devices";
 import platEdit from "./plat/plat-edit";
 import platList from "./plat/plat-list";
+import platVendorList from "./plat/plat-vendor-list";
 import platView from "./plat/plat-view";
 import vendorAddPage from "./vendor/vendor-add";
 import vendorDeviceList from "./vendor/vendor-devices";
@@ -198,7 +199,15 @@ const pages = [{
                         "icon": "fa fa-plus",
                         "url": "/plat/:id/device",
                         "schema": platDeviceList
+                    },
+
+                    {
+                        "label": "平台厂商",
+                        "icon": "fa fa-plus",
+                        "url": "/plat/:id/vendor",
+                        "schema": platVendorList
                     }
+
                 ]
             },
 

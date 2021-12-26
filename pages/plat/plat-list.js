@@ -14,7 +14,7 @@ const platList2 = {
   //   "actionType": "link",
   //   "link": "/crud/url/url-add",
   //   "label": "新增",
-  //   "primary": true
+  //   "primary": true.
   // }],
   "body": [{
     "type": "crud",

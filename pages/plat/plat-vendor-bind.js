@@ -35,11 +35,11 @@ let platVendorBindDiaLog = {
                 }
 
                 console.log("🚀 ~ file: plat-plat-bind.js ~ line 40 ~ api.data.plat_id", api.data.plat_id)
-                if (api.data.plat_id) {
+                if (api.data.vendor_id) {
                     console.log("🚀 ~ file: plat-plat-bind.js ~ line 40 ~ api.data.plat_id", api.data.plat_id)
-                    let plat_id = api.data.plat_id;
-                    newItem.data.plat_id = Number(plat_id);
-                    newItem.body.plat_id = Number(plat_id);
+                    let vendor_id = api.data.vendor_id;
+                    newItem.data.vendor_id = Number(vendor_id);
+                    newItem.body.vendor_id = Number(vendor_id);
 
                 }
 
@@ -49,7 +49,7 @@ let platVendorBindDiaLog = {
             "data": {
                 "vendor_id": "${vendor}",
                 "obj": 1,
-                "obj_id": "${id}"
+                "obj_id": "${params.id}"
             }
         },
         "body": [
@@ -57,7 +57,7 @@ let platVendorBindDiaLog = {
             //     "type": "divider"
             // },
             {
-                "label": "平台",
+                "label": "厂商",
                 "labelField": "name",
                 "valueField": "id",
                 "type": "select",
