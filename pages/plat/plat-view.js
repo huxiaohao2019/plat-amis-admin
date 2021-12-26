@@ -1,8 +1,5 @@
-import {
-    response
-} from "express";
+
 import myutils from "../../tools/myutils";
-import platDevicesTab from "./plat-devices-tab";
 
 // let 
 
