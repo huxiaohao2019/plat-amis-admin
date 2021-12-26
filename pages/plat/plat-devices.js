@@ -4,8 +4,8 @@ import platDeviceBindDiaLog from './plat-device-bind';
 
 
 
-let columns = deviceListItems.map(v => v).filter(v=>{
-    return v.name!='vendor_id'
+let columns = deviceListItems.map(v => v).filter(v => {
+    return v.name != 'vendor_id'
 })
 
 let operationItem = {
@@ -79,9 +79,15 @@ const platDeviceList = {
 
             method: 'get',
             // url: '/api/device/0.1',
-            url: '/api/device/0.1/plat-id/${params.id}',
-            // url: '/api/device/0.1/plat-id/4',
-            // requestAdaptor: myutils.requestAdaptor,
+            // url: '/api/device/0.1/plat-id/${params.id}',
+            // url: '/api/device/0.1',
+            url: '/api/device/0.1/plat-id/:id',
+            data: {
+                $id: '${params.id}',
+                orderBy:'${orderBy}',
+                orderDir:"${orderDir}"
+            },
+            requestAdaptor: myutils.subListRequestAdaptor,
             adaptor: myutils.listResponseAdapter
         },
 

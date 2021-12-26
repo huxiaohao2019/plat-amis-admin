@@ -1,5 +1,41 @@
 import kvFlags from '../tools/kv-flags'
+
+const subListRequestAdaptor = function (api) {
+    console.log("🚀 ~ file: myutils.js ~ line 4 ~ subListRequestAdaptor ~ api", api)
+    
+
+    var urlHost = api.url.split('?')[0]
+
+    var query = api.query;
+    let {
+        $id,
+        orderBy,
+        orderDir
+    }=query;
+
+    urlHost=urlHost.replace(/:id/,$id);
+    
+
+    let newQuery2List = []
+    if (orderBy && orderDir) {
+        let orderStr = 'sort=[' + orderBy + ':' + orderDir + ']'
+        console.log("🚀 ~ file: myutils.js ~ line 58 ~ requestAdaptor ~ orderStr", orderStr)
+        newQuery2List.push(orderStr)
+    }
+
+    let newQuery2ListStr = newQuery2List.join('&');
+    api.url = urlHost + '?' + newQuery2ListStr;
+
+    let newApi = {
+        ...api
+    }
+    console.log("🚀 ~ file: myutils.js ~ line 30 ~ subListRequestAdaptor ~ newApi", newApi)
+
+    return newApi;
+}
+
 const requestAdaptor = function (api) {
+    console.log("🚀 ~ file: myutils.js ~ line 3 ~ requestAdaptor ~ api", api)
     console.log("🚀 ~ requestAdaptor ~ api.url", api.url)
 
     var urlHost = api.url.split('?')[0]
@@ -48,6 +84,7 @@ const requestAdaptor = function (api) {
         "offset=" + offset
     ]
 
+    // 排序
     let {
         orderBy,
         orderDir
@@ -150,6 +187,7 @@ const platItemResponseAdapter = function (payload, response, api) {
 
 
 export default {
+    subListRequestAdaptor,
     requestAdaptor,
     listResponseAdapter,
     platItemResponseAdapter

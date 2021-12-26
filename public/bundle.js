@@ -148,7 +148,42 @@
         platKvFlags:platKvFlags
     };
 
+    const subListRequestAdaptor = function (api) {
+        console.log("🚀 ~ file: myutils.js ~ line 4 ~ subListRequestAdaptor ~ api", api);
+        
+
+        var urlHost = api.url.split('?')[0];
+
+        var query = api.query;
+        let {
+            $id,
+            orderBy,
+            orderDir
+        }=query;
+
+        urlHost=urlHost.replace(/:id/,$id);
+        
+
+        let newQuery2List = [];
+        if (orderBy && orderDir) {
+            let orderStr = 'sort=[' + orderBy + ':' + orderDir + ']';
+            console.log("🚀 ~ file: myutils.js ~ line 58 ~ requestAdaptor ~ orderStr", orderStr);
+            newQuery2List.push(orderStr);
+        }
+
+        let newQuery2ListStr = newQuery2List.join('&');
+        api.url = urlHost + '?' + newQuery2ListStr;
+
+        let newApi = {
+            ...api
+        };
+        console.log("🚀 ~ file: myutils.js ~ line 30 ~ subListRequestAdaptor ~ newApi", newApi);
+
+        return newApi;
+    };
+
     const requestAdaptor = function (api) {
+        console.log("🚀 ~ file: myutils.js ~ line 3 ~ requestAdaptor ~ api", api);
         console.log("🚀 ~ requestAdaptor ~ api.url", api.url);
 
         var urlHost = api.url.split('?')[0];
@@ -189,6 +224,7 @@
             "offset=" + offset
         ];
 
+        // 排序
         let {
             orderBy,
             orderDir
@@ -291,6 +327,7 @@
 
 
     var myutils = {
+        subListRequestAdaptor,
         requestAdaptor,
         listResponseAdapter,
         platItemResponseAdapter: platItemResponseAdapter$1
@@ -793,15 +830,15 @@
       }
     ];
 
-    let baseColumns=platDataColumns.map(v=>{
+    let baseColumns = platDataColumns.map(v => {
       // if(v.name=='vendor_id'){
       //   return platSimpleVendor
       // }else{
       //   return v;
       // }
       return v;
-    }).filter(v=>{
-      return v.name!=='vendor_id'
+    }).filter(v => {
+      return v.name !== 'vendor_id'
     });
 
     const devicePlatOpeationItems = [{
@@ -869,8 +906,15 @@
           // },
           api: {
             method: 'get',
-            url: '/api/plat/0.1/device-id/${params.id}',
+            // url: '/api/plat/0.1/device-id/${params.id}',
+            url: '/api/plat/0.1/device-id/:id',
             //   requestAdaptor: myutils.requestAdaptor,
+            data: {
+              $id: '${params.id}',
+              orderBy: '${orderBy}',
+              orderDir: "${orderDir}"
+            },
+            requestAdaptor: myutils.subListRequestAdaptor,
             adaptor: myutils.listResponseAdapter
           },
 
@@ -1211,8 +1255,8 @@
         }
     };
 
-    let columns$4 = deviceListItems.map(v => v).filter(v=>{
-        return v.name!='vendor_id'
+    let columns$4 = deviceListItems.map(v => v).filter(v => {
+        return v.name != 'vendor_id'
     });
 
     let operationItem$3 = {
@@ -1286,9 +1330,15 @@
 
                 method: 'get',
                 // url: '/api/device/0.1',
-                url: '/api/device/0.1/plat-id/${params.id}',
-                // url: '/api/device/0.1/plat-id/4',
-                // requestAdaptor: myutils.requestAdaptor,
+                // url: '/api/device/0.1/plat-id/${params.id}',
+                // url: '/api/device/0.1',
+                url: '/api/device/0.1/plat-id/:id',
+                data: {
+                    $id: '${params.id}',
+                    orderBy:'${orderBy}',
+                    orderDir:"${orderDir}"
+                },
+                requestAdaptor: myutils.subListRequestAdaptor,
                 adaptor: myutils.listResponseAdapter
             },
 
@@ -1506,8 +1556,8 @@
         }
     ];
 
-    let columns$2 = vendorDataColumns.map(v => v).filter(v=>{
-        return v.label!='装备' && v.label!='平台'
+    let columns$2 = vendorDataColumns.map(v => v).filter(v => {
+        return v.label != '装备' && v.label != '平台'
     });
 
     let operationItem$2 = {
@@ -1579,10 +1629,17 @@
             //   "page": 1
             // },
             api: {
-
+                // TODO:
                 method: 'get',
                 // url: '/api/vendor/0.1',
-                url: '/api/vendor/0.1/plat-id/${params.id}',
+                url: '/api/vendor/0.1/plat-id/:id',
+
+                data: {
+                    $id: '${params.id}',
+                    orderBy: '${orderBy}',
+                    orderDir: "${orderDir}"
+                },
+                requestAdaptor: myutils.subListRequestAdaptor,
                 // url: '/api/vendor/0.1/plat-id/4',
                 // requestAdaptor: myutils.requestAdaptor,
                 adaptor: myutils.listResponseAdapter
@@ -1967,7 +2024,14 @@
                 
                 method: 'get',
                 // url: '/api/device/0.1',
-                url: '/api/device/0.1/vendor-id/${params.id}',
+                // url: '/api/device/0.1/vendor-id/${params.id}',
+                url: '/api/device/0.1/vendor-id/:id',
+                data: {
+                    $id: '${params.id}',
+                    orderBy: '${orderBy}',
+                    orderDir: "${orderDir}"
+                },
+                requestAdaptor: myutils.subListRequestAdaptor,
                 // url: '/api/device/0.1/plat-id/4',
                 // requestAdaptor: myutils.requestAdaptor,
                 adaptor: myutils.listResponseAdapter
@@ -2249,7 +2313,14 @@
 
                 method: 'get',
                 // url: '/api/device/0.1',
-                url: '/api/plat/0.1/vendor-id/${params.id}',
+                // url: '/api/plat/0.1/vendor-id/${params.id}',
+                url: '/api/plat/0.1/vendor-id/:id',
+                data: {
+                    $id: '${params.id}',
+                    orderBy: '${orderBy}',
+                    orderDir: "${orderDir}"
+                },
+                requestAdaptor: myutils.subListRequestAdaptor,
                 // url: '/api/device/0.1/plat-id/4',
                 // requestAdaptor: myutils.requestAdaptor,
                 adaptor: myutils.listResponseAdapter

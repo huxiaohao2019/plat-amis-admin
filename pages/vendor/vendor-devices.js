@@ -78,7 +78,14 @@ const vendorDeviceList = {
             
             method: 'get',
             // url: '/api/device/0.1',
-            url: '/api/device/0.1/vendor-id/${params.id}',
+            // url: '/api/device/0.1/vendor-id/${params.id}',
+            url: '/api/device/0.1/vendor-id/:id',
+            data: {
+                $id: '${params.id}',
+                orderBy: '${orderBy}',
+                orderDir: "${orderDir}"
+            },
+            requestAdaptor: myutils.subListRequestAdaptor,
             // url: '/api/device/0.1/plat-id/4',
             // requestAdaptor: myutils.requestAdaptor,
             adaptor: myutils.listResponseAdapter

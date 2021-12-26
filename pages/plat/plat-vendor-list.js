@@ -4,8 +4,8 @@ import platVendorBindDiaLog from './plat-vendor-bind';
 
 
 
-let columns = vendorDataColumns.map(v => v).filter(v=>{
-    return v.label!='装备' && v.label!='平台'
+let columns = vendorDataColumns.map(v => v).filter(v => {
+    return v.label != '装备' && v.label != '平台'
 })
 
 let operationItem = {
@@ -77,10 +77,17 @@ const platVendorList = {
         //   "page": 1
         // },
         api: {
-
+            // TODO:
             method: 'get',
             // url: '/api/vendor/0.1',
-            url: '/api/vendor/0.1/plat-id/${params.id}',
+            url: '/api/vendor/0.1/plat-id/:id',
+
+            data: {
+                $id: '${params.id}',
+                orderBy: '${orderBy}',
+                orderDir: "${orderDir}"
+            },
+            requestAdaptor: myutils.subListRequestAdaptor,
             // url: '/api/vendor/0.1/plat-id/4',
             // requestAdaptor: myutils.requestAdaptor,
             adaptor: myutils.listResponseAdapter

@@ -3,15 +3,15 @@ import platSimpleVendor from "../plat/components/plat-list-item-simple-vendor";
 import platDataColumns from "../plat/plat-data-columns";
 import devicePlatBindDiaLog from "./device-plat-bind";
 
-let baseColumns=platDataColumns.map(v=>{
+let baseColumns = platDataColumns.map(v => {
   // if(v.name=='vendor_id'){
   //   return platSimpleVendor
   // }else{
   //   return v;
   // }
   return v;
-}).filter(v=>{
-  return v.name!=='vendor_id'
+}).filter(v => {
+  return v.name !== 'vendor_id'
 })
 
 const devicePlatOpeationItems = [{
@@ -79,8 +79,15 @@ const devicePlatList = {
       // },
       api: {
         method: 'get',
-        url: '/api/plat/0.1/device-id/${params.id}',
+        // url: '/api/plat/0.1/device-id/${params.id}',
+        url: '/api/plat/0.1/device-id/:id',
         //   requestAdaptor: myutils.requestAdaptor,
+        data: {
+          $id: '${params.id}',
+          orderBy: '${orderBy}',
+          orderDir: "${orderDir}"
+        },
+        requestAdaptor: myutils.subListRequestAdaptor,
         adaptor: myutils.listResponseAdapter
       },
 
