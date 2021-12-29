@@ -20,7 +20,7 @@ let operateItem = {
         "level": "info",
         "actionType": "link",
         // "link": "/vendor/${id}/edit?page=${page}"
-        "link": "/vendor/${id}/edit"
+        "link": "/vendor/${id}/edit?title=${name}"
       },
       {
         "type": "button",

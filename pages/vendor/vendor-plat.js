@@ -4,7 +4,7 @@ import vendorPlatBindDiaLog from './vendor-plat-bind';
 
 
 let columns = platDataColumns.map(v => v).filter(v=>{
-    return v.name!=='vendor_id'
+    return v.name!=='vendor_id' && v.label!='装备' && v.label!='厂商'
 })
 
 let operationItem = {
@@ -45,7 +45,15 @@ const vendorPlatList = {
     "remark": null,
     "name": "page-demo",
     "toolbar": [
-
+        {
+            "type": "button",
+            "actionType": "button",
+            "label": "返回",
+  
+            onClick: () => {
+              window.history.back();
+            }
+          },
         {
             "type": "button",
             "primary": true,

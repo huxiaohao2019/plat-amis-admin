@@ -2,12 +2,12 @@ import deviceFormItems from "./device-form-items";
 
 const deviceEdit = {
   "type": "page",
-  "title": "修改 ${params.id}",
+  "title": "修改 - ${title}",
   "remark": null,
   "toolbar": [{
     "type": "button",
     "actionType": "button",
-    "label": "返回列表",
+    "label": "返回",
     onClick: () => {
       window.history.back();
     }

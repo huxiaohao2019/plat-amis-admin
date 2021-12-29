@@ -4,14 +4,10 @@ import platDataColumns from "../plat/plat-data-columns";
 import devicePlatBindDiaLog from "./device-plat-bind";
 
 let baseColumns = platDataColumns.map(v => {
-  // if(v.name=='vendor_id'){
-  //   return platSimpleVendor
-  // }else{
-  //   return v;
-  // }
+  
   return v;
 }).filter(v => {
-  return v.name !== 'vendor_id'
+  return v.name !== 'vendor_id'  && v.label!='装备' && v.label!='厂商'
 })
 
 const devicePlatOpeationItems = [{
@@ -54,7 +50,15 @@ const devicePlatList = {
   "remark": null,
   "name": "page-demo",
   "toolbar": [
+    {
+      "type": "button",
+      "actionType": "button",
+      "label": "返回",
 
+      onClick: () => {
+        window.history.back();
+      }
+    },
     {
       "type": "button",
       "primary": true,
@@ -63,9 +67,8 @@ const devicePlatList = {
       "dialog": devicePlatBindDiaLog
     }
   ],
-  "body": [{
+  "body": [
 
-    },
     {
       "type": "crud",
       "name": "sample",

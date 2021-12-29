@@ -3,8 +3,8 @@ import myutils from '../../tools/myutils';
 import vendorDeviceBindDiaLog from './vendor-device-bind';
 
 
-let columns = deviceListItems.map(v => v).filter(v=>{
-    return v.name!=='vendor_id';
+let columns = deviceListItems.map(v => v).filter(v => {
+    return v.name !== 'vendor_id' && v.label != '平台'
 })
 
 let operationItem = {
@@ -29,21 +29,6 @@ let operationItem = {
                 "confirmText": "确定移除该设备绑定?${name}",
                 "api": "delete:/api/vendor/product/0.1/vendor/${params.id}/obj/3/obj-id/${id}"
             }
-            // {
-            //     "type": "button",
-            //     "label": "修改",
-            //     "level": "info",
-            //     "actionType": "link",
-            //     "link": "/device/${id}/edit"
-            // },
-            // {
-            //     "type": "button",
-            //     "label": "删除",
-            //     "level": "danger",
-            //     "actionType": "ajax",
-            //     "confirmText": "您确认要删除?",
-            //     "api": "get:/api/url/destroy/${id}"
-            // }
         ]
     }],
     "placeholder": "-",
@@ -58,7 +43,15 @@ const vendorDeviceList = {
     "name": "page-demo",
 
     "toolbar": [
-
+        {
+            "type": "button",
+            "actionType": "button",
+            "label": "返回",
+  
+            onClick: () => {
+              window.history.back();
+            }
+          },
         {
             "type": "button",
             "primary": true,
@@ -75,7 +68,7 @@ const vendorDeviceList = {
         //   "page": 1
         // },
         api: {
-            
+
             method: 'get',
             // url: '/api/device/0.1',
             // url: '/api/device/0.1/vendor-id/${params.id}',
@@ -91,7 +84,7 @@ const vendorDeviceList = {
             adaptor: myutils.listResponseAdapter
         },
 
-    
+
         "columns": columns,
         "affixHeader": true,
         "columnsTogglable": "auto",

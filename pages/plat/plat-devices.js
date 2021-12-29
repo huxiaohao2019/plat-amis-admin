@@ -5,7 +5,16 @@ import platDeviceBindDiaLog from './plat-device-bind';
 
 
 let columns = deviceListItems.map(v => v).filter(v => {
-    return v.name != 'vendor_id'
+    // return v.name != 'vendor_id'
+    // return /vendor_id/
+    if (v.name == 'vendor_id') {
+        return false;
+    }
+
+    if (v.label == '平台') {
+        return false;
+    }
+    return true;
 })
 
 let operationItem = {
@@ -59,7 +68,15 @@ const platDeviceList = {
     "remark": null,
     "name": "page-demo",
     "toolbar": [
-
+        {
+            "type": "button",
+            "actionType": "button",
+            "label": "返回",
+  
+            onClick: () => {
+              window.history.back();
+            }
+          },
         {
             "type": "button",
             "primary": true,
@@ -84,8 +101,8 @@ const platDeviceList = {
             url: '/api/device/0.1/plat-id/:id',
             data: {
                 $id: '${params.id}',
-                orderBy:'${orderBy}',
-                orderDir:"${orderDir}"
+                orderBy: '${orderBy}',
+                orderDir: "${orderDir}"
             },
             requestAdaptor: myutils.subListRequestAdaptor,
             adaptor: myutils.listResponseAdapter

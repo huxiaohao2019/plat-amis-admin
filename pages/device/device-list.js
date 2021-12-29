@@ -22,7 +22,7 @@ let operationItem= {
         "label": "修改",
         "level": "info",
         "actionType": "link",
-        "link": "/device/${id}/edit"
+        "link": "/device/${id}/edit?title=${name}"
       },
       {
         "type": "button",

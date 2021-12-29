@@ -51,7 +51,7 @@
       "toolbar": [{
         "type": "button",
         "actionType": "button",
-        "label": "返回列表",
+        "label": "返回",
         onClick: () => {
           window.history.back();
         }
@@ -89,12 +89,12 @@
 
     const deviceEdit = {
       "type": "page",
-      "title": "修改 ${params.id}",
+      "title": "修改 - ${title}",
       "remark": null,
       "toolbar": [{
         "type": "button",
         "actionType": "button",
-        "label": "返回列表",
+        "label": "返回",
         onClick: () => {
           window.history.back();
         }
@@ -610,7 +610,7 @@
             "label": "修改",
             "level": "info",
             "actionType": "link",
-            "link": "/device/${id}/edit"
+            "link": "/device/${id}/edit?title=${name}"
           },
           {
             "type": "button",
@@ -696,10 +696,10 @@
     //     int MIL_SAT = 4;
     // }
     let platTypes = {
-        "1": "WARSHIP",
-        "2": "PLANE",
-        "3": "ARMOURED_VEHICLE",
-        "4": "MIL_SAT",
+        "1": "舰船",
+        "2": "飞机",
+        "3": "装甲车",
+        "4": "卫星",
         "*":"其他"
     };
 
@@ -831,14 +831,10 @@
     ];
 
     let baseColumns = platDataColumns.map(v => {
-      // if(v.name=='vendor_id'){
-      //   return platSimpleVendor
-      // }else{
-      //   return v;
-      // }
+      
       return v;
     }).filter(v => {
-      return v.name !== 'vendor_id'
+      return v.name !== 'vendor_id'  && v.label!='装备' && v.label!='厂商'
     });
 
     const devicePlatOpeationItems = [{
@@ -881,7 +877,15 @@
       "remark": null,
       "name": "page-demo",
       "toolbar": [
+        {
+          "type": "button",
+          "actionType": "button",
+          "label": "返回",
 
+          onClick: () => {
+            window.history.back();
+          }
+        },
         {
           "type": "button",
           "primary": true,
@@ -890,9 +894,8 @@
           "dialog": devicePlatBindDiaLog
         }
       ],
-      "body": [{
+      "body": [
 
-        },
         {
           "type": "crud",
           "name": "sample",
@@ -1148,7 +1151,7 @@
         {
           "type": "button",
             "actionType": "button",
-            "label": "返回列表",
+            "label": "返回",
             onClick: () => {
                 window.history.back();
             }
@@ -1256,7 +1259,16 @@
     };
 
     let columns$4 = deviceListItems.map(v => v).filter(v => {
-        return v.name != 'vendor_id'
+        // return v.name != 'vendor_id'
+        // return /vendor_id/
+        if (v.name == 'vendor_id') {
+            return false;
+        }
+
+        if (v.label == '平台') {
+            return false;
+        }
+        return true;
     });
 
     let operationItem$3 = {
@@ -1310,7 +1322,15 @@
         "remark": null,
         "name": "page-demo",
         "toolbar": [
-
+            {
+                "type": "button",
+                "actionType": "button",
+                "label": "返回",
+      
+                onClick: () => {
+                  window.history.back();
+                }
+              },
             {
                 "type": "button",
                 "primary": true,
@@ -1335,8 +1355,8 @@
                 url: '/api/device/0.1/plat-id/:id',
                 data: {
                     $id: '${params.id}',
-                    orderBy:'${orderBy}',
-                    orderDir:"${orderDir}"
+                    orderBy: '${orderBy}',
+                    orderDir: "${orderDir}"
                 },
                 requestAdaptor: myutils.subListRequestAdaptor,
                 adaptor: myutils.listResponseAdapter
@@ -1375,12 +1395,12 @@
 
     const platEdit = {
       "type": "page",
-      "title": "修改 ${params.id}",
+      "title": "修改 - ${title}",
       "remark": null,
       "toolbar": [{
         "type": "button",
         "actionType": "button",
-        "label": "返回列表",
+        "label": "返回",
         onClick: () => {
           window.history.back();
         }
@@ -1444,7 +1464,7 @@
                     "label": "修改",
                     "level": "info",
                     "actionType": "link",
-                    "link": "/plat/${id}/edit"
+                    "link": "/plat/${id}/edit?title=${name}"
                 },
                 {
                     "type": "button",
@@ -1612,7 +1632,15 @@
         "remark": null,
         "name": "page-demo",
         "toolbar": [
-
+            {
+                "type": "button",
+                "actionType": "button",
+                "label": "返回",
+      
+                onClick: () => {
+                  window.history.back();
+                }
+              },
             {
                 "type": "button",
                 "primary": true,
@@ -1789,12 +1817,12 @@
         },
         "body": [{
                 "type": "container",
-                "className": "my-2",
+                "className": "mb-1.5",
                 "body": [{
                     "type": "button",
                     "actionType": "button",
                     "label": "返回",
-
+                    "className": "space-x-2.space-x-reverse",
                     onClick: () => {
                         window.history.back();
                     }
@@ -1949,8 +1977,8 @@
         }
     };
 
-    let columns$1 = deviceListItems.map(v => v).filter(v=>{
-        return v.name!=='vendor_id';
+    let columns$1 = deviceListItems.map(v => v).filter(v => {
+        return v.name !== 'vendor_id' && v.label != '平台'
     });
 
     let operationItem$1 = {
@@ -1975,21 +2003,6 @@
                     "confirmText": "确定移除该设备绑定?${name}",
                     "api": "delete:/api/vendor/product/0.1/vendor/${params.id}/obj/3/obj-id/${id}"
                 }
-                // {
-                //     "type": "button",
-                //     "label": "修改",
-                //     "level": "info",
-                //     "actionType": "link",
-                //     "link": "/device/${id}/edit"
-                // },
-                // {
-                //     "type": "button",
-                //     "label": "删除",
-                //     "level": "danger",
-                //     "actionType": "ajax",
-                //     "confirmText": "您确认要删除?",
-                //     "api": "get:/api/url/destroy/${id}"
-                // }
             ]
         }],
         "placeholder": "-",
@@ -2004,7 +2017,15 @@
         "name": "page-demo",
 
         "toolbar": [
-
+            {
+                "type": "button",
+                "actionType": "button",
+                "label": "返回",
+      
+                onClick: () => {
+                  window.history.back();
+                }
+              },
             {
                 "type": "button",
                 "primary": true,
@@ -2021,7 +2042,7 @@
             //   "page": 1
             // },
             api: {
-                
+
                 method: 'get',
                 // url: '/api/device/0.1',
                 // url: '/api/device/0.1/vendor-id/${params.id}',
@@ -2037,7 +2058,7 @@
                 adaptor: myutils.listResponseAdapter
             },
 
-        
+
             "columns": columns$1,
             "affixHeader": true,
             "columnsTogglable": "auto",
@@ -2054,13 +2075,13 @@
     const vendorEdit =
     {
       "type": "page",
-      "title": "修改 ${params.id}",
+      "title": "修改 - ${title}",
       "remark": null,
       "toolbar": [
         {
           "type": "button",
           "actionType": "button",
-          "label": "返回列表",
+          "label": "返回",
           onClick: () => {
               window.history.back();
           }
@@ -2100,7 +2121,7 @@
             "level": "info",
             "actionType": "link",
             // "link": "/vendor/${id}/edit?page=${page}"
-            "link": "/vendor/${id}/edit"
+            "link": "/vendor/${id}/edit?title=${name}"
           },
           {
             "type": "button",
@@ -2252,7 +2273,7 @@
     };
 
     let columns = platDataColumns.map(v => v).filter(v=>{
-        return v.name!=='vendor_id'
+        return v.name!=='vendor_id' && v.label!='装备' && v.label!='厂商'
     });
 
     let operationItem = {
@@ -2293,7 +2314,15 @@
         "remark": null,
         "name": "page-demo",
         "toolbar": [
-
+            {
+                "type": "button",
+                "actionType": "button",
+                "label": "返回",
+      
+                onClick: () => {
+                  window.history.back();
+                }
+              },
             {
                 "type": "button",
                 "primary": true,

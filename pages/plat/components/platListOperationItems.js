@@ -16,7 +16,7 @@ let platListOperationItems = [{
                 "label": "修改",
                 "level": "info",
                 "actionType": "link",
-                "link": "/plat/${id}/edit"
+                "link": "/plat/${id}/edit?title=${name}"
             },
             {
                 "type": "button",

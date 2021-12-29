@@ -6,10 +6,10 @@
 //     int MIL_SAT = 4;
 // }
 let platTypes = {
-    "1": "WARSHIP",
-    "2": "PLANE",
-    "3": "ARMOURED_VEHICLE",
-    "4": "MIL_SAT",
+    "1": "舰船",
+    "2": "飞机",
+    "3": "装甲车",
+    "4": "卫星",
     "*":"其他"
 }
 

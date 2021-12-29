@@ -60,7 +60,15 @@ const platVendorList = {
     "remark": null,
     "name": "page-demo",
     "toolbar": [
-
+        {
+            "type": "button",
+            "actionType": "button",
+            "label": "返回",
+  
+            onClick: () => {
+              window.history.back();
+            }
+          },
         {
             "type": "button",
             "primary": true,

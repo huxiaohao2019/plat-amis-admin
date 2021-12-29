@@ -7,7 +7,7 @@ const deviceAddPage = {
   "toolbar": [{
     "type": "button",
     "actionType": "button",
-    "label": "返回列表",
+    "label": "返回",
     onClick: () => {
       window.history.back();
     }
