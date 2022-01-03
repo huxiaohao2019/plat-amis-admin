@@ -74,7 +74,7 @@ const platFormItems = [{
     {
         "type": "input-kv",
         "name": "weapons",
-        
+        "className":"plat-kv",
         "label": "武器装备"
 
     },
@@ -85,6 +85,7 @@ const platFormItems = [{
     {
         "type": "input-kv",
         "name": "profile",
+        "className":"plat-kv",
         "label": "简介"
 
     },

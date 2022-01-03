@@ -16,6 +16,7 @@ const deviceFormItems = [
     {
         "type": "input-kv",
         "name": "tech",
+        "className":"plat-kv",
         "label": "技术参数"
 
     },
