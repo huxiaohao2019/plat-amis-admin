@@ -1100,6 +1100,7 @@
         {
             "type": "input-kv",
             "name": "tech",
+            "className":"plat-kv",
             "label": "技术参数"
 
         },
@@ -1110,6 +1111,7 @@
         {
             "type": "input-kv",
             "name": "weapons",
+            
             "label": "武器装备"
 
         },
