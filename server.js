@@ -40,9 +40,11 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/main', function (req, res) {
-  res.sendFile(path.join(__dirname, 'main/index.html'));
-});
+// app.get('/main', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'main/index.html'));
+// });
+
+app.use('/main', express.static('main'));
 
 
 
