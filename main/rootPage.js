@@ -45,6 +45,7 @@ export default {
                 {
                     "type": "input-tree",
                     "name": "tree",
+                    submitOnChange:true,
                     "searchable": true,
                     // "label": "Tree",
                     "showOutline": true,

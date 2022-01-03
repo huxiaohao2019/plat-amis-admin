@@ -1383,6 +1383,7 @@
                     {
                         "type": "input-tree",
                         "name": "tree",
+                        submitOnChange:true,
                         "searchable": true,
                         // "label": "Tree",
                         "showOutline": true,
@@ -1413,9 +1414,14 @@
       body: rootPage
     };
     amis.embed('#root', amisJSON);
+
+
+
     var main = {
       platMain: amisJSON
     };
+
+    // document.getElementById('')
 
     return main;
 

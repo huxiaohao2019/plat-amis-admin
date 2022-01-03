@@ -8,6 +8,11 @@ let amisJSON = {
   body: rootPage
 };
 let amisScoped = amis.embed('#root', amisJSON);
+
+
+
 export default {
   platMain: amisJSON
 }
+
+// document.getElementById('')
