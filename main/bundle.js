@@ -4,372 +4,6 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.platMain = factory());
 })(this, (function () { 'use strict';
 
-    const platKvFlags = [
-        {
-            flagKey: 'tech',
-            flagLabel: '技术参数'
-        }, {
-            flagKey: 'weapons',
-            flagLabel: '主要武器'
-        }, {
-            flagKey: 'profile',
-            flagLabel: '简况'
-        }
-
-    ];
-
-
-    var kvFlags = {
-        platKvFlags:platKvFlags
-    };
-
-    const subListRequestAdaptor = function (api) {
-        console.log("🚀 ~ file: myutils.js ~ line 4 ~ subListRequestAdaptor ~ api", api);
-        
-
-        var urlHost = api.url.split('?')[0];
-
-        var query = api.query;
-        let {
-            $id,
-            orderBy,
-            orderDir
-        }=query;
-
-        urlHost=urlHost.replace(/:id/,$id);
-        
-
-        let newQuery2List = [];
-        if (orderBy && orderDir) {
-            let orderStr = 'sort=[' + orderBy + ':' + orderDir + ']';
-            console.log("🚀 ~ file: myutils.js ~ line 58 ~ requestAdaptor ~ orderStr", orderStr);
-            newQuery2List.push(orderStr);
-        }
-
-        let newQuery2ListStr = newQuery2List.join('&');
-        api.url = urlHost + '?' + newQuery2ListStr;
-
-        let newApi = {
-            ...api
-        };
-        console.log("🚀 ~ file: myutils.js ~ line 30 ~ subListRequestAdaptor ~ newApi", newApi);
-
-        return newApi;
-    };
-
-    const requestAdaptor = function (api) {
-        console.log("🚀 ~ file: myutils.js ~ line 3 ~ requestAdaptor ~ api", api);
-        console.log("🚀 ~ requestAdaptor ~ api.url", api.url);
-
-        var urlHost = api.url.split('?')[0];
-
-        var query = api.query;
-        var page = query.page;
-        var perPage = query.perPage;
-
-
-
-
-        var limit = perPage;
-        var offset = (page - 1) * perPage;
-
-        var newQuery = {
-            ...query,
-        };
-        delete newQuery['page'];
-        delete newQuery['perPage'];
-
-        let subQueryList = [];
-
-        for (let key in newQuery) {
-            if (/.*,.*/.test(key)) {
-                let value = newQuery[key];
-                let subKeys = key.split(',');
-                subKeys.forEach(subKey => {
-                    let subQueryStr = subKey + ':like:\'%25' + String(value) + '\%25\'';
-                    subQueryList.push(subQueryStr);
-                });
-            }
-        }
-
-        let subQueryListStr = '[' + subQueryList.join('|') + ']';
-
-        let newQuery2List = [
-            "limit=" + limit,
-            "offset=" + offset
-        ];
-
-        // 排序
-        let {
-            orderBy,
-            orderDir
-        } = query;
-
-        if (orderBy && orderDir) {
-            let orderStr = 'sort=[' + orderBy + ':' + orderDir + ']';
-            console.log("🚀 ~ file: myutils.js ~ line 58 ~ requestAdaptor ~ orderStr", orderStr);
-
-            newQuery2List.push(orderStr);
-        }
-
-
-        if (subQueryList.length) {
-            newQuery2List.push("query=" + subQueryListStr);
-        }
-
-        let newQuery2ListStr = newQuery2List.join('&');
-
-
-
-
-        api.url = urlHost + '?' + newQuery2ListStr;
-        console.log("🚀 ~ requestAdaptor ~ api.url ", api.url);
-
-        var obj1 = {
-            ...api
-        };
-
-        return obj1;
-    };
-
-    const listResponseAdapter = function (payload, response) {
-        // return {
-        //     ...payload,
-        //     status: payload.code === 200 ? 0 : payload.code
-        // };
-        console.log("🚀 ~ file: myutils.js ~ line 32 ~ listResponseAdapter ~ response.headers['sum']", response.headers['sum']);
-        var amisList = {
-            msg: '',
-            status: '0',
-            data: {
-                "rows": payload,
-                "count": response.headers['sum']
-            }
-        };
-
-        return amisList;
-    };
-
-    function objToKvList(obj) {
-        let list = [];
-        for (let key in obj) {
-            let item = {
-                key,
-                value: obj[key]
-            };
-            list.push(item);
-        }
-        return list;
-    }
-
-    const platItemResponseAdapter = function (payload, response, api) {
-
-        var newItem = {
-            ...payload,
-            _origin: payload
-        };
-
-        if (payload.img && payload.img.file_data) {
-            newItem.imgSrc = 'data:image/jpeg;base64,' + payload.img.file_data;
-        }
-
-        var kvContainerList = [];
-
-
-        kvFlags.platKvFlags.forEach(item => {
-            let flagKey = item['flagKey'];
-            if (typeof payload[flagKey] == 'object') {
-                delete newItem[flagKey];
-                var kvItems = objToKvList(payload[flagKey]);
-                var kvContainer = {
-                    ...item,
-                    kvItems: kvItems
-                };
-                kvContainerList.push(kvContainer);
-            }
-        });
-        newItem.kvContainerList = kvContainerList;
-
-        var techKvList = objToKvList(payload['tech']);
-        newItem.techKvList = techKvList;
-        newItem.profileKvList = objToKvList(payload['profile']);
-        newItem.weaponsKvList = objToKvList(payload['weapons']);
-
-
-        return newItem;
-    };
-
-
-
-    var myutils = {
-        subListRequestAdaptor,
-        requestAdaptor,
-        listResponseAdapter,
-        platItemResponseAdapter
-    };
-
-    let platListOperationItems = [{
-        "type": "operation",
-        "label": "操作",
-        "width": "",
-        "buttons": [{
-            "type": "button-group",
-            "buttons": [{
-                    "type": "button",
-                    "label": "查看",
-                    "level": "primary",
-                    "actionType": "link",
-                    "link": "/plat/${id}"
-                },
-                {
-                    "type": "button",
-                    "label": "修改",
-                    "level": "info",
-                    "actionType": "link",
-                    "link": "/plat/${id}/edit?title=${name}"
-                },
-                {
-                    "type": "button",
-                    "label": "删除",
-                    "level": "danger",
-                    "actionType": "ajax",
-                    "confirmText": "您确认要删除?",
-                    // "api": "get:/api/url/destroy/${id}"
-                    "api": "delete:/api/plat/0.1/${id}"
-                }
-            ]
-        }],
-        "placeholder": "-",
-        "fixed": "right"
-    }];
-
-    // {
-    //     int UNDEFINED = 0;
-    //     int WARSHIP = 1;
-    //     int PLANE = 2;
-    //     int ARMOURED_VEHICLE = 3;
-    //     int MIL_SAT = 4;
-    // }
-    let platTypes = {
-        "1": "舰船",
-        "2": "飞机",
-        "3": "装甲车",
-        "4": "卫星",
-        "*":"其他"
-    };
-
-    let platDataColumns = [{
-        "name": "id",
-        "label": "ID",
-        "width": 20,
-        "sortable": true
-      },
-      {
-        "name": "name",
-        "label": "名称",
-        "sortable": true
-      },
-      {
-        "name": "time",
-        "type": "tpl",
-        "label": "时间",
-        "sortable": true,
-        "tpl": "${time|date:LLL:x}"
-
-      },
-      {
-        "label": "装备",
-        "name": "id",
-        "type": "link",
-        "href": "/#/plat/${id}/device",
-        "blank": false,
-        "body": "装备列表"
-      },
-
-      
-      {
-        "label": "厂商",
-        "name": "vendor",
-        "type": "link",
-        "href": "/#/plat/${id}/vendor",
-        "blank": false,
-        "body": "厂商列表"
-      },
-
-
-      {
-        name: 'type',
-        label: '类型',
-        "type": "mapping",
-        "map": platTypes
-      },
-      {
-        "name": "country",
-        "label": "国家(地区)",
-        "sortable": true
-      }
-    ];
-
-    let columns=platDataColumns.concat(platListOperationItems);
-
-    const platList2 = {
-      "type": "page",
-      "title": "平台列表",
-      "remark": null,
-      "name": "page-demo",
-      // "toolbar": [{
-      //   "type": "button",
-      //   "actionType": "link",
-      //   "link": "/crud/url/url-add",
-      //   "label": "新增",
-      //   "primary": true.
-      // }],
-      "body": [{
-        "type": "crud",
-        "name": "sample",
-        "perPage": 10,
-
-        api: {
-          method: 'get',
-          url: '/api/plat/0.1',
-          requestAdaptor: myutils.requestAdaptor,
-          adaptor: myutils.listResponseAdapter
-        },
-
-        "filter": {
-          "title": "",
-          "mode": "inline",
-          "wrapWithPanel": false,
-          "submitText": "",
-          "controls": [{
-            "type": "text",
-            "name": "country,name",
-            "placeholder": "通过关键字搜索",
-            "addOn": {
-              "label": "搜索",
-              "type": "submit",
-              "className": "btn-success"
-            },
-            "clearable": true
-          }],
-          "className": "m-b-sm"
-        },
-        "bulkActions": [
-
-        ],
-        "columns": columns,
-        "affixHeader": true,
-        "columnsTogglable": "auto",
-        "placeholder": "暂无数据",
-        "tableClassName": "table-db table-striped",
-        "headerClassName": "crud-table-header",
-        "footerClassName": "crud-table-footer",
-        "toolbarClassName": "crud-table-toolbar",
-        "combineNum": 0,
-        "bodyClassName": "panel-default"
-      }]
-    };
-
     var areaCode = [{
             'short': 'CN',
             'name': '中国',
@@ -1340,11 +974,11 @@
     ];
 
     let dict1 = {
-        1: '普通',
-        2: '内部',
+        1: '电子战',
+        2: '情报',
         4: '秘密',
-        8: '机密',
-        16: '绝密'
+        // 8: '机密',
+        // 16: '绝密'
     };
 
 
@@ -1358,14 +992,14 @@
 
         let dict1Options = [];
         for (let key in dict1) {
-            console.log("🚀 ~ file: rootPage.js ~ line 12 ~ key", key);
+            // console.log("🚀 ~ file: rootPage.js ~ line 12 ~ key", key)
             let item = {
                 label: dict1[key],
                 value: v.tel + '-' + key
             };
             dict1Options.push(item);
         }
-        console.log("🚀 ~ file: rootPage.js ~ line 18 ~ dict1Options", dict1Options);
+        // console.log("🚀 ~ file: rootPage.js ~ line 18 ~ dict1Options", dict1Options)
 
         newItem.children = dict1Options;
         return newItem;
@@ -1375,34 +1009,119 @@
         "type": "grid",
         "columns": [{
                 // "columnClassName": "bg-green-300",
-                md:4,
-                sm:6,
-                lg:3,
-                "body": [
-
-                    {
-                        "type": "input-tree",
-                        "name": "tree",
-                        submitOnChange:true,
-                        "searchable": true,
-                        // "label": "Tree",
-                        "showOutline": true,
-                        "initiallyOpen": false,
-                        "options": areaCategoryList,
-                        "size": "full"
-                        // "labelField": "name",
-                        // "valueField": "tel"
-                    }
+                md: 4,
+                sm: 6,
+                lg: 3,
+                "body": [{
+                        "type": "form",
+                        "name": "otherForm",
+                        "title": "导航",
+                        // "api": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/mock2/form/saveForm",
+                        // "target": "main-plat",
+                        "target": "detailForm",
+                        "actions": [],
+                        "body": [
+                            // {
+                            //     "type": "static",
+                            //     "name": "id",
+                            //     "label": "返回 ID"
+                            // },
+                            {
+                                "type": "input-tree",
+                                "name": "tree",
+                                submitOnChange: true,
+                                "searchable": true,
+                                // "label": "Tree",
+                                "showOutline": true,
+                                "initiallyOpen": false,
+                                "options": areaCategoryList,
+                                "size": "full"
+                                // "labelField": "name",
+                                // "valueField": "tel"
+                            }
+                        ]
+                    },
+                    // {
+                    //     "type": "input-tree",
+                    //     "name": "tree",
+                    //     submitOnChange: true,
+                    //     "searchable": true,
+                    //     // "label": "Tree",
+                    //     "showOutline": true,
+                    //     "initiallyOpen": false,
+                    //     "options": areaCategoryList,
+                    //     "size": "full"
+                    //     // "labelField": "name",
+                    //     // "valueField": "tel"
+                    // }
                 ]
             },
             {
-                // "columnClassName": "bg-blue-300",
-                "body": [{
-                    "type": "panel",
-                    "title": "国家平台列表",
-                    "body": platList2
-                  }]
+                type: "page",
+                body: [{
+                        "type": "page",
+                        "initApi":"/api/plat/0.1?limit=10&offset=10",
+                        // "data": {
+                        //     "items": [{
+                        //             "engine": "Trident",
+                        //             "browser": "Internet Explorer 4.0"
+                        //         },
+                        //         {
+                        //             "engine": "Chrome",
+                        //             "browser": "Chrome 44"
+                        //         },
+                        //         {
+                        //             "engine": "Gecko",
+                        //             "browser": "Firefox 1.0"
+                        //         },
+                        //         {
+                        //             "engine": "Presto",
+                        //             "browser": "Opera 10"
+                        //         },
+                        //         {
+                        //             "engine": "Webkie",
+                        //             "browser": "Safari 12"
+                        //         }
+                        //     ]
+                        // },
+                        "body": {
+                            "type": "cards",
+                            "source": "$items",
+                            "card": {
+                                "header": {
+                                    "avatarText": "${engine|substring:0:2|upperCase}",
+                                    "avatarTextBackground": [
+                                        "#FFB900",
+                                        "#D83B01",
+                                        "#B50E0E",
+                                        "#E81123",
+                                        "#B4009E",
+                                        "#5C2D91",
+                                        "#0078D7",
+                                        "#00B4FF",
+                                        "#008272"
+                                    ]
+                                },
+                                "body": [{
+                                    "label": "平台名称",
+                                    "name": "${name}"
+                                }]
+                            }
+                        }
+                    },
+                   
+                ]
             }
+
+
+            // {
+            //     "name": "main-plat",
+            //     "body": [{
+            //         "type": "panel",
+            //         "title": "国家平台列表",
+            //         "body": "${tree}"
+            //     }]
+            // }
         ]
     };
 
@@ -1413,7 +1132,15 @@
       title: '主页',
       body: rootPage
     };
-    amis.embed('#root', amisJSON);
+    amis.embed('#root', amisJSON, {
+      tracker: (eventTrack, props) => {
+      console.log("🚀 ~ file: main.js ~ line 12 ~ eventTrack", eventTrack);
+        const blob = new Blob([JSON.stringify(eventTrack)], {
+          type: 'application/json'
+        });
+        navigator.sendBeacon('/tracker', blob);
+      }
+    });
 
 
 

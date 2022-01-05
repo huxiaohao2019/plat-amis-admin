@@ -4,6 +4,8 @@
   "description": "基于 amis 的项目模板",
   "main": "index.js",
   "scripts": {
+    "build": "rollup -c -w ",
+    "build2": "rollup --config rollup.main.config.js -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "gh-pages": "rm -rf gh-pages && fis3 release gh-pages -c",

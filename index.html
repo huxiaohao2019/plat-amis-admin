@@ -5,8 +5,7 @@
   <meta charset="UTF-8" />
   <title>amis admin</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
   <link rel="stylesheet" href="./public/libs/amis-1.5.3/sdk.css">
   <link rel="stylesheet" href="./public/libs/amis-1.5.3/helper.css">
@@ -39,15 +38,18 @@
     .sub-label {
       color: #425EAF;
     }
-    .plat-kv .cxd-Form-row .cxd-Form-col{
-      flex-grow:initial;
+
+    .plat-kv .cxd-Form-row .cxd-Form-col {
+      flex-grow: initial;
       flex-basis: initial;
     }
-    .plat-kv .cxd-Form-row .cxd-Form-col:nth-child(1){
-      width: 320px!important;
+
+    .plat-kv .cxd-Form-row .cxd-Form-col:nth-child(1) {
+      width: 320px !important;
       /* background-color: antiquewhite; */
     }
-    .plat-kv .cxd-Form-row .cxd-Form-col:nth-child(2){
+
+    .plat-kv .cxd-Form-row .cxd-Form-col:nth-child(2) {
       /* width: 100%; */
       width: calc(100% - 320px);
       /* background-color: antiquewhite; */
@@ -90,8 +92,8 @@
         let pathname = ~idx ?
           to.substring(0, idx) :
           ~idx2 ?
-            to.substring(0, idx2) :
-            to;
+          to.substring(0, idx2) :
+          to;
         let search = ~idx ? to.substring(idx, ~idx2 ? idx2 : undefined) : '';
         let hash = ~idx2 ? to.substring(idx2) : location.hash;
 
@@ -139,65 +141,72 @@
       let amisInstance = amis.embed(
         '#root',
         app, {
-        location: history.location
-      }, {
-        // watchRouteChange: fn => {
-        //   return history.listen(fn);
-        // },
-        updateLocation: (location, replace) => {
-          location = normalizeLink(location);
-          if (location === 'goBack') {
-            return history.goBack();
-          } else if (
-            (!/^https?\:\/\//.test(location) &&
-              location ===
-              history.location.pathname + history.location.search) ||
-            location === history.location.href
-          ) {
-            // 目标地址和当前地址一样，不处理，免得重复刷新
-            return;
-          } else if (/^https?\:\/\//.test(location) || !history) {
-            return (window.location.href = location);
-          }
+          location: history.location
+        }, {
+          tracker: (eventTrack, props) => {
+          console.log("🚀 ~ file: index.html ~ line 147 ~ eventTrack", eventTrack)
+            const blob = new Blob([JSON.stringify(eventTrack)], {
+              type: 'application/json'
+            });
+            // navigator.sendBeacon('/tracker', blob);
+          },
+          // watchRouteChange: fn => {
+          //   return history.listen(fn);
+          // },
+          updateLocation: (location, replace) => {
+            location = normalizeLink(location);
+            if (location === 'goBack') {
+              return history.goBack();
+            } else if (
+              (!/^https?\:\/\//.test(location) &&
+                location ===
+                history.location.pathname + history.location.search) ||
+              location === history.location.href
+            ) {
+              // 目标地址和当前地址一样，不处理，免得重复刷新
+              return;
+            } else if (/^https?\:\/\//.test(location) || !history) {
+              return (window.location.href = location);
+            }
 
-          history[replace ? 'replace' : 'push'](location);
-        },
-        jumpTo: (to, action) => {
-          if (to === 'goBack') {
-            return history.goBack();
-          }
+            history[replace ? 'replace' : 'push'](location);
+          },
+          jumpTo: (to, action) => {
+            if (to === 'goBack') {
+              return history.goBack();
+            }
 
-          to = normalizeLink(to);
+            to = normalizeLink(to);
 
-          if (isCurrentUrl(to)) {
-            return;
-          }
+            if (isCurrentUrl(to)) {
+              return;
+            }
 
-          if (action && action.actionType === 'url') {
-            action.blank === false ?
-              (window.location.href = to) :
+            if (action && action.actionType === 'url') {
+              action.blank === false ?
+                (window.location.href = to) :
+                window.open(to, '_blank');
+              return;
+            } else if (action && action.blank) {
               window.open(to, '_blank');
-            return;
-          } else if (action && action.blank) {
-            window.open(to, '_blank');
-            return;
-          }
+              return;
+            }
 
-          if (/^https?:\/\//.test(to)) {
-            window.location.href = to;
-          } else if (
-            (!/^https?\:\/\//.test(to) &&
-              to === history.pathname + history.location.search) ||
-            to === history.location.href
-          ) {
-            // do nothing
-          } else {
-            history.push(to);
-          }
-        },
-        isCurrentUrl: isCurrentUrl,
-        theme: 'cxd'
-      }
+            if (/^https?:\/\//.test(to)) {
+              window.location.href = to;
+            } else if (
+              (!/^https?\:\/\//.test(to) &&
+                to === history.pathname + history.location.search) ||
+              to === history.location.href
+            ) {
+              // do nothing
+            } else {
+              history.push(to);
+            }
+          },
+          isCurrentUrl: isCurrentUrl,
+          theme: 'cxd'
+        }
       );
 
       history.listen(state => {

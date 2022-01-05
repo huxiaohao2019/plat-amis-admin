@@ -7,7 +7,15 @@ let amisJSON = {
   title: '主页',
   body: rootPage
 };
-let amisScoped = amis.embed('#root', amisJSON);
+let amisScoped = amis.embed('#root', amisJSON, {
+  tracker: (eventTrack, props) => {
+  console.log("🚀 ~ file: main.js ~ line 12 ~ eventTrack", eventTrack)
+    const blob = new Blob([JSON.stringify(eventTrack)], {
+      type: 'application/json'
+    });
+    navigator.sendBeacon('/tracker', blob);
+  }
+});
 
 
 
