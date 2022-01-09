@@ -1132,6 +1132,35 @@
       title: '主页',
       body: rootPage
     };
+
+    let amisAppJSON={
+      "type": "app",
+      "brandName": "应用名称",
+      "pages": [
+        {
+          // "label": "分组1",
+          "children": [
+            {
+              // "label": "父页面",
+              "url": "/parent",
+              "children": [
+                {
+                  "label": "子页面",
+                  "url": "pageA",
+                  "schema": {
+                    "type": "page",
+                    "title": "Page A"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    amisJSON=amisAppJSON;
+
     amis.embed('#root', amisJSON, {
       tracker: (eventTrack, props) => {
       console.log("🚀 ~ file: main.js ~ line 12 ~ eventTrack", eventTrack);
@@ -1141,6 +1170,8 @@
         navigator.sendBeacon('/tracker', blob);
       }
     });
+
+
 
 
 
