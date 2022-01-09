@@ -65,7 +65,8 @@ const platFormItems = [{
         "name": "tech",
         "className":"plat-kv",
         "label": "技术参数",
-        "valueType":"textarea"
+        "valueType":"textarea",
+        "minRows":1
 
     },
     {

@@ -31,6 +31,7 @@ const platEdit = {
   }],
   "body": [{
     "type": "form",
+    "id":"plat-edit-form",
     // "initApi": "/api/plat/0.1/${params.id}",
     "initApi": {
       method: 'get',
