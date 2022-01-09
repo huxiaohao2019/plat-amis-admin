@@ -23,7 +23,9 @@
             "type": "input-kv",
             "name": "tech",
             "className":"plat-kv",
-            "label": "技术参数"
+            "label": "技术参数",
+            "valueType":"textarea",
+            "minRows":1
 
         },
         {
@@ -1103,7 +1105,8 @@
             "name": "tech",
             "className":"plat-kv",
             "label": "技术参数",
-            "valueType":"textarea"
+            "valueType":"textarea",
+            "minRows":1
 
         },
         {
@@ -1414,6 +1417,7 @@
       }],
       "body": [{
         "type": "form",
+        "id":"plat-edit-form",
         // "initApi": "/api/plat/0.1/${params.id}",
         "initApi": {
           method: 'get',
