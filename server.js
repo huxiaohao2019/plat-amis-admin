@@ -6,6 +6,12 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const config=require('./config')
 
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const config2 = require('./webpack.config.js');
+const compiler = webpack(config2);
+
+
 const {
   createProxyMiddleware
 } = require('http-proxy-middleware')
@@ -15,6 +21,13 @@ const app = express();
 const routes=require('./routes')
 
 app.set('port', process.env.PORT || 3100);
+
+app.use(
+  webpackDevMiddleware(compiler, {
+    publicPath: config2.output.publicPath
+  })
+);
+
 app.use(logger('dev'));
 // app.use(bodyParser.json()); // Parses json, multi-part (file), url-encoded
 
@@ -45,6 +58,7 @@ app.get('/', function (req, res) {
 // });
 
 app.use('/main', express.static('main'));
+// app.use('/main2', express.static('main2'));
 
 
 

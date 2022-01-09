@@ -3,13 +3,49 @@
   "version": "1.0.0",
   "description": "基于 amis 的项目模板",
   "main": "index.js",
+  "dependencies": {
+    "@types/lodash": "^4.14.178",
+    "history": "^5.2.0",
+    "http-proxy-middleware": "^2.0.1",
+    "lodash": "^4.17.21",
+    "superagent": "^6.1.0",
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.11",
+    "@types/react-dom": "^16.9.9",
+    "amis": "1.5.1",
+    "axios": "^0.24.0",
+    "copy-to-clipboard": "^3.3.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "typescript": "^4.4.3"
+  },
   "scripts": {
-    "build": "rollup -c -w ",
+    "build": "webpack",
+    "build1": "rollup -c -w ",
     "build2": "rollup --config rollup.main.config.js -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "gh-pages": "rm -rf gh-pages && fis3 release gh-pages -c",
     "deploy-gh-pages": "git subtree push --prefix gh-pages origin gh-pages"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "keywords": [
     "amis",
@@ -21,17 +57,30 @@
   "license": "MIT",
   "devDependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7",
-    "reload": "^3.1.1"
-  },
-  "dependencies": {
-    "@types/lodash": "^4.14.178",
-    "axios": "^0.24.0",
-    "history": "^5.2.0",
-    "http-proxy-middleware": "^2.0.1",
-    "lodash": "^4.17.21",
-    "superagent": "^6.1.0"
+    "reload": "^3.1.1",
+    "@snowpack/plugin-dotenv": "^2.0.5",
+    "@snowpack/plugin-react-refresh": "^2.3.8",
+    "@snowpack/plugin-typescript": "^1.1.1",
+    "@vitejs/plugin-react": "^1.1.0",
+    "@vue/compiler-sfc": "^3.0.4",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.5.1",
+    "express": "^4.17.1",
+    "file-loader": "^6.2.0",
+    "fork-ts-checker-webpack-plugin": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "monaco-editor-webpack-plugin": "^6.0.0",
+    "prettier": "^2.2.1",
+    "snowpack": "^3.8.8",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "url-loader": "^4.1.1",
+    "vite": "^2.6.14",
+    "webpack": "^5.46.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-middleware": "^5.2.2",
+    "webpack-dev-server": "^4.6.0"
   }
 }

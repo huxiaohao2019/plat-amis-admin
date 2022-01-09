@@ -1,5 +1,6 @@
-import platList2 from "../pages/plat/plat-list";
-import areaCode from "./tools/area-code";
+import areaCode from "../main/tools/area-code";
+// import platList2 from "../pages/plat/plat-list";
+// import areaCode from "./tools/area-code";
 
 let dict1 = {
     1: '电子战',
@@ -10,7 +11,7 @@ let dict1 = {
 }
 
 
-let areaCategoryList = areaCode.map(v => {
+let areaCategoryList = areaCode .map(v => {
     let newItem = {
         ...v,
         label: v.name,
@@ -33,7 +34,7 @@ let areaCategoryList = areaCode.map(v => {
     return newItem;
 })
 
- var root1= {
+export default {
     "type": "grid",
     "columns": [{
             // "columnClassName": "bg-green-300",
@@ -152,11 +153,3 @@ let areaCategoryList = areaCode.map(v => {
         // }
     ]
 }
-
-var root2={
-    "type": "page",
-    "title": "标题",
-    "body": "Hello World!"
-  }
-
-export default root2;
