@@ -22,11 +22,7 @@ const routes=require('./routes')
 
 app.set('port', process.env.PORT || 3100);
 
-app.use(
-  webpackDevMiddleware(compiler, {
-    publicPath: config2.output.publicPath
-  })
-);
+
 
 app.use(logger('dev'));
 // app.use(bodyParser.json()); // Parses json, multi-part (file), url-encoded
@@ -46,7 +42,12 @@ app.use('/api', createProxyMiddleware({
 app.get('/ss',function(req,res,next){
   
 })
-
+app.use(
+  webpackDevMiddleware(compiler, {
+    publicPath: config2.output.publicPath
+    // publicPath:'/main2/'
+  })
+);
 
 app.use('/', routes);
 app.get('/', function (req, res) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 // import * as rootPage from './'
 // let rootPage=require('./rootPage');
 // import rootP2 from './page2';
@@ -23,6 +23,7 @@ import {
 } from 'amis';
 import {alert, confirm} from 'amis/lib/components/Alert';
 import {toast} from 'amis/lib/components/Toast';
+// import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // amis 环境配置
 const env = {
@@ -137,8 +138,14 @@ class APP extends React.Component<any, any> {
       <>
         <ToastComponent key="toast" position={'top-right'} />
         <AlertComponent key="alert" />
-        <AMISComponent />
-        {/* <Button>btn</Button> */}
+
+        {/* <AMISComponent /> */}
+        <Button>btn</Button>
+        {/* <Switch>
+                <Route path="/" component={Home} exact />
+                <Route path="/about" component={About} />
+                <Route path="/shop" component={Shop} />
+            </Switch> */}
       </>
     );
   }

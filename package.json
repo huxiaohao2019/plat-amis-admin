@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "基于 amis 的项目模板",
   "main": "index.js",
+  "homepage":"main2",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@types/jest": "^27.0.3",
