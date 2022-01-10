@@ -139,7 +139,7 @@ class APP extends React.Component<any, any> {
         <ToastComponent key="toast" position={'top-right'} />
         <AlertComponent key="alert" />
 
-        {/* <AMISComponent /> */}
+        <AMISComponent />
         <Button>btn</Button>
         {/* <Switch>
                 <Route path="/" component={Home} exact />

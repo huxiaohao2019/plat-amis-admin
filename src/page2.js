@@ -1,4 +1,4 @@
-import areaCode from "../main/tools/area-code";
+import areaCode from "../main-old/tools/area-code";
 // import platList2 from "../pages/plat/plat-list";
 // import areaCode from "./tools/area-code";
 
@@ -132,8 +132,12 @@ export default {
                                 ]
                             },
                             "body": [{
-                                "label": "平台名称",
-                                "name": "${name}"
+                                "type": "link",
+    "href": "/main/plat/1",
+    // "body": "百度一下，你就知道"
+                                // "label": "平台名称",
+                                "body": "${name}"
+                                
                             }]
                         }
                     }

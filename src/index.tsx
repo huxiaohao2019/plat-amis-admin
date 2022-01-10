@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
-// import APP from './App';
+import APP from './App';
 
 export function Expenses() {
   return (
@@ -31,10 +31,16 @@ export function App() {
       >
         <Link to="/invoices">Invoices</Link> |{' '}
         <Link to="/expenses">Expenses</Link>
+        <Link to="/invoices/1">Expenses</Link>
       </nav>
     </div>
   );
 }
+class Plat extends PureComponent {
+    render() {
+      return <h2>Home</h2>;
+    }
+  }
 
 class Home extends PureComponent {
   render() {
@@ -43,14 +49,13 @@ class Home extends PureComponent {
 }
 
 ReactDOM.render(
-  <BrowserRouter basename='main2'>
+  <BrowserRouter basename="main">
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="expenses" element={<Home />} />
-      <Route path="main2" element={<Home />}>
-        <Route path="expenses" element={<Expenses />} />
-      </Route>
-      <Route path="main2/invoices" element={<Invoices />} />
+      <Route path="invoices" element={<Invoices />} >
+      <Route path=":invoiceId" element={<Plat />} />
+          </Route>
     </Routes>
   </BrowserRouter>,
 
