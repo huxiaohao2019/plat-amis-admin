@@ -25,8 +25,10 @@ import {alert, confirm} from 'amis/lib/components/Alert';
 import {toast} from 'amis/lib/components/Toast';
 // import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import env from './common/amis-env';
+
 // amis 环境配置
-const env = {
+const env1 = {
   // 下面三个接口必须实现
   fetcher: ({
     url, // 接口地址
@@ -140,7 +142,6 @@ class APP extends React.Component<any, any> {
         <AlertComponent key="alert" />
 
         <AMISComponent />
-        <Button>btn</Button>
         {/* <Switch>
                 <Route path="/" component={Home} exact />
                 <Route path="/about" component={About} />

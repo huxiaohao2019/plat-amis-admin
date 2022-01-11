@@ -133,7 +133,7 @@ export default {
                             },
                             "body": [{
                                 "type": "link",
-    "href": "/main/plat/1",
+    "href": "/#/main/plat/${id}",
     // "body": "百度一下，你就知道"
                                 // "label": "平台名称",
                                 "body": "${name}"
